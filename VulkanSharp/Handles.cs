@@ -98,7 +98,7 @@ namespace VulkanSharp
 				var pDevice = new Device();
 
 				Result result;
-				fixed (IntPtr* ptrpDevice = &pDevice.m) result = NativeMethods.vkCreateDevice(m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpDevice);
+				fixed (IntPtr* ptrpDevice = &pDevice.m) result = NativeMethods.vkCreateDevice(m, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpDevice);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pDevice;
@@ -311,7 +311,7 @@ namespace VulkanSharp
 			PhysicalDeviceProperties pProperties;
 			unsafe {
 				pProperties = new PhysicalDeviceProperties();
-				NativeMethods.vkGetPhysicalDeviceProperties(m, pProperties.m);
+				NativeMethods.vkGetPhysicalDeviceProperties(m, pProperties._handle);
 
 				return pProperties;
 			}
@@ -431,7 +431,7 @@ namespace VulkanSharp
 
 	public partial class Device
 	{
-		internal IntPtr m;
+		public IntPtr m;
 
 		public uint AcquireNextImageKHR(SwapchainKhr swapchain, ulong timeout, Semaphore semaphore, Fence fence) {
 			Result result;
@@ -1203,7 +1203,7 @@ namespace VulkanSharp
 
 	public class Queue
 	{
-		internal IntPtr m;
+		public IntPtr m;
 
 		public void BindSparse(uint bindInfoCount, BindSparseInfo pBindInfo, Fence fence) {
 			Result result;
@@ -1238,7 +1238,7 @@ namespace VulkanSharp
 
 	public class CommandBuffer
 	{
-		internal IntPtr m;
+		public IntPtr m;
 
 		public void Begin(CommandBufferBeginInfo pBeginInfo) {
 			Result result;
@@ -1499,112 +1499,112 @@ namespace VulkanSharp
 
 	public class DeviceMemory
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class CommandPool
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Buffer
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class BufferView
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Image
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class ImageView
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class ShaderModule
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Pipeline
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class PipelineLayout
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Sampler
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class DescriptorSet
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class DescriptorSetLayout
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class DescriptorPool
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Fence
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Semaphore
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Event
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class QueryPool
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class Framebuffer
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class RenderPass
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class PipelineCache
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class DisplayKhr
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class DisplayModeKhr
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class SurfaceKhr
@@ -1614,11 +1614,11 @@ namespace VulkanSharp
 
 	public class SwapchainKhr
 	{
-		internal ulong m;
+		public ulong m;
 	}
 
 	public class DebugReportCallbackExt
 	{
-		internal ulong m;
+		public ulong m;
 	}
 }

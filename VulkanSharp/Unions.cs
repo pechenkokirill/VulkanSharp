@@ -57,14 +57,14 @@ namespace VulkanSharp
 					m->Uint32 [i] = 0;
 			}
 		}
-		internal Interop.ClearColorValue* m;
+		public Interop.ClearColorValue* m;
 
 		public ClearColorValue ()
 		{
 			m = (Interop.ClearColorValue*) Interop.Structure.Allocate (typeof (Interop.ClearColorValue));
 		}
 
-		internal ClearColorValue (Interop.ClearColorValue* ptr)
+		public ClearColorValue (Interop.ClearColorValue* ptr)
 		{
 			m = ptr;
 		}
@@ -83,7 +83,7 @@ namespace VulkanSharp
 			get { return m->DepthStencil; }
 			set { m->DepthStencil = value; }
 		}
-		internal Interop.ClearValue* m;
+		public Interop.ClearValue* m;
 
 		public ClearValue ()
 		{
@@ -91,14 +91,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal ClearValue (Interop.ClearValue* ptr)
+		public ClearValue (Interop.ClearValue* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			_lColor = new ClearColorValue (&m->Color);
 		}

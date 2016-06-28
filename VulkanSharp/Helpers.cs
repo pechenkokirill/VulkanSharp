@@ -49,7 +49,7 @@ namespace VulkanSharp
 
 	public class ResultException : Exception
 	{
-		internal Result _result;
+		public Result _result;
 
 		public Result Result => _result;
 

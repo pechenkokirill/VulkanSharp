@@ -53,7 +53,7 @@ namespace VulkanSharp
 		}
 	}
 
-	public unsafe partial class ClearColorValue
+	public partial class ClearColorValue
 	{
 		public ClearColorValue (float[] floatArray) : this ()
 		{

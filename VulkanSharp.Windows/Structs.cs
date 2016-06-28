@@ -19,7 +19,7 @@ namespace VulkanSharp.Windows
 			get { return _m->Hwnd; }
 			set { _m->Hwnd = value; }
 		}
-		internal Interop.Win32SurfaceCreateInfoKhr* _m;
+		public Interop.Win32SurfaceCreateInfoKhr* _m;
 
 		public Win32SurfaceCreateInfoKhr ()
 		{
@@ -27,14 +27,14 @@ namespace VulkanSharp.Windows
 			Initialize ();
 		}
 
-		internal Win32SurfaceCreateInfoKhr (Interop.Win32SurfaceCreateInfoKhr* ptr)
+		public Win32SurfaceCreateInfoKhr (Interop.Win32SurfaceCreateInfoKhr* ptr)
 		{
 			_m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			_m->SType = StructureType.Win32SurfaceCreateInfoKhr;
 		}

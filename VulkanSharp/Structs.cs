@@ -3,33 +3,33 @@ using System.Runtime.InteropServices;
 
 namespace VulkanSharp
 {
-	public unsafe struct Offset2D
+	public struct Offset2D
 	{
 		public int X;
 		public int Y;
 	}
 
-	public unsafe struct Offset3D
+	public struct Offset3D
 	{
 		public int X;
 		public int Y;
 		public int Z;
 	}
 
-	public unsafe struct Extent2D
+	public struct Extent2D
 	{
 		public uint Width;
 		public uint Height;
 	}
 
-	public unsafe struct Extent3D
+	public struct Extent3D
 	{
 		public uint Width;
 		public uint Height;
 		public uint Depth;
 	}
 
-	public unsafe struct Viewport
+	public struct Viewport
 	{
 		public float X;
 		public float Y;
@@ -39,26 +39,26 @@ namespace VulkanSharp
 		public float MaxDepth;
 	}
 
-	public unsafe struct Rect2D
+	public struct Rect2D
 	{
 		public Offset2D Offset;
 		public Extent2D Extent;
 	}
 
-	public unsafe struct Rect3D
+	public struct Rect3D
 	{
 		public Offset3D Offset;
 		public Extent3D Extent;
 	}
 
-	public unsafe struct ClearRect
+	public struct ClearRect
 	{
 		public Rect2D Rect;
 		public uint BaseArrayLayer;
 		public uint LayerCount;
 	}
 
-	public unsafe struct ComponentMapping
+	public struct ComponentMapping
 	{
 		public ComponentSwizzle R;
 		public ComponentSwizzle G;
@@ -69,40 +69,40 @@ namespace VulkanSharp
 	public unsafe class PhysicalDeviceProperties
 	{
 		public uint ApiVersion {
-			get { return m->ApiVersion; }
-			set { m->ApiVersion = value; }
+			get { return _handle->ApiVersion; }
+			set { _handle->ApiVersion = value; }
 		}
 
 		public uint DriverVersion {
-			get { return m->DriverVersion; }
-			set { m->DriverVersion = value; }
+			get { return _handle->DriverVersion; }
+			set { _handle->DriverVersion = value; }
 		}
 
 		public uint VendorID {
-			get { return m->VendorID; }
-			set { m->VendorID = value; }
+			get { return _handle->VendorID; }
+			set { _handle->VendorID = value; }
 		}
 
 		public uint DeviceID {
-			get { return m->DeviceID; }
-			set { m->DeviceID = value; }
+			get { return _handle->DeviceID; }
+			set { _handle->DeviceID = value; }
 		}
 
 		public PhysicalDeviceType DeviceType {
-			get { return m->DeviceType; }
-			set { m->DeviceType = value; }
+			get { return _handle->DeviceType; }
+			set { _handle->DeviceType = value; }
 		}
 
 		public string DeviceName {
-			get { return Marshal.PtrToStringAnsi ((IntPtr)m->DeviceName); }
-			set { Interop.Structure.MarshalFixedSizeString (m->DeviceName, value, 256); }
+			get { return Marshal.PtrToStringAnsi ((IntPtr)_handle->DeviceName); }
+			set { Interop.Structure.MarshalFixedSizeString (_handle->DeviceName, value, 256); }
 		}
 
 		public byte[] PipelineCacheUUID {
 			get {
 				var arr = new byte [16];
 				for (var i = 0; i < 16; i++)
-					arr [i] = m->PipelineCacheUUID [i];
+					arr [i] = _handle->PipelineCacheUUID [i];
 				return arr;
 			}
 
@@ -110,40 +110,40 @@ namespace VulkanSharp
 				if (value.Length > 16)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->PipelineCacheUUID [i] = value [i];
+					_handle->PipelineCacheUUID [i] = value [i];
 				for (var i = value.Length; i < 16; i++)
-					m->PipelineCacheUUID [i] = 0;
+					_handle->PipelineCacheUUID [i] = 0;
 			}
 		}
 
 		PhysicalDeviceLimits lLimits;
 		public PhysicalDeviceLimits Limits {
 			get { return lLimits; }
-			set { lLimits = value; m->Limits = *value.m; }
+			set { lLimits = value; _handle->Limits = *value.m; }
 		}
 
 		public PhysicalDeviceSparseProperties SparseProperties {
-			get { return m->SparseProperties; }
-			set { m->SparseProperties = value; }
+			get { return _handle->SparseProperties; }
+			set { _handle->SparseProperties = value; }
 		}
-		internal Interop.PhysicalDeviceProperties* m;
+		public Interop.PhysicalDeviceProperties* _handle;
 
 		public PhysicalDeviceProperties ()
 		{
-			m = (Interop.PhysicalDeviceProperties*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceProperties));
+			_handle = (Interop.PhysicalDeviceProperties*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceProperties));
 			Initialize ();
 		}
 
-		internal PhysicalDeviceProperties (Interop.PhysicalDeviceProperties* ptr)
+		public PhysicalDeviceProperties (Interop.PhysicalDeviceProperties* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
-			lLimits = new PhysicalDeviceLimits (&m->Limits);
+			lLimits = new PhysicalDeviceLimits (&_handle->Limits);
 		}
 
 	}
@@ -151,24 +151,24 @@ namespace VulkanSharp
 	public unsafe class ExtensionProperties
 	{
 		public string ExtensionName {
-			get { return Marshal.PtrToStringAnsi ((IntPtr)m->ExtensionName); }
-			set { Interop.Structure.MarshalFixedSizeString (m->ExtensionName, value, 256); }
+			get { return Marshal.PtrToStringAnsi ((IntPtr)_handle->ExtensionName); }
+			set { Interop.Structure.MarshalFixedSizeString (_handle->ExtensionName, value, 256); }
 		}
 
 		public uint SpecVersion {
-			get { return m->SpecVersion; }
-			set { m->SpecVersion = value; }
+			get { return _handle->SpecVersion; }
+			set { _handle->SpecVersion = value; }
 		}
-		internal Interop.ExtensionProperties* m;
+		public Interop.ExtensionProperties* _handle;
 
 		public ExtensionProperties ()
 		{
-			m = (Interop.ExtensionProperties*) Interop.Structure.Allocate (typeof (Interop.ExtensionProperties));
+			_handle = (Interop.ExtensionProperties*) Interop.Structure.Allocate (typeof (Interop.ExtensionProperties));
 		}
 
-		internal ExtensionProperties (Interop.ExtensionProperties* ptr)
+		public ExtensionProperties (Interop.ExtensionProperties* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -176,34 +176,34 @@ namespace VulkanSharp
 	public unsafe class LayerProperties
 	{
 		public string LayerName {
-			get { return Marshal.PtrToStringAnsi ((IntPtr)m->LayerName); }
-			set { Interop.Structure.MarshalFixedSizeString (m->LayerName, value, 256); }
+			get { return Marshal.PtrToStringAnsi ((IntPtr)_handle->LayerName); }
+			set { Interop.Structure.MarshalFixedSizeString (_handle->LayerName, value, 256); }
 		}
 
 		public uint SpecVersion {
-			get { return m->SpecVersion; }
-			set { m->SpecVersion = value; }
+			get { return _handle->SpecVersion; }
+			set { _handle->SpecVersion = value; }
 		}
 
 		public uint ImplementationVersion {
-			get { return m->ImplementationVersion; }
-			set { m->ImplementationVersion = value; }
+			get { return _handle->ImplementationVersion; }
+			set { _handle->ImplementationVersion = value; }
 		}
 
 		public string Description {
-			get { return Marshal.PtrToStringAnsi ((IntPtr)m->Description); }
-			set { Interop.Structure.MarshalFixedSizeString (m->Description, value, 256); }
+			get { return Marshal.PtrToStringAnsi ((IntPtr)_handle->Description); }
+			set { Interop.Structure.MarshalFixedSizeString (_handle->Description, value, 256); }
 		}
-		internal Interop.LayerProperties* m;
+		public Interop.LayerProperties* _handle;
 
 		public LayerProperties ()
 		{
-			m = (Interop.LayerProperties*) Interop.Structure.Allocate (typeof (Interop.LayerProperties));
+			_handle = (Interop.LayerProperties*) Interop.Structure.Allocate (typeof (Interop.LayerProperties));
 		}
 
-		internal LayerProperties (Interop.LayerProperties* ptr)
+		public LayerProperties (Interop.LayerProperties* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -211,47 +211,47 @@ namespace VulkanSharp
 	public unsafe class ApplicationInfo
 	{
 		public string ApplicationName {
-			get { return Marshal.PtrToStringAnsi (m->ApplicationName); }
-			set { m->ApplicationName = Marshal.StringToHGlobalAnsi (value); }
+			get { return Marshal.PtrToStringAnsi (_handle->ApplicationName); }
+			set { _handle->ApplicationName = Marshal.StringToHGlobalAnsi (value); }
 		}
 
 		public uint ApplicationVersion {
-			get { return m->ApplicationVersion; }
-			set { m->ApplicationVersion = value; }
+			get { return _handle->ApplicationVersion; }
+			set { _handle->ApplicationVersion = value; }
 		}
 
 		public string EngineName {
-			get { return Marshal.PtrToStringAnsi (m->EngineName); }
-			set { m->EngineName = Marshal.StringToHGlobalAnsi (value); }
+			get { return Marshal.PtrToStringAnsi (_handle->EngineName); }
+			set { _handle->EngineName = Marshal.StringToHGlobalAnsi (value); }
 		}
 
 		public uint EngineVersion {
-			get { return m->EngineVersion; }
-			set { m->EngineVersion = value; }
+			get { return _handle->EngineVersion; }
+			set { _handle->EngineVersion = value; }
 		}
 
 		public uint ApiVersion {
-			get { return m->ApiVersion; }
-			set { m->ApiVersion = value; }
+			get { return _handle->ApiVersion; }
+			set { _handle->ApiVersion = value; }
 		}
-		internal Interop.ApplicationInfo* m;
+		public Interop.ApplicationInfo* _handle;
 
 		public ApplicationInfo ()
 		{
-			m = (Interop.ApplicationInfo*) Interop.Structure.Allocate (typeof (Interop.ApplicationInfo));
+			_handle = (Interop.ApplicationInfo*) Interop.Structure.Allocate (typeof (Interop.ApplicationInfo));
 			Initialize ();
 		}
 
-		internal ApplicationInfo (Interop.ApplicationInfo* ptr)
+		public ApplicationInfo (Interop.ApplicationInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
-			m->SType = StructureType.ApplicationInfo;
+			_handle->SType = StructureType.ApplicationInfo;
 		}
 
 	}
@@ -259,74 +259,74 @@ namespace VulkanSharp
 	public unsafe class AllocationCallbacks
 	{
 		public IntPtr UserData {
-			get { return m->UserData; }
-			set { m->UserData = value; }
+			get { return _handle->UserData; }
+			set { _handle->UserData = value; }
 		}
 
 		public IntPtr PfnAllocation {
-			get { return m->PfnAllocation; }
-			set { m->PfnAllocation = value; }
+			get { return _handle->PfnAllocation; }
+			set { _handle->PfnAllocation = value; }
 		}
 
 		public IntPtr PfnReallocation {
-			get { return m->PfnReallocation; }
-			set { m->PfnReallocation = value; }
+			get { return _handle->PfnReallocation; }
+			set { _handle->PfnReallocation = value; }
 		}
 
 		public IntPtr PfnFree {
-			get { return m->PfnFree; }
-			set { m->PfnFree = value; }
+			get { return _handle->PfnFree; }
+			set { _handle->PfnFree = value; }
 		}
 
 		public IntPtr PfnInternalAllocation {
-			get { return m->PfnInternalAllocation; }
-			set { m->PfnInternalAllocation = value; }
+			get { return _handle->PfnInternalAllocation; }
+			set { _handle->PfnInternalAllocation = value; }
 		}
 
 		public IntPtr PfnInternalFree {
-			get { return m->PfnInternalFree; }
-			set { m->PfnInternalFree = value; }
+			get { return _handle->PfnInternalFree; }
+			set { _handle->PfnInternalFree = value; }
 		}
-		private Interop.AllocationCallbacks* m;
+		private Interop.AllocationCallbacks* _handle;
 
 		public AllocationCallbacks ()
 		{
-			m = (Interop.AllocationCallbacks*) Interop.Structure.Allocate (typeof (Interop.AllocationCallbacks));
+			_handle = (Interop.AllocationCallbacks*) Interop.Structure.Allocate (typeof (Interop.AllocationCallbacks));
 		}
 
-		internal AllocationCallbacks (Interop.AllocationCallbacks* ptr)
+		public AllocationCallbacks (Interop.AllocationCallbacks* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
-		public Interop.AllocationCallbacks* Handle => m;
+		public Interop.AllocationCallbacks* Handle => _handle;
 	}
 
 	public unsafe class DeviceQueueCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint QueueFamilyIndex {
-			get { return m->QueueFamilyIndex; }
-			set { m->QueueFamilyIndex = value; }
+			get { return _handle->QueueFamilyIndex; }
+			set { _handle->QueueFamilyIndex = value; }
 		}
 
 		public uint QueueCount {
-			get { return m->QueueCount; }
-			set { m->QueueCount = value; }
+			get { return _handle->QueueCount; }
+			set { _handle->QueueCount = value; }
 		}
 
 		public float[] QueuePriorities {
 			get {
-				if (m->QueueCount == 0)
+				if (_handle->QueueCount == 0)
 					return null;
-				var values = new float [m->QueueCount];
+				var values = new float [_handle->QueueCount];
 				unsafe
 				{
-					var ptr = (float*)m->QueuePriorities;
+					var ptr = (float*)_handle->QueuePriorities;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -335,38 +335,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->QueueCount = 0;
-					m->QueuePriorities = IntPtr.Zero;
+					_handle->QueueCount = 0;
+					_handle->QueuePriorities = IntPtr.Zero;
 					return;
 				}
-				m->QueueCount = (uint)value.Length;
-				m->QueuePriorities = Marshal.AllocHGlobal ((int)(sizeof(float)*value.Length));
+				_handle->QueueCount = (uint)value.Length;
+				_handle->QueuePriorities = Marshal.AllocHGlobal ((int)(sizeof(float)*value.Length));
 				unsafe
 				{
-					var ptr = (float*)m->QueuePriorities;
+					var ptr = (float*)_handle->QueuePriorities;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		internal Interop.DeviceQueueCreateInfo* m;
+		public Interop.DeviceQueueCreateInfo* _handle;
 
 		public DeviceQueueCreateInfo ()
 		{
-			m = (Interop.DeviceQueueCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DeviceQueueCreateInfo));
+			_handle = (Interop.DeviceQueueCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DeviceQueueCreateInfo));
 			Initialize ();
 		}
 
-		internal DeviceQueueCreateInfo (Interop.DeviceQueueCreateInfo* ptr)
+		public DeviceQueueCreateInfo (Interop.DeviceQueueCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
-			m->SType = StructureType.DeviceQueueCreateInfo;
+			_handle->SType = StructureType.DeviceQueueCreateInfo;
 		}
 
 	}
@@ -374,26 +374,26 @@ namespace VulkanSharp
 	public unsafe class DeviceCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint QueueCreateInfoCount {
-			get { return m->QueueCreateInfoCount; }
-			set { m->QueueCreateInfoCount = value; }
+			get { return _handle->QueueCreateInfoCount; }
+			set { _handle->QueueCreateInfoCount = value; }
 		}
 
 		public DeviceQueueCreateInfo[] QueueCreateInfos {
 			get {
-				if (m->QueueCreateInfoCount == 0)
+				if (_handle->QueueCreateInfoCount == 0)
 					return null;
-				var values = new DeviceQueueCreateInfo [m->QueueCreateInfoCount];
+				var values = new DeviceQueueCreateInfo [_handle->QueueCreateInfoCount];
 				unsafe
 				{
-					var ptr = (Interop.DeviceQueueCreateInfo*)m->QueueCreateInfos;
+					var ptr = (Interop.DeviceQueueCreateInfo*)_handle->QueueCreateInfos;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DeviceQueueCreateInfo ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -401,35 +401,35 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->QueueCreateInfoCount = 0;
-					m->QueueCreateInfos = IntPtr.Zero;
+					_handle->QueueCreateInfoCount = 0;
+					_handle->QueueCreateInfos = IntPtr.Zero;
 					return;
 				}
-				m->QueueCreateInfoCount = (uint)value.Length;
-				m->QueueCreateInfos = Marshal.AllocHGlobal ((int)(sizeof(Interop.DeviceQueueCreateInfo)*value.Length));
+				_handle->QueueCreateInfoCount = (uint)value.Length;
+				_handle->QueueCreateInfos = Marshal.AllocHGlobal ((int)(sizeof(Interop.DeviceQueueCreateInfo)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.DeviceQueueCreateInfo*)m->QueueCreateInfos;
+					var ptr = (Interop.DeviceQueueCreateInfo*)_handle->QueueCreateInfos;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
 
 		public uint EnabledLayerCount {
-			get { return m->EnabledLayerCount; }
-			set { m->EnabledLayerCount = value; }
+			get { return _handle->EnabledLayerCount; }
+			set { _handle->EnabledLayerCount = value; }
 		}
 
 		public string[] EnabledLayerNames {
 			get {
-				if (m->EnabledLayerCount == 0)
+				if (_handle->EnabledLayerCount == 0)
 					return null;
-				var strings = new string [m->EnabledLayerCount];
+				var strings = new string [_handle->EnabledLayerCount];
 				unsafe
 				{
-					var ptr = (void**)m->EnabledLayerNames;
-					for (var i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)_handle->EnabledLayerNames;
+					for (var i = 0; i < _handle->EnabledLayerCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -437,35 +437,35 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->EnabledLayerCount = 0;
-					m->EnabledLayerNames = IntPtr.Zero;
+					_handle->EnabledLayerCount = 0;
+					_handle->EnabledLayerNames = IntPtr.Zero;
 					return;
 				}
-				m->EnabledLayerCount = (uint)value.Length;
-				m->EnabledLayerNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledLayerCount));
+				_handle->EnabledLayerCount = (uint)value.Length;
+				_handle->EnabledLayerNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*_handle->EnabledLayerCount));
 				unsafe
 				{
-					var ptr = (void**)m->EnabledLayerNames;
-					for (var i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)_handle->EnabledLayerNames;
+					for (var i = 0; i < _handle->EnabledLayerCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
 		}
 
 		public uint EnabledExtensionCount {
-			get { return m->EnabledExtensionCount; }
-			set { m->EnabledExtensionCount = value; }
+			get { return _handle->EnabledExtensionCount; }
+			set { _handle->EnabledExtensionCount = value; }
 		}
 
 		public string[] EnabledExtensionNames {
 			get {
-				if (m->EnabledExtensionCount == 0)
+				if (_handle->EnabledExtensionCount == 0)
 					return null;
-				var strings = new string [m->EnabledExtensionCount];
+				var strings = new string [_handle->EnabledExtensionCount];
 				unsafe
 				{
-					var ptr = (void**)m->EnabledExtensionNames;
-					for (var i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)_handle->EnabledExtensionNames;
+					for (var i = 0; i < _handle->EnabledExtensionCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -473,43 +473,43 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->EnabledExtensionCount = 0;
-					m->EnabledExtensionNames = IntPtr.Zero;
+					_handle->EnabledExtensionCount = 0;
+					_handle->EnabledExtensionNames = IntPtr.Zero;
 					return;
 				}
-				m->EnabledExtensionCount = (uint)value.Length;
-				m->EnabledExtensionNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledExtensionCount));
+				_handle->EnabledExtensionCount = (uint)value.Length;
+				_handle->EnabledExtensionNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*_handle->EnabledExtensionCount));
 				unsafe
 				{
-					var ptr = (void**)m->EnabledExtensionNames;
-					for (var i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)_handle->EnabledExtensionNames;
+					for (var i = 0; i < _handle->EnabledExtensionCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
 		}
 
 		public PhysicalDeviceFeatures EnabledFeatures {
-			get { return (PhysicalDeviceFeatures)Interop.Structure.MarshalPointerToObject (m->EnabledFeatures, typeof (PhysicalDeviceFeatures)); }
-			set { m->EnabledFeatures = Interop.Structure.MarshalObjectToPointer (m->EnabledFeatures, value); }
+			get { return (PhysicalDeviceFeatures)Interop.Structure.MarshalPointerToObject (_handle->EnabledFeatures, typeof (PhysicalDeviceFeatures)); }
+			set { _handle->EnabledFeatures = Interop.Structure.MarshalObjectToPointer (_handle->EnabledFeatures, value); }
 		}
-		internal Interop.DeviceCreateInfo* m;
+		public Interop.DeviceCreateInfo* _handle;
 
 		public DeviceCreateInfo ()
 		{
-			m = (Interop.DeviceCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DeviceCreateInfo));
+			_handle = (Interop.DeviceCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DeviceCreateInfo));
 			Initialize ();
 		}
 
-		internal DeviceCreateInfo (Interop.DeviceCreateInfo* ptr)
+		public DeviceCreateInfo (Interop.DeviceCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
-			m->SType = StructureType.DeviceCreateInfo;
+			_handle->SType = StructureType.DeviceCreateInfo;
 		}
 
 	}
@@ -524,7 +524,7 @@ namespace VulkanSharp
 		ApplicationInfo lApplicationInfo;
 		public ApplicationInfo ApplicationInfo {
 			get { return lApplicationInfo; }
-			set { lApplicationInfo = value; m->ApplicationInfo = (IntPtr)value.m; }
+			set { lApplicationInfo = value; m->ApplicationInfo = (IntPtr)value._handle; }
 		}
 
 		public uint EnabledLayerCount {
@@ -598,7 +598,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.InstanceCreateInfo* m;
+		public Interop.InstanceCreateInfo* m;
 
 		public InstanceCreateInfo ()
 		{
@@ -606,21 +606,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal InstanceCreateInfo (Interop.InstanceCreateInfo* ptr)
+		public InstanceCreateInfo (Interop.InstanceCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.InstanceCreateInfo;
 		}
 
 	}
 
-	public unsafe struct QueueFamilyProperties
+	public struct QueueFamilyProperties
 	{
 		public QueueFlags QueueFlags;
 		public uint QueueCount;
@@ -685,14 +685,14 @@ namespace VulkanSharp
 					}
 			}
 		}
-		internal Interop.PhysicalDeviceMemoryProperties* m;
+		public Interop.PhysicalDeviceMemoryProperties* m;
 
 		public PhysicalDeviceMemoryProperties ()
 		{
 			m = (Interop.PhysicalDeviceMemoryProperties*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceMemoryProperties));
 		}
 
-		internal PhysicalDeviceMemoryProperties (Interop.PhysicalDeviceMemoryProperties* ptr)
+		public PhysicalDeviceMemoryProperties (Interop.PhysicalDeviceMemoryProperties* ptr)
 		{
 			m = ptr;
 		}
@@ -710,7 +710,7 @@ namespace VulkanSharp
 			get { return m->MemoryTypeIndex; }
 			set { m->MemoryTypeIndex = value; }
 		}
-		internal Interop.MemoryAllocateInfo* m;
+		public Interop.MemoryAllocateInfo* m;
 
 		public MemoryAllocateInfo ()
 		{
@@ -718,35 +718,35 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal MemoryAllocateInfo (Interop.MemoryAllocateInfo* ptr)
+		public MemoryAllocateInfo (Interop.MemoryAllocateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.MemoryAllocateInfo;
 		}
 
 	}
 
-	public unsafe struct MemoryRequirements
+	public struct MemoryRequirements
 	{
 		public DeviceSize Size;
 		public DeviceSize Alignment;
 		public uint MemoryTypeBits;
 	}
 
-	public unsafe struct SparseImageFormatProperties
+	public struct SparseImageFormatProperties
 	{
 		public ImageAspectFlags AspectMask;
 		public Extent3D ImageGranularity;
 		public SparseImageFormatFlags Flags;
 	}
 
-	public unsafe struct SparseImageMemoryRequirements
+	public struct SparseImageMemoryRequirements
 	{
 		public SparseImageFormatProperties FormatProperties;
 		public uint ImageMipTailFirstLod;
@@ -755,13 +755,13 @@ namespace VulkanSharp
 		public DeviceSize ImageMipTailStride;
 	}
 
-	public unsafe struct MemoryType
+	public struct MemoryType
 	{
 		public MemoryPropertyFlags PropertyFlags;
 		public uint HeapIndex;
 	}
 
-	public unsafe struct MemoryHeap
+	public struct MemoryHeap
 	{
 		public DeviceSize Size;
 		public MemoryHeapFlags Flags;
@@ -784,7 +784,7 @@ namespace VulkanSharp
 			get { return m->Size; }
 			set { m->Size = value; }
 		}
-		internal Interop.MappedMemoryRange* m;
+		public Interop.MappedMemoryRange* m;
 
 		public MappedMemoryRange ()
 		{
@@ -792,28 +792,28 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal MappedMemoryRange (Interop.MappedMemoryRange* ptr)
+		public MappedMemoryRange (Interop.MappedMemoryRange* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.MappedMemoryRange;
 		}
 
 	}
 
-	public unsafe struct FormatProperties
+	public struct FormatProperties
 	{
 		public FormatFeatureFlags LinearTilingFeatures;
 		public FormatFeatureFlags OptimalTilingFeatures;
 		public FormatFeatureFlags BufferFeatures;
 	}
 
-	public unsafe struct ImageFormatProperties
+	public struct ImageFormatProperties
 	{
 		public Extent3D MaxExtent;
 		public uint MaxMipLevels;
@@ -839,7 +839,7 @@ namespace VulkanSharp
 			get { return m->Range; }
 			set { m->Range = value; }
 		}
-		internal Interop.DescriptorBufferInfo* m;
+		public Interop.DescriptorBufferInfo* m;
 
 		public DescriptorBufferInfo ()
 		{
@@ -847,14 +847,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DescriptorBufferInfo (Interop.DescriptorBufferInfo* ptr)
+		public DescriptorBufferInfo (Interop.DescriptorBufferInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -878,7 +878,7 @@ namespace VulkanSharp
 			get { return m->ImageLayout; }
 			set { m->ImageLayout = value; }
 		}
-		internal Interop.DescriptorImageInfo* m;
+		public Interop.DescriptorImageInfo* m;
 
 		public DescriptorImageInfo ()
 		{
@@ -886,14 +886,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DescriptorImageInfo (Interop.DescriptorImageInfo* ptr)
+		public DescriptorImageInfo (Interop.DescriptorImageInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -1025,7 +1025,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.WriteDescriptorSet* m;
+		public Interop.WriteDescriptorSet* m;
 
 		public WriteDescriptorSet ()
 		{
@@ -1033,14 +1033,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal WriteDescriptorSet (Interop.WriteDescriptorSet* ptr)
+		public WriteDescriptorSet (Interop.WriteDescriptorSet* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.WriteDescriptorSet;
 		}
@@ -1085,7 +1085,7 @@ namespace VulkanSharp
 			get { return m->DescriptorCount; }
 			set { m->DescriptorCount = value; }
 		}
-		internal Interop.CopyDescriptorSet* m;
+		public Interop.CopyDescriptorSet* m;
 
 		public CopyDescriptorSet ()
 		{
@@ -1093,14 +1093,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal CopyDescriptorSet (Interop.CopyDescriptorSet* ptr)
+		public CopyDescriptorSet (Interop.CopyDescriptorSet* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.CopyDescriptorSet;
 		}
@@ -1164,7 +1164,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.BufferCreateInfo* m;
+		public Interop.BufferCreateInfo* m;
 
 		public BufferCreateInfo ()
 		{
@@ -1172,14 +1172,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal BufferCreateInfo (Interop.BufferCreateInfo* ptr)
+		public BufferCreateInfo (Interop.BufferCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.BufferCreateInfo;
 		}
@@ -1213,7 +1213,7 @@ namespace VulkanSharp
 			get { return m->Range; }
 			set { m->Range = value; }
 		}
-		internal Interop.BufferViewCreateInfo* m;
+		public Interop.BufferViewCreateInfo* m;
 
 		public BufferViewCreateInfo ()
 		{
@@ -1221,28 +1221,28 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal BufferViewCreateInfo (Interop.BufferViewCreateInfo* ptr)
+		public BufferViewCreateInfo (Interop.BufferViewCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.BufferViewCreateInfo;
 		}
 
 	}
 
-	public unsafe struct ImageSubresource
+	public struct ImageSubresource
 	{
 		public ImageAspectFlags AspectMask;
 		public uint MipLevel;
 		public uint ArrayLayer;
 	}
 
-	public unsafe struct ImageSubresourceLayers
+	public struct ImageSubresourceLayers
 	{
 		public ImageAspectFlags AspectMask;
 		public uint MipLevel;
@@ -1250,7 +1250,7 @@ namespace VulkanSharp
 		public uint LayerCount;
 	}
 
-	public unsafe struct ImageSubresourceRange
+	public struct ImageSubresourceRange
 	{
 		public ImageAspectFlags AspectMask;
 		public uint BaseMipLevel;
@@ -1270,7 +1270,7 @@ namespace VulkanSharp
 			get { return m->DstAccessMask; }
 			set { m->DstAccessMask = value; }
 		}
-		internal Interop.MemoryBarrier* m;
+		public Interop.MemoryBarrier* m;
 
 		public MemoryBarrier ()
 		{
@@ -1278,14 +1278,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal MemoryBarrier (Interop.MemoryBarrier* ptr)
+		public MemoryBarrier (Interop.MemoryBarrier* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.MemoryBarrier;
 		}
@@ -1329,7 +1329,7 @@ namespace VulkanSharp
 			get { return m->Size; }
 			set { m->Size = value; }
 		}
-		internal Interop.BufferMemoryBarrier* m;
+		public Interop.BufferMemoryBarrier* m;
 
 		public BufferMemoryBarrier ()
 		{
@@ -1337,14 +1337,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal BufferMemoryBarrier (Interop.BufferMemoryBarrier* ptr)
+		public BufferMemoryBarrier (Interop.BufferMemoryBarrier* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.BufferMemoryBarrier;
 		}
@@ -1393,7 +1393,7 @@ namespace VulkanSharp
 			get { return m->SubresourceRange; }
 			set { m->SubresourceRange = value; }
 		}
-		internal Interop.ImageMemoryBarrier* m;
+		public Interop.ImageMemoryBarrier* m;
 
 		public ImageMemoryBarrier ()
 		{
@@ -1401,14 +1401,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal ImageMemoryBarrier (Interop.ImageMemoryBarrier* ptr)
+		public ImageMemoryBarrier (Interop.ImageMemoryBarrier* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.ImageMemoryBarrier;
 		}
@@ -1507,7 +1507,7 @@ namespace VulkanSharp
 			get { return m->InitialLayout; }
 			set { m->InitialLayout = value; }
 		}
-		internal Interop.ImageCreateInfo* m;
+		public Interop.ImageCreateInfo* m;
 
 		public ImageCreateInfo ()
 		{
@@ -1515,21 +1515,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal ImageCreateInfo (Interop.ImageCreateInfo* ptr)
+		public ImageCreateInfo (Interop.ImageCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.ImageCreateInfo;
 		}
 
 	}
 
-	public unsafe struct SubresourceLayout
+	public struct SubresourceLayout
 	{
 		public DeviceSize Offset;
 		public DeviceSize Size;
@@ -1570,7 +1570,7 @@ namespace VulkanSharp
 			get { return m->SubresourceRange; }
 			set { m->SubresourceRange = value; }
 		}
-		internal Interop.ImageViewCreateInfo* m;
+		public Interop.ImageViewCreateInfo* m;
 
 		public ImageViewCreateInfo ()
 		{
@@ -1578,21 +1578,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal ImageViewCreateInfo (Interop.ImageViewCreateInfo* ptr)
+		public ImageViewCreateInfo (Interop.ImageViewCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.ImageViewCreateInfo;
 		}
 
 	}
 
-	public unsafe struct BufferCopy
+	public struct BufferCopy
 	{
 		public DeviceSize SrcOffset;
 		public DeviceSize DstOffset;
@@ -1626,7 +1626,7 @@ namespace VulkanSharp
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
-		internal Interop.SparseMemoryBind* m;
+		public Interop.SparseMemoryBind* m;
 
 		public SparseMemoryBind ()
 		{
@@ -1634,14 +1634,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SparseMemoryBind (Interop.SparseMemoryBind* ptr)
+		public SparseMemoryBind (Interop.SparseMemoryBind* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -1679,7 +1679,7 @@ namespace VulkanSharp
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
-		internal Interop.SparseImageMemoryBind* m;
+		public Interop.SparseImageMemoryBind* m;
 
 		public SparseImageMemoryBind ()
 		{
@@ -1687,14 +1687,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SparseImageMemoryBind (Interop.SparseImageMemoryBind* ptr)
+		public SparseImageMemoryBind (Interop.SparseImageMemoryBind* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -1745,7 +1745,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.SparseBufferMemoryBindInfo* m;
+		public Interop.SparseBufferMemoryBindInfo* m;
 
 		public SparseBufferMemoryBindInfo ()
 		{
@@ -1753,14 +1753,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SparseBufferMemoryBindInfo (Interop.SparseBufferMemoryBindInfo* ptr)
+		public SparseBufferMemoryBindInfo (Interop.SparseBufferMemoryBindInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -1811,7 +1811,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.SparseImageOpaqueMemoryBindInfo* m;
+		public Interop.SparseImageOpaqueMemoryBindInfo* m;
 
 		public SparseImageOpaqueMemoryBindInfo ()
 		{
@@ -1819,14 +1819,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SparseImageOpaqueMemoryBindInfo (Interop.SparseImageOpaqueMemoryBindInfo* ptr)
+		public SparseImageOpaqueMemoryBindInfo (Interop.SparseImageOpaqueMemoryBindInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -1877,7 +1877,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.SparseImageMemoryBindInfo* m;
+		public Interop.SparseImageMemoryBindInfo* m;
 
 		public SparseImageMemoryBindInfo ()
 		{
@@ -1885,14 +1885,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SparseImageMemoryBindInfo (Interop.SparseImageMemoryBindInfo* ptr)
+		public SparseImageMemoryBindInfo (Interop.SparseImageMemoryBindInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -2089,7 +2089,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.BindSparseInfo* m;
+		public Interop.BindSparseInfo* m;
 
 		public BindSparseInfo ()
 		{
@@ -2097,21 +2097,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal BindSparseInfo (Interop.BindSparseInfo* ptr)
+		public BindSparseInfo (Interop.BindSparseInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.BindSparseInfo;
 		}
 
 	}
 
-	public unsafe struct ImageCopy
+	public struct ImageCopy
 	{
 		public ImageSubresourceLayers SrcSubresource;
 		public Offset3D SrcOffset;
@@ -2175,21 +2175,21 @@ namespace VulkanSharp
 					}
 			}
 		}
-		internal Interop.ImageBlit* m;
+		public Interop.ImageBlit* m;
 
 		public ImageBlit ()
 		{
 			m = (Interop.ImageBlit*) Interop.Structure.Allocate (typeof (Interop.ImageBlit));
 		}
 
-		internal ImageBlit (Interop.ImageBlit* ptr)
+		public ImageBlit (Interop.ImageBlit* ptr)
 		{
 			m = ptr;
 		}
 
 	}
 
-	public unsafe struct BufferImageCopy
+	public struct BufferImageCopy
 	{
 		public DeviceSize BufferOffset;
 		public uint BufferRowLength;
@@ -2199,7 +2199,7 @@ namespace VulkanSharp
 		public Extent3D ImageExtent;
 	}
 
-	public unsafe struct ImageResolve
+	public struct ImageResolve
 	{
 		public ImageSubresourceLayers SrcSubresource;
 		public Offset3D SrcOffset;
@@ -2250,7 +2250,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.ShaderModuleCreateInfo* m;
+		public Interop.ShaderModuleCreateInfo* m;
 
 		public ShaderModuleCreateInfo ()
 		{
@@ -2258,14 +2258,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal ShaderModuleCreateInfo (Interop.ShaderModuleCreateInfo* ptr)
+		public ShaderModuleCreateInfo (Interop.ShaderModuleCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.ShaderModuleCreateInfo;
 		}
@@ -2326,14 +2326,14 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.DescriptorSetLayoutBinding* m;
+		public Interop.DescriptorSetLayoutBinding* m;
 
 		public DescriptorSetLayoutBinding ()
 		{
 			m = (Interop.DescriptorSetLayoutBinding*) Interop.Structure.Allocate (typeof (Interop.DescriptorSetLayoutBinding));
 		}
 
-		internal DescriptorSetLayoutBinding (Interop.DescriptorSetLayoutBinding* ptr)
+		public DescriptorSetLayoutBinding (Interop.DescriptorSetLayoutBinding* ptr)
 		{
 			m = ptr;
 		}
@@ -2384,7 +2384,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.DescriptorSetLayoutCreateInfo* m;
+		public Interop.DescriptorSetLayoutCreateInfo* m;
 
 		public DescriptorSetLayoutCreateInfo ()
 		{
@@ -2392,21 +2392,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DescriptorSetLayoutCreateInfo (Interop.DescriptorSetLayoutCreateInfo* ptr)
+		public DescriptorSetLayoutCreateInfo (Interop.DescriptorSetLayoutCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DescriptorSetLayoutCreateInfo;
 		}
 
 	}
 
-	public unsafe struct DescriptorPoolSize
+	public struct DescriptorPoolSize
 	{
 		public DescriptorType Type;
 		public uint DescriptorCount;
@@ -2459,7 +2459,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.DescriptorPoolCreateInfo* m;
+		public Interop.DescriptorPoolCreateInfo* m;
 
 		public DescriptorPoolCreateInfo ()
 		{
@@ -2467,14 +2467,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DescriptorPoolCreateInfo (Interop.DescriptorPoolCreateInfo* ptr)
+		public DescriptorPoolCreateInfo (Interop.DescriptorPoolCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DescriptorPoolCreateInfo;
 		}
@@ -2526,7 +2526,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.DescriptorSetAllocateInfo* m;
+		public Interop.DescriptorSetAllocateInfo* m;
 
 		public DescriptorSetAllocateInfo ()
 		{
@@ -2534,21 +2534,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DescriptorSetAllocateInfo (Interop.DescriptorSetAllocateInfo* ptr)
+		public DescriptorSetAllocateInfo (Interop.DescriptorSetAllocateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DescriptorSetAllocateInfo;
 		}
 
 	}
 
-	public unsafe struct SpecializationMapEntry
+	public struct SpecializationMapEntry
 	{
 		public uint ConstantID;
 		public uint Offset;
@@ -2602,14 +2602,14 @@ namespace VulkanSharp
 			get { return m->Data; }
 			set { m->Data = value; }
 		}
-		internal Interop.SpecializationInfo* m;
+		public Interop.SpecializationInfo* m;
 
 		public SpecializationInfo ()
 		{
 			m = (Interop.SpecializationInfo*) Interop.Structure.Allocate (typeof (Interop.SpecializationInfo));
 		}
 
-		internal SpecializationInfo (Interop.SpecializationInfo* ptr)
+		public SpecializationInfo (Interop.SpecializationInfo* ptr)
 		{
 			m = ptr;
 		}
@@ -2644,7 +2644,7 @@ namespace VulkanSharp
 			get { return lSpecializationInfo; }
 			set { lSpecializationInfo = value; m->SpecializationInfo = (IntPtr)value.m; }
 		}
-		internal Interop.PipelineShaderStageCreateInfo* m;
+		public Interop.PipelineShaderStageCreateInfo* m;
 
 		public PipelineShaderStageCreateInfo ()
 		{
@@ -2652,14 +2652,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineShaderStageCreateInfo (Interop.PipelineShaderStageCreateInfo* ptr)
+		public PipelineShaderStageCreateInfo (Interop.PipelineShaderStageCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineShaderStageCreateInfo;
 		}
@@ -2695,7 +2695,7 @@ namespace VulkanSharp
 			get { return m->BasePipelineIndex; }
 			set { m->BasePipelineIndex = value; }
 		}
-		internal Interop.ComputePipelineCreateInfo* m;
+		public Interop.ComputePipelineCreateInfo* m;
 
 		public ComputePipelineCreateInfo ()
 		{
@@ -2703,14 +2703,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal ComputePipelineCreateInfo (Interop.ComputePipelineCreateInfo* ptr)
+		public ComputePipelineCreateInfo (Interop.ComputePipelineCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.ComputePipelineCreateInfo;
 			lStage = new PipelineShaderStageCreateInfo (&m->Stage);
@@ -2718,14 +2718,14 @@ namespace VulkanSharp
 
 	}
 
-	public unsafe struct VertexInputBindingDescription
+	public struct VertexInputBindingDescription
 	{
 		public uint Binding;
 		public uint Stride;
 		public VertexInputRate InputRate;
 	}
 
-	public unsafe struct VertexInputAttributeDescription
+	public struct VertexInputAttributeDescription
 	{
 		public uint Location;
 		public uint Binding;
@@ -2811,7 +2811,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.PipelineVertexInputStateCreateInfo* m;
+		public Interop.PipelineVertexInputStateCreateInfo* m;
 
 		public PipelineVertexInputStateCreateInfo ()
 		{
@@ -2819,14 +2819,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineVertexInputStateCreateInfo (Interop.PipelineVertexInputStateCreateInfo* ptr)
+		public PipelineVertexInputStateCreateInfo (Interop.PipelineVertexInputStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineVertexInputStateCreateInfo;
 		}
@@ -2849,7 +2849,7 @@ namespace VulkanSharp
 			get { return m->PrimitiveRestartEnable; }
 			set { m->PrimitiveRestartEnable = value; }
 		}
-		internal Interop.PipelineInputAssemblyStateCreateInfo* m;
+		public Interop.PipelineInputAssemblyStateCreateInfo* m;
 
 		public PipelineInputAssemblyStateCreateInfo ()
 		{
@@ -2857,14 +2857,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineInputAssemblyStateCreateInfo (Interop.PipelineInputAssemblyStateCreateInfo* ptr)
+		public PipelineInputAssemblyStateCreateInfo (Interop.PipelineInputAssemblyStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineInputAssemblyStateCreateInfo;
 		}
@@ -2882,7 +2882,7 @@ namespace VulkanSharp
 			get { return m->PatchControlPoints; }
 			set { m->PatchControlPoints = value; }
 		}
-		internal Interop.PipelineTessellationStateCreateInfo* m;
+		public Interop.PipelineTessellationStateCreateInfo* m;
 
 		public PipelineTessellationStateCreateInfo ()
 		{
@@ -2890,14 +2890,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineTessellationStateCreateInfo (Interop.PipelineTessellationStateCreateInfo* ptr)
+		public PipelineTessellationStateCreateInfo (Interop.PipelineTessellationStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineTessellationStateCreateInfo;
 		}
@@ -2982,7 +2982,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.PipelineViewportStateCreateInfo* m;
+		public Interop.PipelineViewportStateCreateInfo* m;
 
 		public PipelineViewportStateCreateInfo ()
 		{
@@ -2990,14 +2990,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineViewportStateCreateInfo (Interop.PipelineViewportStateCreateInfo* ptr)
+		public PipelineViewportStateCreateInfo (Interop.PipelineViewportStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineViewportStateCreateInfo;
 		}
@@ -3060,7 +3060,7 @@ namespace VulkanSharp
 			get { return m->LineWidth; }
 			set { m->LineWidth = value; }
 		}
-		internal Interop.PipelineRasterizationStateCreateInfo* m;
+		public Interop.PipelineRasterizationStateCreateInfo* m;
 
 		public PipelineRasterizationStateCreateInfo ()
 		{
@@ -3068,14 +3068,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineRasterizationStateCreateInfo (Interop.PipelineRasterizationStateCreateInfo* ptr)
+		public PipelineRasterizationStateCreateInfo (Interop.PipelineRasterizationStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineRasterizationStateCreateInfo;
 		}
@@ -3144,7 +3144,7 @@ namespace VulkanSharp
 			get { return m->AlphaToOneEnable; }
 			set { m->AlphaToOneEnable = value; }
 		}
-		internal Interop.PipelineMultisampleStateCreateInfo* m;
+		public Interop.PipelineMultisampleStateCreateInfo* m;
 
 		public PipelineMultisampleStateCreateInfo ()
 		{
@@ -3152,21 +3152,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineMultisampleStateCreateInfo (Interop.PipelineMultisampleStateCreateInfo* ptr)
+		public PipelineMultisampleStateCreateInfo (Interop.PipelineMultisampleStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineMultisampleStateCreateInfo;
 		}
 
 	}
 
-	public unsafe struct PipelineColorBlendAttachmentState
+	public struct PipelineColorBlendAttachmentState
 	{
 		public Bool32 BlendEnable;
 		public BlendFactor SrcColorBlendFactor;
@@ -3248,7 +3248,7 @@ namespace VulkanSharp
 					m->BlendConstants [i] = 0;
 			}
 		}
-		internal Interop.PipelineColorBlendStateCreateInfo* m;
+		public Interop.PipelineColorBlendStateCreateInfo* m;
 
 		public PipelineColorBlendStateCreateInfo ()
 		{
@@ -3256,14 +3256,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineColorBlendStateCreateInfo (Interop.PipelineColorBlendStateCreateInfo* ptr)
+		public PipelineColorBlendStateCreateInfo (Interop.PipelineColorBlendStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineColorBlendStateCreateInfo;
 		}
@@ -3312,7 +3312,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.PipelineDynamicStateCreateInfo* m;
+		public Interop.PipelineDynamicStateCreateInfo* m;
 
 		public PipelineDynamicStateCreateInfo ()
 		{
@@ -3320,21 +3320,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineDynamicStateCreateInfo (Interop.PipelineDynamicStateCreateInfo* ptr)
+		public PipelineDynamicStateCreateInfo (Interop.PipelineDynamicStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineDynamicStateCreateInfo;
 		}
 
 	}
 
-	public unsafe struct StencilOpState
+	public struct StencilOpState
 	{
 		public StencilOp FailOp;
 		public StencilOp PassOp;
@@ -3396,7 +3396,7 @@ namespace VulkanSharp
 			get { return m->MaxDepthBounds; }
 			set { m->MaxDepthBounds = value; }
 		}
-		internal Interop.PipelineDepthStencilStateCreateInfo* m;
+		public Interop.PipelineDepthStencilStateCreateInfo* m;
 
 		public PipelineDepthStencilStateCreateInfo ()
 		{
@@ -3404,14 +3404,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineDepthStencilStateCreateInfo (Interop.PipelineDepthStencilStateCreateInfo* ptr)
+		public PipelineDepthStencilStateCreateInfo (Interop.PipelineDepthStencilStateCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineDepthStencilStateCreateInfo;
 		}
@@ -3544,7 +3544,7 @@ namespace VulkanSharp
 			get { return m->BasePipelineIndex; }
 			set { m->BasePipelineIndex = value; }
 		}
-		internal Interop.GraphicsPipelineCreateInfo* m;
+		public Interop.GraphicsPipelineCreateInfo* m;
 
 		public GraphicsPipelineCreateInfo ()
 		{
@@ -3552,14 +3552,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal GraphicsPipelineCreateInfo (Interop.GraphicsPipelineCreateInfo* ptr)
+		public GraphicsPipelineCreateInfo (Interop.GraphicsPipelineCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.GraphicsPipelineCreateInfo;
 		}
@@ -3582,7 +3582,7 @@ namespace VulkanSharp
 			get { return m->InitialData; }
 			set { m->InitialData = value; }
 		}
-		internal Interop.PipelineCacheCreateInfo* m;
+		public Interop.PipelineCacheCreateInfo* m;
 
 		public PipelineCacheCreateInfo ()
 		{
@@ -3590,21 +3590,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineCacheCreateInfo (Interop.PipelineCacheCreateInfo* ptr)
+		public PipelineCacheCreateInfo (Interop.PipelineCacheCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineCacheCreateInfo;
 		}
 
 	}
 
-	public unsafe struct PushConstantRange
+	public struct PushConstantRange
 	{
 		public ShaderStageFlags StageFlags;
 		public uint Offset;
@@ -3691,7 +3691,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.PipelineLayoutCreateInfo* m;
+		public Interop.PipelineLayoutCreateInfo* m;
 
 		public PipelineLayoutCreateInfo ()
 		{
@@ -3699,14 +3699,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineLayoutCreateInfo (Interop.PipelineLayoutCreateInfo* ptr)
+		public PipelineLayoutCreateInfo (Interop.PipelineLayoutCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineLayoutCreateInfo;
 		}
@@ -3794,7 +3794,7 @@ namespace VulkanSharp
 			get { return m->UnnormalizedCoordinates; }
 			set { m->UnnormalizedCoordinates = value; }
 		}
-		internal Interop.SamplerCreateInfo* m;
+		public Interop.SamplerCreateInfo* m;
 
 		public SamplerCreateInfo ()
 		{
@@ -3802,14 +3802,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SamplerCreateInfo (Interop.SamplerCreateInfo* ptr)
+		public SamplerCreateInfo (Interop.SamplerCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.SamplerCreateInfo;
 		}
@@ -3827,7 +3827,7 @@ namespace VulkanSharp
 			get { return m->QueueFamilyIndex; }
 			set { m->QueueFamilyIndex = value; }
 		}
-		internal Interop.CommandPoolCreateInfo* m;
+		public Interop.CommandPoolCreateInfo* m;
 
 		public CommandPoolCreateInfo ()
 		{
@@ -3835,14 +3835,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal CommandPoolCreateInfo (Interop.CommandPoolCreateInfo* ptr)
+		public CommandPoolCreateInfo (Interop.CommandPoolCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.CommandPoolCreateInfo;
 		}
@@ -3866,7 +3866,7 @@ namespace VulkanSharp
 			get { return m->CommandBufferCount; }
 			set { m->CommandBufferCount = value; }
 		}
-		internal Interop.CommandBufferAllocateInfo* m;
+		public Interop.CommandBufferAllocateInfo* m;
 
 		public CommandBufferAllocateInfo ()
 		{
@@ -3874,14 +3874,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal CommandBufferAllocateInfo (Interop.CommandBufferAllocateInfo* ptr)
+		public CommandBufferAllocateInfo (Interop.CommandBufferAllocateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.CommandBufferAllocateInfo;
 		}
@@ -3921,7 +3921,7 @@ namespace VulkanSharp
 			get { return m->PipelineStatistics; }
 			set { m->PipelineStatistics = value; }
 		}
-		internal Interop.CommandBufferInheritanceInfo* m;
+		public Interop.CommandBufferInheritanceInfo* m;
 
 		public CommandBufferInheritanceInfo ()
 		{
@@ -3929,14 +3929,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal CommandBufferInheritanceInfo (Interop.CommandBufferInheritanceInfo* ptr)
+		public CommandBufferInheritanceInfo (Interop.CommandBufferInheritanceInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.CommandBufferInheritanceInfo;
 		}
@@ -3955,7 +3955,7 @@ namespace VulkanSharp
 			get { return lInheritanceInfo; }
 			set { lInheritanceInfo = value; m->InheritanceInfo = (IntPtr)value.m; }
 		}
-		internal Interop.CommandBufferBeginInfo* m;
+		public Interop.CommandBufferBeginInfo* m;
 
 		public CommandBufferBeginInfo ()
 		{
@@ -3963,14 +3963,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal CommandBufferBeginInfo (Interop.CommandBufferBeginInfo* ptr)
+		public CommandBufferBeginInfo (Interop.CommandBufferBeginInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.CommandBufferBeginInfo;
 		}
@@ -4033,7 +4033,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.RenderPassBeginInfo* m;
+		public Interop.RenderPassBeginInfo* m;
 
 		public RenderPassBeginInfo ()
 		{
@@ -4041,34 +4041,34 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal RenderPassBeginInfo (Interop.RenderPassBeginInfo* ptr)
+		public RenderPassBeginInfo (Interop.RenderPassBeginInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.RenderPassBeginInfo;
 		}
 
 	}
 
-	public unsafe struct ClearDepthStencilValue
+	public struct ClearDepthStencilValue
 	{
 		public float Depth;
 		public uint Stencil;
 	}
 
-	public unsafe struct ClearAttachment
+	public struct ClearAttachment
 	{
 		public ImageAspectFlags AspectMask;
 		public uint ColorAttachment;
 		public IntPtr ClearValue;
 	}
 
-	public unsafe struct AttachmentDescription
+	public struct AttachmentDescription
 	{
 		public AttachmentDescriptionFlags Flags;
 		public Format Format;
@@ -4081,7 +4081,7 @@ namespace VulkanSharp
 		public ImageLayout FinalLayout;
 	}
 
-	public unsafe struct AttachmentReference
+	public struct AttachmentReference
 	{
 		public uint Attachment;
 		public ImageLayout Layout;
@@ -4242,21 +4242,21 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.SubpassDescription* m;
+		public Interop.SubpassDescription* m;
 
 		public SubpassDescription ()
 		{
 			m = (Interop.SubpassDescription*) Interop.Structure.Allocate (typeof (Interop.SubpassDescription));
 		}
 
-		internal SubpassDescription (Interop.SubpassDescription* ptr)
+		public SubpassDescription (Interop.SubpassDescription* ptr)
 		{
 			m = ptr;
 		}
 
 	}
 
-	public unsafe struct SubpassDependency
+	public struct SubpassDependency
 	{
 		public uint SrcSubpass;
 		public uint DstSubpass;
@@ -4383,7 +4383,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.RenderPassCreateInfo* m;
+		public Interop.RenderPassCreateInfo* m;
 
 		public RenderPassCreateInfo ()
 		{
@@ -4391,14 +4391,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal RenderPassCreateInfo (Interop.RenderPassCreateInfo* ptr)
+		public RenderPassCreateInfo (Interop.RenderPassCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.RenderPassCreateInfo;
 		}
@@ -4411,7 +4411,7 @@ namespace VulkanSharp
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
-		internal Interop.EventCreateInfo* m;
+		public Interop.EventCreateInfo* m;
 
 		public EventCreateInfo ()
 		{
@@ -4419,14 +4419,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal EventCreateInfo (Interop.EventCreateInfo* ptr)
+		public EventCreateInfo (Interop.EventCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.EventCreateInfo;
 		}
@@ -4439,7 +4439,7 @@ namespace VulkanSharp
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
-		internal Interop.FenceCreateInfo* m;
+		public Interop.FenceCreateInfo* m;
 
 		public FenceCreateInfo ()
 		{
@@ -4447,21 +4447,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal FenceCreateInfo (Interop.FenceCreateInfo* ptr)
+		public FenceCreateInfo (Interop.FenceCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.FenceCreateInfo;
 		}
 
 	}
 
-	public unsafe struct PhysicalDeviceFeatures
+	public struct PhysicalDeviceFeatures
 	{
 		public Bool32 RobustBufferAccess;
 		public Bool32 FullDrawIndexUint32;
@@ -4520,7 +4520,7 @@ namespace VulkanSharp
 		public Bool32 InheritedQueries;
 	}
 
-	public unsafe struct PhysicalDeviceSparseProperties
+	public struct PhysicalDeviceSparseProperties
 	{
 		public Bool32 ResidencyStandard2DBlockShape;
 		public Bool32 ResidencyStandard2DMultisampleBlockShape;
@@ -5138,14 +5138,14 @@ namespace VulkanSharp
 			get { return m->NonCoherentAtomSize; }
 			set { m->NonCoherentAtomSize = value; }
 		}
-		internal Interop.PhysicalDeviceLimits* m;
+		public Interop.PhysicalDeviceLimits* m;
 
 		public PhysicalDeviceLimits ()
 		{
 			m = (Interop.PhysicalDeviceLimits*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceLimits));
 		}
 
-		internal PhysicalDeviceLimits (Interop.PhysicalDeviceLimits* ptr)
+		public PhysicalDeviceLimits (Interop.PhysicalDeviceLimits* ptr)
 		{
 			m = ptr;
 		}
@@ -5158,7 +5158,7 @@ namespace VulkanSharp
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
-		internal Interop.SemaphoreCreateInfo* m;
+		public Interop.SemaphoreCreateInfo* m;
 
 		public SemaphoreCreateInfo ()
 		{
@@ -5166,14 +5166,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SemaphoreCreateInfo (Interop.SemaphoreCreateInfo* ptr)
+		public SemaphoreCreateInfo (Interop.SemaphoreCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.SemaphoreCreateInfo;
 		}
@@ -5201,7 +5201,7 @@ namespace VulkanSharp
 			get { return m->PipelineStatistics; }
 			set { m->PipelineStatistics = value; }
 		}
-		internal Interop.QueryPoolCreateInfo* m;
+		public Interop.QueryPoolCreateInfo* m;
 
 		public QueryPoolCreateInfo ()
 		{
@@ -5209,14 +5209,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal QueryPoolCreateInfo (Interop.QueryPoolCreateInfo* ptr)
+		public QueryPoolCreateInfo (Interop.QueryPoolCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.QueryPoolCreateInfo;
 		}
@@ -5288,7 +5288,7 @@ namespace VulkanSharp
 			get { return m->Layers; }
 			set { m->Layers = value; }
 		}
-		internal Interop.FramebufferCreateInfo* m;
+		public Interop.FramebufferCreateInfo* m;
 
 		public FramebufferCreateInfo ()
 		{
@@ -5296,21 +5296,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal FramebufferCreateInfo (Interop.FramebufferCreateInfo* ptr)
+		public FramebufferCreateInfo (Interop.FramebufferCreateInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.FramebufferCreateInfo;
 		}
 
 	}
 
-	public unsafe struct DrawIndirectCommand
+	public struct DrawIndirectCommand
 	{
 		public uint VertexCount;
 		public uint InstanceCount;
@@ -5318,7 +5318,7 @@ namespace VulkanSharp
 		public uint FirstInstance;
 	}
 
-	public unsafe struct DrawIndexedIndirectCommand
+	public struct DrawIndexedIndirectCommand
 	{
 		public uint IndexCount;
 		public uint InstanceCount;
@@ -5327,7 +5327,7 @@ namespace VulkanSharp
 		public uint FirstInstance;
 	}
 
-	public unsafe struct DispatchIndirectCommand
+	public struct DispatchIndirectCommand
 	{
 		public uint X;
 		public uint Y;
@@ -5480,7 +5480,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.SubmitInfo* m;
+		public Interop.SubmitInfo* m;
 
 		public SubmitInfo ()
 		{
@@ -5488,14 +5488,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SubmitInfo (Interop.SubmitInfo* ptr)
+		public SubmitInfo (Interop.SubmitInfo* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.SubmitInfo;
 		}
@@ -5539,7 +5539,7 @@ namespace VulkanSharp
 			get { return m->PersistentContent; }
 			set { m->PersistentContent = value; }
 		}
-		internal Interop.DisplayPropertiesKhr* m;
+		public Interop.DisplayPropertiesKhr* m;
 
 		public DisplayPropertiesKhr ()
 		{
@@ -5547,14 +5547,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DisplayPropertiesKhr (Interop.DisplayPropertiesKhr* ptr)
+		public DisplayPropertiesKhr (Interop.DisplayPropertiesKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -5572,7 +5572,7 @@ namespace VulkanSharp
 			get { return m->CurrentStackIndex; }
 			set { m->CurrentStackIndex = value; }
 		}
-		internal Interop.DisplayPlanePropertiesKhr* m;
+		public Interop.DisplayPlanePropertiesKhr* m;
 
 		public DisplayPlanePropertiesKhr ()
 		{
@@ -5580,20 +5580,20 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DisplayPlanePropertiesKhr (Interop.DisplayPlanePropertiesKhr* ptr)
+		public DisplayPlanePropertiesKhr (Interop.DisplayPlanePropertiesKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
 	}
 
-	public unsafe struct DisplayModeParametersKhr
+	public struct DisplayModeParametersKhr
 	{
 		public Extent2D VisibleRegion;
 		public uint RefreshRate;
@@ -5611,7 +5611,7 @@ namespace VulkanSharp
 			get { return m->Parameters; }
 			set { m->Parameters = value; }
 		}
-		internal Interop.DisplayModePropertiesKhr* m;
+		public Interop.DisplayModePropertiesKhr* m;
 
 		public DisplayModePropertiesKhr ()
 		{
@@ -5619,14 +5619,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DisplayModePropertiesKhr (Interop.DisplayModePropertiesKhr* ptr)
+		public DisplayModePropertiesKhr (Interop.DisplayModePropertiesKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 		}
 
@@ -5643,7 +5643,7 @@ namespace VulkanSharp
 			get { return m->Parameters; }
 			set { m->Parameters = value; }
 		}
-		internal Interop.DisplayModeCreateInfoKhr* m;
+		public Interop.DisplayModeCreateInfoKhr* m;
 
 		public DisplayModeCreateInfoKhr ()
 		{
@@ -5651,21 +5651,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DisplayModeCreateInfoKhr (Interop.DisplayModeCreateInfoKhr* ptr)
+		public DisplayModeCreateInfoKhr (Interop.DisplayModeCreateInfoKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DisplayModeCreateInfoKhr;
 		}
 
 	}
 
-	public unsafe struct DisplayPlaneCapabilitiesKhr
+	public struct DisplayPlaneCapabilitiesKhr
 	{
 		public DisplayPlaneAlphaFlagsKhr SupportedAlpha;
 		public Offset2D MinSrcPosition;
@@ -5720,7 +5720,7 @@ namespace VulkanSharp
 			get { return m->ImageExtent; }
 			set { m->ImageExtent = value; }
 		}
-		internal Interop.DisplaySurfaceCreateInfoKhr* m;
+		public Interop.DisplaySurfaceCreateInfoKhr* m;
 
 		public DisplaySurfaceCreateInfoKhr ()
 		{
@@ -5728,14 +5728,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DisplaySurfaceCreateInfoKhr (Interop.DisplaySurfaceCreateInfoKhr* ptr)
+		public DisplaySurfaceCreateInfoKhr (Interop.DisplaySurfaceCreateInfoKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DisplaySurfaceCreateInfoKhr;
 		}
@@ -5758,7 +5758,7 @@ namespace VulkanSharp
 			get { return m->Persistent; }
 			set { m->Persistent = value; }
 		}
-		internal Interop.DisplayPresentInfoKhr* m;
+		public Interop.DisplayPresentInfoKhr* m;
 
 		public DisplayPresentInfoKhr ()
 		{
@@ -5766,21 +5766,21 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DisplayPresentInfoKhr (Interop.DisplayPresentInfoKhr* ptr)
+		public DisplayPresentInfoKhr (Interop.DisplayPresentInfoKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DisplayPresentInfoKhr;
 		}
 
 	}
 
-	public unsafe struct SurfaceCapabilitiesKhr
+	public struct SurfaceCapabilitiesKhr
 	{
 		public uint MinImageCount;
 		public uint MaxImageCount;
@@ -5794,7 +5794,7 @@ namespace VulkanSharp
 		public ImageUsageFlags SupportedUsageFlags;
 	}
 
-	public unsafe struct SurfaceFormatKhr
+	public struct SurfaceFormatKhr
 	{
 		public Format Format;
 		public ColorSpaceKhr ColorSpace;
@@ -5909,7 +5909,7 @@ namespace VulkanSharp
 			get { return lOldSwapchain; }
 			set { lOldSwapchain = value; m->OldSwapchain = (ulong)value.m; }
 		}
-		internal Interop.SwapchainCreateInfoKhr* m;
+		public Interop.SwapchainCreateInfoKhr* m;
 
 		public SwapchainCreateInfoKhr ()
 		{
@@ -5917,14 +5917,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal SwapchainCreateInfoKhr (Interop.SwapchainCreateInfoKhr* ptr)
+		public SwapchainCreateInfoKhr (Interop.SwapchainCreateInfoKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.SwapchainCreateInfoKhr;
 		}
@@ -6070,7 +6070,7 @@ namespace VulkanSharp
 				}
 			}
 		}
-		internal Interop.PresentInfoKhr* m;
+		public Interop.PresentInfoKhr* m;
 
 		public PresentInfoKhr ()
 		{
@@ -6078,14 +6078,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PresentInfoKhr (Interop.PresentInfoKhr* ptr)
+		public PresentInfoKhr (Interop.PresentInfoKhr* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PresentInfoKhr;
 		}
@@ -6108,7 +6108,7 @@ namespace VulkanSharp
 			get { return m->UserData; }
 			set { m->UserData = value; }
 		}
-		internal Interop.DebugReportCallbackCreateInfoExt* m;
+		public Interop.DebugReportCallbackCreateInfoExt* m;
 
 		public DebugReportCallbackCreateInfoExt ()
 		{
@@ -6116,14 +6116,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DebugReportCallbackCreateInfoExt (Interop.DebugReportCallbackCreateInfoExt* ptr)
+		public DebugReportCallbackCreateInfoExt (Interop.DebugReportCallbackCreateInfoExt* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DebugReportCallbackCreateInfoExt;
 		}
@@ -6136,7 +6136,7 @@ namespace VulkanSharp
 			get { return m->RasterizationOrder; }
 			set { m->RasterizationOrder = value; }
 		}
-		internal Interop.PipelineRasterizationStateRasterizationOrderAmd* m;
+		public Interop.PipelineRasterizationStateRasterizationOrderAmd* m;
 
 		public PipelineRasterizationStateRasterizationOrderAmd ()
 		{
@@ -6144,14 +6144,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal PipelineRasterizationStateRasterizationOrderAmd (Interop.PipelineRasterizationStateRasterizationOrderAmd* ptr)
+		public PipelineRasterizationStateRasterizationOrderAmd (Interop.PipelineRasterizationStateRasterizationOrderAmd* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.PipelineRasterizationStateRasterizationOrderAmd;
 		}
@@ -6174,7 +6174,7 @@ namespace VulkanSharp
 			get { return Marshal.PtrToStringAnsi (m->ObjectName); }
 			set { m->ObjectName = Marshal.StringToHGlobalAnsi (value); }
 		}
-		internal Interop.DebugMarkerObjectNameInfoExt* m;
+		public Interop.DebugMarkerObjectNameInfoExt* m;
 
 		public DebugMarkerObjectNameInfoExt ()
 		{
@@ -6182,14 +6182,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DebugMarkerObjectNameInfoExt (Interop.DebugMarkerObjectNameInfoExt* ptr)
+		public DebugMarkerObjectNameInfoExt (Interop.DebugMarkerObjectNameInfoExt* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DebugMarkerObjectNameInfoExt;
 		}
@@ -6222,7 +6222,7 @@ namespace VulkanSharp
 			get { return m->Tag; }
 			set { m->Tag = value; }
 		}
-		internal Interop.DebugMarkerObjectTagInfoExt* m;
+		public Interop.DebugMarkerObjectTagInfoExt* m;
 
 		public DebugMarkerObjectTagInfoExt ()
 		{
@@ -6230,14 +6230,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DebugMarkerObjectTagInfoExt (Interop.DebugMarkerObjectTagInfoExt* ptr)
+		public DebugMarkerObjectTagInfoExt (Interop.DebugMarkerObjectTagInfoExt* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DebugMarkerObjectTagInfoExt;
 		}
@@ -6268,7 +6268,7 @@ namespace VulkanSharp
 					m->Color [i] = 0;
 			}
 		}
-		internal Interop.DebugMarkerMarkerInfoExt* m;
+		public Interop.DebugMarkerMarkerInfoExt* m;
 
 		public DebugMarkerMarkerInfoExt ()
 		{
@@ -6276,14 +6276,14 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-		internal DebugMarkerMarkerInfoExt (Interop.DebugMarkerMarkerInfoExt* ptr)
+		public DebugMarkerMarkerInfoExt (Interop.DebugMarkerMarkerInfoExt* ptr)
 		{
 			m = ptr;
 			Initialize ();
 		}
 
 
-		internal void Initialize ()
+		public void Initialize ()
 		{
 			m->SType = StructureType.DebugMarkerMarkerInfoExt;
 		}

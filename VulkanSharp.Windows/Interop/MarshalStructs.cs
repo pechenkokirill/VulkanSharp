@@ -3,12 +3,12 @@ using System;
 namespace VulkanSharp.Windows.Interop
 {
 	// ReSharper disable InconsistentNaming
-	internal struct Win32SurfaceCreateInfoKhr
+	public struct Win32SurfaceCreateInfoKhr
 	{
-		internal StructureType SType;
-		internal IntPtr Next;
-		internal uint Flags;
-		internal IntPtr Hinstance;
-		internal IntPtr Hwnd;
+		public StructureType SType;
+		public IntPtr Next;
+		public uint Flags;
+		public IntPtr Hinstance;
+		public IntPtr Hwnd;
 	}
 }
