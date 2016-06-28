@@ -297,7 +297,7 @@ namespace Vulkan
 			get { return m->PfnInternalFree; }
 			set { m->PfnInternalFree = value; }
 		}
-		internal Interop.AllocationCallbacks* m;
+		private Interop.AllocationCallbacks* m;
 
 		public AllocationCallbacks ()
 		{
@@ -309,6 +309,7 @@ namespace Vulkan
 			m = ptr;
 		}
 
+		public Interop.AllocationCallbacks* Handle => m;
 	}
 
 	unsafe public partial class DeviceQueueCreateInfo

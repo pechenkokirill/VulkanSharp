@@ -16,12 +16,13 @@ namespace Vulkan
 {
 	public partial class Instance
 	{
-		internal IntPtr m;
+		protected IntPtr m;
+		public IntPtr Handle => m;
 
 		public void Destroy (AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyInstance (this.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyInstance (this.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -46,8 +47,7 @@ namespace Vulkan
 					return null;
 				var arr = new PhysicalDevice [pPhysicalDeviceCount];
 				for (int i = 0; i < pPhysicalDeviceCount; i++) {
-					arr [i] = new PhysicalDevice ();
-					arr [i].m = ((IntPtr*)ptrpPhysicalDevices) [i];
+					arr [i] = new PhysicalDevice (((IntPtr*)ptrpPhysicalDevices)[i]);
 				}
 
 				return arr;
@@ -69,7 +69,7 @@ namespace Vulkan
 				pSurface = new SurfaceKhr ();
 
 				fixed (UInt64* ptrpSurface = &pSurface.m) {
-					result = Interop.NativeMethods.vkCreateDisplayPlaneSurfaceKHR (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpSurface);
+					result = Interop.NativeMethods.vkCreateDisplayPlaneSurfaceKHR (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpSurface);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -81,7 +81,7 @@ namespace Vulkan
 		public void DestroySurfaceKHR (SurfaceKhr surface, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroySurfaceKHR (this.m, surface.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroySurfaceKHR (this.m, surface.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace Vulkan
 				pCallback = new DebugReportCallbackExt ();
 
 				fixed (UInt64* ptrpCallback = &pCallback.m) {
-					result = Interop.NativeMethods.vkCreateDebugReportCallbackEXT (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpCallback);
+					result = Interop.NativeMethods.vkCreateDebugReportCallbackEXT (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpCallback);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -105,7 +105,7 @@ namespace Vulkan
 		public void DestroyDebugReportCallbackEXT (DebugReportCallbackExt callback, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyDebugReportCallbackEXT (this.m, callback.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyDebugReportCallbackEXT (this.m, callback.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -119,7 +119,13 @@ namespace Vulkan
 
 	public partial class PhysicalDevice
 	{
-		internal IntPtr m;
+		protected IntPtr m;
+
+		public PhysicalDevice(IntPtr handle) {
+			m = handle;
+		}
+
+		public IntPtr Handle => m;
 
 		public PhysicalDeviceProperties GetProperties ()
 		{
@@ -210,7 +216,7 @@ namespace Vulkan
 				pDevice = new Device ();
 
 				fixed (IntPtr* ptrpDevice = &pDevice.m) {
-					result = Interop.NativeMethods.vkCreateDevice (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpDevice);
+					result = Interop.NativeMethods.vkCreateDevice (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpDevice);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -419,7 +425,7 @@ namespace Vulkan
 				pMode = new DisplayModeKhr ();
 
 				fixed (UInt64* ptrpMode = &pMode.m) {
-					result = Interop.NativeMethods.vkCreateDisplayModeKHR (this.m, display.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpMode);
+					result = Interop.NativeMethods.vkCreateDisplayModeKHR (this.m, display.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpMode);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -542,7 +548,7 @@ namespace Vulkan
 		public void Destroy (AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyDevice (this.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyDevice (this.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -578,7 +584,7 @@ namespace Vulkan
 				pMemory = new DeviceMemory ();
 
 				fixed (UInt64* ptrpMemory = &pMemory.m) {
-					result = Interop.NativeMethods.vkAllocateMemory (this.m, pAllocateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpMemory);
+					result = Interop.NativeMethods.vkAllocateMemory (this.m, pAllocateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpMemory);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -590,7 +596,7 @@ namespace Vulkan
 		public void FreeMemory (DeviceMemory memory, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkFreeMemory (this.m, memory.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkFreeMemory (this.m, memory.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -719,7 +725,7 @@ namespace Vulkan
 				pFence = new Fence ();
 
 				fixed (UInt64* ptrpFence = &pFence.m) {
-					result = Interop.NativeMethods.vkCreateFence (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpFence);
+					result = Interop.NativeMethods.vkCreateFence (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpFence);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -731,7 +737,7 @@ namespace Vulkan
 		public void DestroyFence (Fence fence, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyFence (this.m, fence.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyFence (this.m, fence.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -777,7 +783,7 @@ namespace Vulkan
 				pSemaphore = new Semaphore ();
 
 				fixed (UInt64* ptrpSemaphore = &pSemaphore.m) {
-					result = Interop.NativeMethods.vkCreateSemaphore (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpSemaphore);
+					result = Interop.NativeMethods.vkCreateSemaphore (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpSemaphore);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -789,7 +795,7 @@ namespace Vulkan
 		public void DestroySemaphore (Semaphore semaphore, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroySemaphore (this.m, semaphore.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroySemaphore (this.m, semaphore.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -801,7 +807,7 @@ namespace Vulkan
 				pEvent = new Event ();
 
 				fixed (UInt64* ptrpEvent = &pEvent.m) {
-					result = Interop.NativeMethods.vkCreateEvent (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpEvent);
+					result = Interop.NativeMethods.vkCreateEvent (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpEvent);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -813,7 +819,7 @@ namespace Vulkan
 		public void DestroyEvent (Event @event, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyEvent (this.m, @event.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyEvent (this.m, @event.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -855,7 +861,7 @@ namespace Vulkan
 				pQueryPool = new QueryPool ();
 
 				fixed (UInt64* ptrpQueryPool = &pQueryPool.m) {
-					result = Interop.NativeMethods.vkCreateQueryPool (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpQueryPool);
+					result = Interop.NativeMethods.vkCreateQueryPool (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpQueryPool);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -867,7 +873,7 @@ namespace Vulkan
 		public void DestroyQueryPool (QueryPool queryPool, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyQueryPool (this.m, queryPool.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyQueryPool (this.m, queryPool.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -893,7 +899,7 @@ namespace Vulkan
 				pBuffer = new Buffer ();
 
 				fixed (UInt64* ptrpBuffer = &pBuffer.m) {
-					result = Interop.NativeMethods.vkCreateBuffer (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpBuffer);
+					result = Interop.NativeMethods.vkCreateBuffer (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpBuffer);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -905,7 +911,7 @@ namespace Vulkan
 		public void DestroyBuffer (Buffer buffer, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyBuffer (this.m, buffer.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyBuffer (this.m, buffer.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -917,7 +923,7 @@ namespace Vulkan
 				pView = new BufferView ();
 
 				fixed (UInt64* ptrpView = &pView.m) {
-					result = Interop.NativeMethods.vkCreateBufferView (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpView);
+					result = Interop.NativeMethods.vkCreateBufferView (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpView);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -929,7 +935,7 @@ namespace Vulkan
 		public void DestroyBufferView (BufferView bufferView, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyBufferView (this.m, bufferView.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyBufferView (this.m, bufferView.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -941,7 +947,7 @@ namespace Vulkan
 				pImage = new Image ();
 
 				fixed (UInt64* ptrpImage = &pImage.m) {
-					result = Interop.NativeMethods.vkCreateImage (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpImage);
+					result = Interop.NativeMethods.vkCreateImage (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpImage);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -953,7 +959,7 @@ namespace Vulkan
 		public void DestroyImage (Image image, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyImage (this.m, image.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyImage (this.m, image.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -976,7 +982,7 @@ namespace Vulkan
 				pView = new ImageView ();
 
 				fixed (UInt64* ptrpView = &pView.m) {
-					result = Interop.NativeMethods.vkCreateImageView (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpView);
+					result = Interop.NativeMethods.vkCreateImageView (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpView);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -988,7 +994,7 @@ namespace Vulkan
 		public void DestroyImageView (ImageView imageView, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyImageView (this.m, imageView.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyImageView (this.m, imageView.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1000,7 +1006,7 @@ namespace Vulkan
 				pShaderModule = new ShaderModule ();
 
 				fixed (UInt64* ptrpShaderModule = &pShaderModule.m) {
-					result = Interop.NativeMethods.vkCreateShaderModule (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpShaderModule);
+					result = Interop.NativeMethods.vkCreateShaderModule (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpShaderModule);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1012,7 +1018,7 @@ namespace Vulkan
 		public void DestroyShaderModule (ShaderModule shaderModule, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyShaderModule (this.m, shaderModule.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyShaderModule (this.m, shaderModule.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1024,7 +1030,7 @@ namespace Vulkan
 				pPipelineCache = new PipelineCache ();
 
 				fixed (UInt64* ptrpPipelineCache = &pPipelineCache.m) {
-					result = Interop.NativeMethods.vkCreatePipelineCache (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpPipelineCache);
+					result = Interop.NativeMethods.vkCreatePipelineCache (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpPipelineCache);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1036,7 +1042,7 @@ namespace Vulkan
 		public void DestroyPipelineCache (PipelineCache pipelineCache, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyPipelineCache (this.m, pipelineCache.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyPipelineCache (this.m, pipelineCache.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1073,7 +1079,7 @@ namespace Vulkan
 
 				int size = Marshal.SizeOf (typeof (UInt64));
 				var ptrpPipelines = Marshal.AllocHGlobal ((int)(size * createInfoCount));
-				result = Interop.NativeMethods.vkCreateGraphicsPipelines (this.m, pipelineCache.m, createInfoCount, pCreateInfos.m, pAllocator != null ? pAllocator.m : null, (UInt64*)ptrpPipelines);
+				result = Interop.NativeMethods.vkCreateGraphicsPipelines (this.m, pipelineCache.m, createInfoCount, pCreateInfos.m, pAllocator != null ? pAllocator.Handle : null, (UInt64*)ptrpPipelines);
 				if (result != Result.Success)
 					throw new ResultException (result);
 
@@ -1098,7 +1104,7 @@ namespace Vulkan
 
 				int size = Marshal.SizeOf (typeof (UInt64));
 				var ptrpPipelines = Marshal.AllocHGlobal ((int)(size * createInfoCount));
-				result = Interop.NativeMethods.vkCreateComputePipelines (this.m, pipelineCache.m, createInfoCount, pCreateInfos.m, pAllocator != null ? pAllocator.m : null, (UInt64*)ptrpPipelines);
+				result = Interop.NativeMethods.vkCreateComputePipelines (this.m, pipelineCache.m, createInfoCount, pCreateInfos.m, pAllocator != null ? pAllocator.Handle : null, (UInt64*)ptrpPipelines);
 				if (result != Result.Success)
 					throw new ResultException (result);
 
@@ -1117,7 +1123,7 @@ namespace Vulkan
 		public void DestroyPipeline (Pipeline pipeline, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyPipeline (this.m, pipeline.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyPipeline (this.m, pipeline.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1129,7 +1135,7 @@ namespace Vulkan
 				pPipelineLayout = new PipelineLayout ();
 
 				fixed (UInt64* ptrpPipelineLayout = &pPipelineLayout.m) {
-					result = Interop.NativeMethods.vkCreatePipelineLayout (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpPipelineLayout);
+					result = Interop.NativeMethods.vkCreatePipelineLayout (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpPipelineLayout);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1141,7 +1147,7 @@ namespace Vulkan
 		public void DestroyPipelineLayout (PipelineLayout pipelineLayout, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyPipelineLayout (this.m, pipelineLayout.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyPipelineLayout (this.m, pipelineLayout.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1153,7 +1159,7 @@ namespace Vulkan
 				pSampler = new Sampler ();
 
 				fixed (UInt64* ptrpSampler = &pSampler.m) {
-					result = Interop.NativeMethods.vkCreateSampler (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpSampler);
+					result = Interop.NativeMethods.vkCreateSampler (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpSampler);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1165,7 +1171,7 @@ namespace Vulkan
 		public void DestroySampler (Sampler sampler, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroySampler (this.m, sampler.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroySampler (this.m, sampler.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1177,7 +1183,7 @@ namespace Vulkan
 				pSetLayout = new DescriptorSetLayout ();
 
 				fixed (UInt64* ptrpSetLayout = &pSetLayout.m) {
-					result = Interop.NativeMethods.vkCreateDescriptorSetLayout (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpSetLayout);
+					result = Interop.NativeMethods.vkCreateDescriptorSetLayout (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpSetLayout);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1189,7 +1195,7 @@ namespace Vulkan
 		public void DestroyDescriptorSetLayout (DescriptorSetLayout descriptorSetLayout, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyDescriptorSetLayout (this.m, descriptorSetLayout.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyDescriptorSetLayout (this.m, descriptorSetLayout.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1201,7 +1207,7 @@ namespace Vulkan
 				pDescriptorPool = new DescriptorPool ();
 
 				fixed (UInt64* ptrpDescriptorPool = &pDescriptorPool.m) {
-					result = Interop.NativeMethods.vkCreateDescriptorPool (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpDescriptorPool);
+					result = Interop.NativeMethods.vkCreateDescriptorPool (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpDescriptorPool);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1213,7 +1219,7 @@ namespace Vulkan
 		public void DestroyDescriptorPool (DescriptorPool descriptorPool, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyDescriptorPool (this.m, descriptorPool.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyDescriptorPool (this.m, descriptorPool.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1279,7 +1285,7 @@ namespace Vulkan
 				pFramebuffer = new Framebuffer ();
 
 				fixed (UInt64* ptrpFramebuffer = &pFramebuffer.m) {
-					result = Interop.NativeMethods.vkCreateFramebuffer (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpFramebuffer);
+					result = Interop.NativeMethods.vkCreateFramebuffer (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpFramebuffer);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1291,7 +1297,7 @@ namespace Vulkan
 		public void DestroyFramebuffer (Framebuffer framebuffer, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyFramebuffer (this.m, framebuffer.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyFramebuffer (this.m, framebuffer.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1303,7 +1309,7 @@ namespace Vulkan
 				pRenderPass = new RenderPass ();
 
 				fixed (UInt64* ptrpRenderPass = &pRenderPass.m) {
-					result = Interop.NativeMethods.vkCreateRenderPass (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpRenderPass);
+					result = Interop.NativeMethods.vkCreateRenderPass (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpRenderPass);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1315,7 +1321,7 @@ namespace Vulkan
 		public void DestroyRenderPass (RenderPass renderPass, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyRenderPass (this.m, renderPass.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyRenderPass (this.m, renderPass.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1338,7 +1344,7 @@ namespace Vulkan
 				pCommandPool = new CommandPool ();
 
 				fixed (UInt64* ptrpCommandPool = &pCommandPool.m) {
-					result = Interop.NativeMethods.vkCreateCommandPool (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpCommandPool);
+					result = Interop.NativeMethods.vkCreateCommandPool (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpCommandPool);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1350,7 +1356,7 @@ namespace Vulkan
 		public void DestroyCommandPool (CommandPool commandPool, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroyCommandPool (this.m, commandPool.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroyCommandPool (this.m, commandPool.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -1407,7 +1413,7 @@ namespace Vulkan
 
 				int size = Marshal.SizeOf (typeof (UInt64));
 				var ptrpSwapchains = Marshal.AllocHGlobal ((int)(size * swapchainCount));
-				result = Interop.NativeMethods.vkCreateSharedSwapchainsKHR (this.m, swapchainCount, pCreateInfos.m, pAllocator != null ? pAllocator.m : null, (UInt64*)ptrpSwapchains);
+				result = Interop.NativeMethods.vkCreateSharedSwapchainsKHR (this.m, swapchainCount, pCreateInfos.m, pAllocator != null ? pAllocator.Handle : null, (UInt64*)ptrpSwapchains);
 				if (result != Result.Success)
 					throw new ResultException (result);
 
@@ -1431,7 +1437,7 @@ namespace Vulkan
 				pSwapchain = new SwapchainKhr ();
 
 				fixed (UInt64* ptrpSwapchain = &pSwapchain.m) {
-					result = Interop.NativeMethods.vkCreateSwapchainKHR (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.m : null, ptrpSwapchain);
+					result = Interop.NativeMethods.vkCreateSwapchainKHR (this.m, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpSwapchain);
 				}
 				if (result != Result.Success)
 					throw new ResultException (result);
@@ -1443,7 +1449,7 @@ namespace Vulkan
 		public void DestroySwapchainKHR (SwapchainKhr swapchain, AllocationCallbacks pAllocator)
 		{
 			unsafe {
-				Interop.NativeMethods.vkDestroySwapchainKHR (this.m, swapchain.m, pAllocator != null ? pAllocator.m : null);
+				Interop.NativeMethods.vkDestroySwapchainKHR (this.m, swapchain.m, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
@@ -2056,7 +2062,7 @@ namespace Vulkan
 
 	public partial class SurfaceKhr
 	{
-		internal UInt64 m;
+		public UInt64 m;
 	}
 
 	public partial class SwapchainKhr

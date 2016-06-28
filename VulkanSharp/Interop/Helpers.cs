@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace Vulkan.Interop
 {
-	internal class Structure
+	public class Structure
 	{
-		internal static IntPtr Allocate (Type type)
+		public static IntPtr Allocate (Type type)
 		{
 			int size = Marshal.SizeOf (type);
 			IntPtr ptr = Marshal.AllocHGlobal (size);

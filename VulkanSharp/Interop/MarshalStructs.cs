@@ -50,7 +50,7 @@ namespace Vulkan.Interop
 		internal UInt32 ApiVersion;
 	}
 
-	internal partial struct AllocationCallbacks
+	public partial struct AllocationCallbacks
 	{
 		internal IntPtr UserData;
 		internal IntPtr PfnAllocation;

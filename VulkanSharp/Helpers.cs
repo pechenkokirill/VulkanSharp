@@ -55,7 +55,7 @@ namespace Vulkan
 			get { return result; }
 		}
 
-		internal ResultException (Result res)
+		public ResultException (Result res)
 		{
 			result = res;
 		}

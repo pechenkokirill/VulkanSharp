@@ -11,7 +11,7 @@ namespace Vulkan
 
 			unsafe {
 				fixed (IntPtr* ptrInstance = &m) {
-					result = Interop.NativeMethods.vkCreateInstance (CreateInfo.m, Allocator != null ? Allocator.m : null, ptrInstance);
+					result = Interop.NativeMethods.vkCreateInstance (CreateInfo.m, Allocator != null ? Allocator.Handle : null, ptrInstance);
 				}
 			}
 
