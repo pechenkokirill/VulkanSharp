@@ -4,11 +4,11 @@ namespace VulkanSharp
 {
 	public struct Bool32
 	{
-		UInt32 value;
+		readonly uint _value;
 
 		public Bool32 (bool bValue)
 		{
-			value = bValue ? 1u : 0;
+			_value = bValue ? 1u : 0;
 		}
 
 		public static implicit operator Bool32 (bool bValue)
@@ -18,46 +18,44 @@ namespace VulkanSharp
 
 		public static implicit operator bool (Bool32 bValue)
 		{
-			return bValue.value == 0 ? false : true;
+			return bValue._value != 0;
 		}
 	}
 
 	public struct DeviceSize
 	{
-		UInt64 value;
+		ulong _value;
 
-		public static implicit operator DeviceSize (UInt64 iValue)
+		public static implicit operator DeviceSize (ulong iValue)
 		{
-			return new DeviceSize { value = iValue };
+			return new DeviceSize { _value = iValue };
 		}
 
 		public static implicit operator DeviceSize (uint iValue)
 		{
-			return new DeviceSize { value = iValue };
+			return new DeviceSize { _value = iValue };
 		}
 
 		public static implicit operator DeviceSize (int iValue)
 		{
-			return new DeviceSize { value = (ulong)iValue };
+			return new DeviceSize { _value = (ulong)iValue };
 		}
 
-		public static implicit operator UInt64 (DeviceSize size)
+		public static implicit operator ulong (DeviceSize size)
 		{
-			return size.value;
+			return size._value;
 		}
 	}
 
 	public class ResultException : Exception
 	{
-		internal Result result;
+		internal Result _result;
 
-		public Result Result {
-			get { return result; }
-		}
+		public Result Result => _result;
 
 		public ResultException (Result res)
 		{
-			result = res;
+			_result = res;
 		}
 	}
 
@@ -70,7 +68,7 @@ namespace VulkanSharp
 
 		public static string ToString (uint version)
 		{
-			return string.Format ("{0}.{1}.{2}", version >> 22, (version >> 12) & 0x3ff, version & 0xfff);
+			return $"{version >> 22}.{(version >> 12) & 0x3ff}.{version & 0xfff}";
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace VulkanSharp
 		}
 	}
 
-	unsafe public partial class ShaderModuleCreateInfo
+	public unsafe partial class ShaderModuleCreateInfo
 	{
 		public byte[] CodeBytes {
 			set {
@@ -45,7 +45,7 @@ namespace VulkanSharp
 	{
 		public ShaderModule CreateShaderModule (byte[] shaderCode, uint flags = 0, AllocationCallbacks allocator = null)
 		{
-			ShaderModuleCreateInfo createInfo = new ShaderModuleCreateInfo {
+			var createInfo = new ShaderModuleCreateInfo {
 				CodeBytes = shaderCode,
 				Flags = flags
 			};
@@ -53,7 +53,7 @@ namespace VulkanSharp
 		}
 	}
 
-	unsafe public partial class ClearColorValue
+	public unsafe partial class ClearColorValue
 	{
 		public ClearColorValue (float[] floatArray) : this ()
 		{

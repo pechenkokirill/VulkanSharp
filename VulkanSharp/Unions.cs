@@ -2,12 +2,12 @@ using System;
 
 namespace VulkanSharp
 {
-	unsafe public partial class ClearColorValue
+	public unsafe partial class ClearColorValue
 	{
 		public float[] Float32 {
 			get {
 				var arr = new float [4];
-				for (int i = 0; i < 4; i++)
+				for (var i = 0; i < 4; i++)
 					arr [i] = m->Float32 [i];
 				return arr;
 			}
@@ -15,17 +15,17 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 4)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->Float32 [i] = value [i];
-				for (int i = value.Length; i < 4; i++)
+				for (var i = value.Length; i < 4; i++)
 					m->Float32 [i] = 0;
 			}
 		}
 
-		public Int32[] Int32 {
+		public int[] Int32 {
 			get {
-				var arr = new Int32 [4];
-				for (int i = 0; i < 4; i++)
+				var arr = new int [4];
+				for (var i = 0; i < 4; i++)
 					arr [i] = m->Int32 [i];
 				return arr;
 			}
@@ -33,17 +33,17 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 4)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->Int32 [i] = value [i];
-				for (int i = value.Length; i < 4; i++)
+				for (var i = value.Length; i < 4; i++)
 					m->Int32 [i] = 0;
 			}
 		}
 
-		public UInt32[] Uint32 {
+		public uint[] Uint32 {
 			get {
-				var arr = new UInt32 [4];
-				for (int i = 0; i < 4; i++)
+				var arr = new uint [4];
+				for (var i = 0; i < 4; i++)
 					arr [i] = m->Uint32 [i];
 				return arr;
 			}
@@ -51,9 +51,9 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 4)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->Uint32 [i] = value [i];
-				for (int i = value.Length; i < 4; i++)
+				for (var i = value.Length; i < 4; i++)
 					m->Uint32 [i] = 0;
 			}
 		}
@@ -71,12 +71,12 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class ClearValue
+	public unsafe class ClearValue
 	{
-		ClearColorValue lColor;
+		ClearColorValue _lColor;
 		public ClearColorValue Color {
-			get { return lColor; }
-			set { lColor = value; m->Color = *value.m; }
+			get { return _lColor; }
+			set { _lColor = value; m->Color = *value.m; }
 		}
 
 		public ClearDepthStencilValue DepthStencil {
@@ -100,7 +100,7 @@ namespace VulkanSharp
 
 		internal void Initialize ()
 		{
-			lColor = new ClearColorValue (&m->Color);
+			_lColor = new ClearColorValue (&m->Color);
 		}
 
 	}

@@ -3,40 +3,40 @@ using VulkanSharp.Interop;
 
 namespace VulkanSharp.Windows
 {
-	unsafe public partial class Win32SurfaceCreateInfoKhr
+	public unsafe class Win32SurfaceCreateInfoKhr
 	{
-		public UInt32 Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+		public uint Flags {
+			get { return _m->Flags; }
+			set { _m->Flags = value; }
 		}
 
 		public IntPtr Hinstance {
-			get { return m->Hinstance; }
-			set { m->Hinstance = value; }
+			get { return _m->Hinstance; }
+			set { _m->Hinstance = value; }
 		}
 
 		public IntPtr Hwnd {
-			get { return m->Hwnd; }
-			set { m->Hwnd = value; }
+			get { return _m->Hwnd; }
+			set { _m->Hwnd = value; }
 		}
-		internal Windows.Interop.Win32SurfaceCreateInfoKhr* m;
+		internal Interop.Win32SurfaceCreateInfoKhr* _m;
 
 		public Win32SurfaceCreateInfoKhr ()
 		{
-			m = (Windows.Interop.Win32SurfaceCreateInfoKhr*) Structure.Allocate (typeof (Windows.Interop.Win32SurfaceCreateInfoKhr));
+			_m = (Interop.Win32SurfaceCreateInfoKhr*) Structure.Allocate (typeof (Interop.Win32SurfaceCreateInfoKhr));
 			Initialize ();
 		}
 
-		internal Win32SurfaceCreateInfoKhr (Windows.Interop.Win32SurfaceCreateInfoKhr* ptr)
+		internal Win32SurfaceCreateInfoKhr (Interop.Win32SurfaceCreateInfoKhr* ptr)
 		{
-			m = ptr;
+			_m = ptr;
 			Initialize ();
 		}
 
 
 		internal void Initialize ()
 		{
-			m->SType = StructureType.Win32SurfaceCreateInfoKhr;
+			_m->SType = StructureType.Win32SurfaceCreateInfoKhr;
 		}
 
 	}

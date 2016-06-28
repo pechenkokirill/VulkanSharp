@@ -1,21 +1,17 @@
-using System;
+using VulkanSharp.Windows.Interop;
 
 namespace VulkanSharp.Windows
 {
+	// ReSharper disable InconsistentNaming
 	public static class InstanceExtension
 	{
-		public static SurfaceKhr CreateWin32SurfaceKHR (this Instance instance, Win32SurfaceCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator)
-		{
-			Result result;
-			SurfaceKhr pSurface;
+		public static SurfaceKhr CreateWin32SurfaceKHR(this Instance instance, Win32SurfaceCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator) {
 			unsafe {
-				pSurface = new SurfaceKhr ();
+				var pSurface = new SurfaceKhr();
 
-				fixed (UInt64* ptrpSurface = &pSurface.m) {
-					result = Windows.Interop.NativeMethods.vkCreateWin32SurfaceKHR (instance.Handle, pCreateInfo.m, pAllocator != null ? pAllocator.Handle : null, ptrpSurface);
-				}
-				if (result != Result.Success)
-					throw new ResultException (result);
+				Result result;
+				fixed (ulong* ptrpSurface = &pSurface.m) result = NativeMethods.vkCreateWin32SurfaceKHR(instance.Handle, pCreateInfo._m, pAllocator != null ? pAllocator.Handle : null, ptrpSurface);
+				if (result != Result.Success) throw new ResultException(result);
 
 				return pSurface;
 			}
@@ -24,12 +20,8 @@ namespace VulkanSharp.Windows
 
 	public static class PhysicalDeviceExtension
 	{
-		public static Bool32 GetWin32PresentationSupportKHR (this PhysicalDevice physicalDevice, UInt32 queueFamilyIndex)
-		{
-			unsafe {
-				return Windows.Interop.NativeMethods.vkGetPhysicalDeviceWin32PresentationSupportKHR (physicalDevice.Handle, queueFamilyIndex);
-			}
+		public static Bool32 GetWin32PresentationSupportKHR(this PhysicalDevice physicalDevice, uint queueFamilyIndex) {
+			return NativeMethods.vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice.Handle, queueFamilyIndex);
 		}
 	}
-
 }

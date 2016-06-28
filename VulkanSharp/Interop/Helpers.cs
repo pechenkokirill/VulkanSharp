@@ -7,20 +7,20 @@ namespace VulkanSharp.Interop
 	{
 		public static IntPtr Allocate (Type type)
 		{
-			int size = Marshal.SizeOf (type);
-			IntPtr ptr = Marshal.AllocHGlobal (size);
+			var size = Marshal.SizeOf (type);
+			var ptr = Marshal.AllocHGlobal (size);
 			unsafe {
-				byte* bptr = (byte*) ptr.ToPointer ();
-				for (int i = 0; i < size; i++)
+				var bptr = (byte*) ptr.ToPointer ();
+				for (var i = 0; i < size; i++)
 					bptr[i] = 0;
 			}
 
 			return ptr;
 		}
 
-		unsafe internal static void MarshalFixedSizeString (byte* dst, string src, int size)
+		internal static unsafe void MarshalFixedSizeString (byte* dst, string src, int size)
 		{
-			var bytes = System.Text.UTF8Encoding.UTF8.GetBytes (src);
+			var bytes = System.Text.Encoding.UTF8.GetBytes (src);
 			size = Math.Min (size - 1, bytes.Length);
 			int i;
 			for (i = 0; i < size; i++)

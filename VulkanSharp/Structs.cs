@@ -3,33 +3,33 @@ using System.Runtime.InteropServices;
 
 namespace VulkanSharp
 {
-	unsafe public partial struct Offset2D
+	public unsafe struct Offset2D
 	{
-		public Int32 X;
-		public Int32 Y;
+		public int X;
+		public int Y;
 	}
 
-	unsafe public partial struct Offset3D
+	public unsafe struct Offset3D
 	{
-		public Int32 X;
-		public Int32 Y;
-		public Int32 Z;
+		public int X;
+		public int Y;
+		public int Z;
 	}
 
-	unsafe public partial struct Extent2D
+	public unsafe struct Extent2D
 	{
-		public UInt32 Width;
-		public UInt32 Height;
+		public uint Width;
+		public uint Height;
 	}
 
-	unsafe public partial struct Extent3D
+	public unsafe struct Extent3D
 	{
-		public UInt32 Width;
-		public UInt32 Height;
-		public UInt32 Depth;
+		public uint Width;
+		public uint Height;
+		public uint Depth;
 	}
 
-	unsafe public partial struct Viewport
+	public unsafe struct Viewport
 	{
 		public float X;
 		public float Y;
@@ -39,26 +39,26 @@ namespace VulkanSharp
 		public float MaxDepth;
 	}
 
-	unsafe public partial struct Rect2D
+	public unsafe struct Rect2D
 	{
 		public Offset2D Offset;
 		public Extent2D Extent;
 	}
 
-	unsafe public partial struct Rect3D
+	public unsafe struct Rect3D
 	{
 		public Offset3D Offset;
 		public Extent3D Extent;
 	}
 
-	unsafe public partial struct ClearRect
+	public unsafe struct ClearRect
 	{
 		public Rect2D Rect;
-		public UInt32 BaseArrayLayer;
-		public UInt32 LayerCount;
+		public uint BaseArrayLayer;
+		public uint LayerCount;
 	}
 
-	unsafe public partial struct ComponentMapping
+	public unsafe struct ComponentMapping
 	{
 		public ComponentSwizzle R;
 		public ComponentSwizzle G;
@@ -66,24 +66,24 @@ namespace VulkanSharp
 		public ComponentSwizzle A;
 	}
 
-	unsafe public partial class PhysicalDeviceProperties
+	public unsafe class PhysicalDeviceProperties
 	{
-		public UInt32 ApiVersion {
+		public uint ApiVersion {
 			get { return m->ApiVersion; }
 			set { m->ApiVersion = value; }
 		}
 
-		public UInt32 DriverVersion {
+		public uint DriverVersion {
 			get { return m->DriverVersion; }
 			set { m->DriverVersion = value; }
 		}
 
-		public UInt32 VendorID {
+		public uint VendorID {
 			get { return m->VendorID; }
 			set { m->VendorID = value; }
 		}
 
-		public UInt32 DeviceID {
+		public uint DeviceID {
 			get { return m->DeviceID; }
 			set { m->DeviceID = value; }
 		}
@@ -101,7 +101,7 @@ namespace VulkanSharp
 		public byte[] PipelineCacheUUID {
 			get {
 				var arr = new byte [16];
-				for (int i = 0; i < 16; i++)
+				for (var i = 0; i < 16; i++)
 					arr [i] = m->PipelineCacheUUID [i];
 				return arr;
 			}
@@ -109,9 +109,9 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 16)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->PipelineCacheUUID [i] = value [i];
-				for (int i = value.Length; i < 16; i++)
+				for (var i = value.Length; i < 16; i++)
 					m->PipelineCacheUUID [i] = 0;
 			}
 		}
@@ -148,14 +148,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class ExtensionProperties
+	public unsafe class ExtensionProperties
 	{
 		public string ExtensionName {
 			get { return Marshal.PtrToStringAnsi ((IntPtr)m->ExtensionName); }
 			set { Interop.Structure.MarshalFixedSizeString (m->ExtensionName, value, 256); }
 		}
 
-		public UInt32 SpecVersion {
+		public uint SpecVersion {
 			get { return m->SpecVersion; }
 			set { m->SpecVersion = value; }
 		}
@@ -173,19 +173,19 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class LayerProperties
+	public unsafe class LayerProperties
 	{
 		public string LayerName {
 			get { return Marshal.PtrToStringAnsi ((IntPtr)m->LayerName); }
 			set { Interop.Structure.MarshalFixedSizeString (m->LayerName, value, 256); }
 		}
 
-		public UInt32 SpecVersion {
+		public uint SpecVersion {
 			get { return m->SpecVersion; }
 			set { m->SpecVersion = value; }
 		}
 
-		public UInt32 ImplementationVersion {
+		public uint ImplementationVersion {
 			get { return m->ImplementationVersion; }
 			set { m->ImplementationVersion = value; }
 		}
@@ -208,14 +208,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class ApplicationInfo
+	public unsafe class ApplicationInfo
 	{
 		public string ApplicationName {
 			get { return Marshal.PtrToStringAnsi (m->ApplicationName); }
 			set { m->ApplicationName = Marshal.StringToHGlobalAnsi (value); }
 		}
 
-		public UInt32 ApplicationVersion {
+		public uint ApplicationVersion {
 			get { return m->ApplicationVersion; }
 			set { m->ApplicationVersion = value; }
 		}
@@ -225,12 +225,12 @@ namespace VulkanSharp
 			set { m->EngineName = Marshal.StringToHGlobalAnsi (value); }
 		}
 
-		public UInt32 EngineVersion {
+		public uint EngineVersion {
 			get { return m->EngineVersion; }
 			set { m->EngineVersion = value; }
 		}
 
-		public UInt32 ApiVersion {
+		public uint ApiVersion {
 			get { return m->ApiVersion; }
 			set { m->ApiVersion = value; }
 		}
@@ -256,7 +256,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class AllocationCallbacks
+	public unsafe class AllocationCallbacks
 	{
 		public IntPtr UserData {
 			get { return m->UserData; }
@@ -302,19 +302,19 @@ namespace VulkanSharp
 		public Interop.AllocationCallbacks* Handle => m;
 	}
 
-	unsafe public partial class DeviceQueueCreateInfo
+	public unsafe class DeviceQueueCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 QueueFamilyIndex {
+		public uint QueueFamilyIndex {
 			get { return m->QueueFamilyIndex; }
 			set { m->QueueFamilyIndex = value; }
 		}
 
-		public UInt32 QueueCount {
+		public uint QueueCount {
 			get { return m->QueueCount; }
 			set { m->QueueCount = value; }
 		}
@@ -326,8 +326,8 @@ namespace VulkanSharp
 				var values = new float [m->QueueCount];
 				unsafe
 				{
-					float* ptr = (float*)m->QueuePriorities;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (float*)m->QueuePriorities;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -343,8 +343,8 @@ namespace VulkanSharp
 				m->QueuePriorities = Marshal.AllocHGlobal ((int)(sizeof(float)*value.Length));
 				unsafe
 				{
-					float* ptr = (float*)m->QueuePriorities;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (float*)m->QueuePriorities;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -371,14 +371,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DeviceCreateInfo
+	public unsafe class DeviceCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 QueueCreateInfoCount {
+		public uint QueueCreateInfoCount {
 			get { return m->QueueCreateInfoCount; }
 			set { m->QueueCreateInfoCount = value; }
 		}
@@ -390,8 +390,8 @@ namespace VulkanSharp
 				var values = new DeviceQueueCreateInfo [m->QueueCreateInfoCount];
 				unsafe
 				{
-					Interop.DeviceQueueCreateInfo* ptr = (Interop.DeviceQueueCreateInfo*)m->QueueCreateInfos;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.DeviceQueueCreateInfo*)m->QueueCreateInfos;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DeviceQueueCreateInfo ();
 						*values [i].m = ptr [i];
 					}
@@ -409,14 +409,14 @@ namespace VulkanSharp
 				m->QueueCreateInfos = Marshal.AllocHGlobal ((int)(sizeof(Interop.DeviceQueueCreateInfo)*value.Length));
 				unsafe
 				{
-					Interop.DeviceQueueCreateInfo* ptr = (Interop.DeviceQueueCreateInfo*)m->QueueCreateInfos;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.DeviceQueueCreateInfo*)m->QueueCreateInfos;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
 		}
 
-		public UInt32 EnabledLayerCount {
+		public uint EnabledLayerCount {
 			get { return m->EnabledLayerCount; }
 			set { m->EnabledLayerCount = value; }
 		}
@@ -428,8 +428,8 @@ namespace VulkanSharp
 				var strings = new string [m->EnabledLayerCount];
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledLayerNames;
-					for (int i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)m->EnabledLayerNames;
+					for (var i = 0; i < m->EnabledLayerCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -445,14 +445,14 @@ namespace VulkanSharp
 				m->EnabledLayerNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledLayerCount));
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledLayerNames;
-					for (int i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)m->EnabledLayerNames;
+					for (var i = 0; i < m->EnabledLayerCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
 		}
 
-		public UInt32 EnabledExtensionCount {
+		public uint EnabledExtensionCount {
 			get { return m->EnabledExtensionCount; }
 			set { m->EnabledExtensionCount = value; }
 		}
@@ -464,8 +464,8 @@ namespace VulkanSharp
 				var strings = new string [m->EnabledExtensionCount];
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledExtensionNames;
-					for (int i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)m->EnabledExtensionNames;
+					for (var i = 0; i < m->EnabledExtensionCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -481,8 +481,8 @@ namespace VulkanSharp
 				m->EnabledExtensionNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledExtensionCount));
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledExtensionNames;
-					for (int i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)m->EnabledExtensionNames;
+					for (var i = 0; i < m->EnabledExtensionCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
@@ -514,9 +514,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class InstanceCreateInfo
+	public unsafe class InstanceCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -527,7 +527,7 @@ namespace VulkanSharp
 			set { lApplicationInfo = value; m->ApplicationInfo = (IntPtr)value.m; }
 		}
 
-		public UInt32 EnabledLayerCount {
+		public uint EnabledLayerCount {
 			get { return m->EnabledLayerCount; }
 			set { m->EnabledLayerCount = value; }
 		}
@@ -539,8 +539,8 @@ namespace VulkanSharp
 				var strings = new string [m->EnabledLayerCount];
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledLayerNames;
-					for (int i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)m->EnabledLayerNames;
+					for (var i = 0; i < m->EnabledLayerCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -556,14 +556,14 @@ namespace VulkanSharp
 				m->EnabledLayerNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledLayerCount));
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledLayerNames;
-					for (int i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)m->EnabledLayerNames;
+					for (var i = 0; i < m->EnabledLayerCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
 		}
 
-		public UInt32 EnabledExtensionCount {
+		public uint EnabledExtensionCount {
 			get { return m->EnabledExtensionCount; }
 			set { m->EnabledExtensionCount = value; }
 		}
@@ -575,8 +575,8 @@ namespace VulkanSharp
 				var strings = new string [m->EnabledExtensionCount];
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledExtensionNames;
-					for (int i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)m->EnabledExtensionNames;
+					for (var i = 0; i < m->EnabledExtensionCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -592,8 +592,8 @@ namespace VulkanSharp
 				m->EnabledExtensionNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledExtensionCount));
 				unsafe
 				{
-					void** ptr = (void**)m->EnabledExtensionNames;
-					for (int i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)m->EnabledExtensionNames;
+					for (var i = 0; i < m->EnabledExtensionCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
@@ -620,17 +620,17 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct QueueFamilyProperties
+	public unsafe struct QueueFamilyProperties
 	{
 		public QueueFlags QueueFlags;
-		public UInt32 QueueCount;
-		public UInt32 TimestampValidBits;
+		public uint QueueCount;
+		public uint TimestampValidBits;
 		public Extent3D MinImageTransferGranularity;
 	}
 
-	unsafe public partial class PhysicalDeviceMemoryProperties
+	public unsafe class PhysicalDeviceMemoryProperties
 	{
-		public UInt32 MemoryTypeCount {
+		public uint MemoryTypeCount {
 			get { return m->MemoryTypeCount; }
 			set { m->MemoryTypeCount = value; }
 		}
@@ -638,7 +638,7 @@ namespace VulkanSharp
 		public MemoryType[] MemoryTypes {
 			get {
 				var arr = new MemoryType [m->MemoryTypeCount];
-				for (int i = 0; i < m->MemoryTypeCount; i++)
+				for (var i = 0; i < m->MemoryTypeCount; i++)
 					unsafe
 					{
 						arr [i] = (&m->MemoryTypes0) [i];
@@ -650,7 +650,7 @@ namespace VulkanSharp
 				if (value.Length > m->MemoryTypeCount)
 					throw new Exception ("array too long");
 				m->MemoryTypeCount = (uint)value.Length;
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
 						(&m->MemoryTypes0) [i] = value [i];
@@ -658,7 +658,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public UInt32 MemoryHeapCount {
+		public uint MemoryHeapCount {
 			get { return m->MemoryHeapCount; }
 			set { m->MemoryHeapCount = value; }
 		}
@@ -666,7 +666,7 @@ namespace VulkanSharp
 		public MemoryHeap[] MemoryHeaps {
 			get {
 				var arr = new MemoryHeap [m->MemoryHeapCount];
-				for (int i = 0; i < m->MemoryHeapCount; i++)
+				for (var i = 0; i < m->MemoryHeapCount; i++)
 					unsafe
 					{
 						arr [i] = (&m->MemoryHeaps0) [i];
@@ -678,7 +678,7 @@ namespace VulkanSharp
 				if (value.Length > m->MemoryHeapCount)
 					throw new Exception ("array too long");
 				m->MemoryHeapCount = (uint)value.Length;
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
 						(&m->MemoryHeaps0) [i] = value [i];
@@ -699,14 +699,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class MemoryAllocateInfo
+	public unsafe class MemoryAllocateInfo
 	{
 		public DeviceSize AllocationSize {
 			get { return m->AllocationSize; }
 			set { m->AllocationSize = value; }
 		}
 
-		public UInt32 MemoryTypeIndex {
+		public uint MemoryTypeIndex {
 			get { return m->MemoryTypeIndex; }
 			set { m->MemoryTypeIndex = value; }
 		}
@@ -732,47 +732,47 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct MemoryRequirements
+	public unsafe struct MemoryRequirements
 	{
 		public DeviceSize Size;
 		public DeviceSize Alignment;
-		public UInt32 MemoryTypeBits;
+		public uint MemoryTypeBits;
 	}
 
-	unsafe public partial struct SparseImageFormatProperties
+	public unsafe struct SparseImageFormatProperties
 	{
 		public ImageAspectFlags AspectMask;
 		public Extent3D ImageGranularity;
 		public SparseImageFormatFlags Flags;
 	}
 
-	unsafe public partial struct SparseImageMemoryRequirements
+	public unsafe struct SparseImageMemoryRequirements
 	{
 		public SparseImageFormatProperties FormatProperties;
-		public UInt32 ImageMipTailFirstLod;
+		public uint ImageMipTailFirstLod;
 		public DeviceSize ImageMipTailSize;
 		public DeviceSize ImageMipTailOffset;
 		public DeviceSize ImageMipTailStride;
 	}
 
-	unsafe public partial struct MemoryType
+	public unsafe struct MemoryType
 	{
 		public MemoryPropertyFlags PropertyFlags;
-		public UInt32 HeapIndex;
+		public uint HeapIndex;
 	}
 
-	unsafe public partial struct MemoryHeap
+	public unsafe struct MemoryHeap
 	{
 		public DeviceSize Size;
 		public MemoryHeapFlags Flags;
 	}
 
-	unsafe public partial class MappedMemoryRange
+	public unsafe class MappedMemoryRange
 	{
 		DeviceMemory lMemory;
 		public DeviceMemory Memory {
 			get { return lMemory; }
-			set { lMemory = value; m->Memory = (UInt64)value.m; }
+			set { lMemory = value; m->Memory = (ulong)value.m; }
 		}
 
 		public DeviceSize Offset {
@@ -806,28 +806,28 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct FormatProperties
+	public unsafe struct FormatProperties
 	{
 		public FormatFeatureFlags LinearTilingFeatures;
 		public FormatFeatureFlags OptimalTilingFeatures;
 		public FormatFeatureFlags BufferFeatures;
 	}
 
-	unsafe public partial struct ImageFormatProperties
+	public unsafe struct ImageFormatProperties
 	{
 		public Extent3D MaxExtent;
-		public UInt32 MaxMipLevels;
-		public UInt32 MaxArrayLayers;
+		public uint MaxMipLevels;
+		public uint MaxArrayLayers;
 		public SampleCountFlags SampleCounts;
 		public DeviceSize MaxResourceSize;
 	}
 
-	unsafe public partial class DescriptorBufferInfo
+	public unsafe class DescriptorBufferInfo
 	{
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (UInt64)value.m; }
+			set { lBuffer = value; m->Buffer = (ulong)value.m; }
 		}
 
 		public DeviceSize Offset {
@@ -860,18 +860,18 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DescriptorImageInfo
+	public unsafe class DescriptorImageInfo
 	{
 		Sampler lSampler;
 		public Sampler Sampler {
 			get { return lSampler; }
-			set { lSampler = value; m->Sampler = (UInt64)value.m; }
+			set { lSampler = value; m->Sampler = (ulong)value.m; }
 		}
 
 		ImageView lImageView;
 		public ImageView ImageView {
 			get { return lImageView; }
-			set { lImageView = value; m->ImageView = (UInt64)value.m; }
+			set { lImageView = value; m->ImageView = (ulong)value.m; }
 		}
 
 		public ImageLayout ImageLayout {
@@ -899,25 +899,25 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class WriteDescriptorSet
+	public unsafe class WriteDescriptorSet
 	{
 		DescriptorSet lDstSet;
 		public DescriptorSet DstSet {
 			get { return lDstSet; }
-			set { lDstSet = value; m->DstSet = (UInt64)value.m; }
+			set { lDstSet = value; m->DstSet = (ulong)value.m; }
 		}
 
-		public UInt32 DstBinding {
+		public uint DstBinding {
 			get { return m->DstBinding; }
 			set { m->DstBinding = value; }
 		}
 
-		public UInt32 DstArrayElement {
+		public uint DstArrayElement {
 			get { return m->DstArrayElement; }
 			set { m->DstArrayElement = value; }
 		}
 
-		public UInt32 DescriptorCount {
+		public uint DescriptorCount {
 			get { return m->DescriptorCount; }
 			set { m->DescriptorCount = value; }
 		}
@@ -934,8 +934,8 @@ namespace VulkanSharp
 				var values = new DescriptorImageInfo [m->DescriptorCount];
 				unsafe
 				{
-					Interop.DescriptorImageInfo* ptr = (Interop.DescriptorImageInfo*)m->ImageInfo;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.DescriptorImageInfo*)m->ImageInfo;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorImageInfo ();
 						*values [i].m = ptr [i];
 					}
@@ -953,8 +953,8 @@ namespace VulkanSharp
 				m->ImageInfo = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorImageInfo)*value.Length));
 				unsafe
 				{
-					Interop.DescriptorImageInfo* ptr = (Interop.DescriptorImageInfo*)m->ImageInfo;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.DescriptorImageInfo*)m->ImageInfo;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -967,8 +967,8 @@ namespace VulkanSharp
 				var values = new DescriptorBufferInfo [m->DescriptorCount];
 				unsafe
 				{
-					Interop.DescriptorBufferInfo* ptr = (Interop.DescriptorBufferInfo*)m->BufferInfo;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.DescriptorBufferInfo*)m->BufferInfo;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorBufferInfo ();
 						*values [i].m = ptr [i];
 					}
@@ -986,8 +986,8 @@ namespace VulkanSharp
 				m->BufferInfo = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorBufferInfo)*value.Length));
 				unsafe
 				{
-					Interop.DescriptorBufferInfo* ptr = (Interop.DescriptorBufferInfo*)m->BufferInfo;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.DescriptorBufferInfo*)m->BufferInfo;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -1000,8 +1000,8 @@ namespace VulkanSharp
 				var values = new BufferView [m->DescriptorCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->TexelBufferView;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->TexelBufferView;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new BufferView ();
 						values [i].m = ptr [i];
 					}
@@ -1016,11 +1016,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->DescriptorCount = (uint)value.Length;
-				m->TexelBufferView = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->TexelBufferView = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->TexelBufferView;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->TexelBufferView;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
@@ -1047,20 +1047,20 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class CopyDescriptorSet
+	public unsafe class CopyDescriptorSet
 	{
 		DescriptorSet lSrcSet;
 		public DescriptorSet SrcSet {
 			get { return lSrcSet; }
-			set { lSrcSet = value; m->SrcSet = (UInt64)value.m; }
+			set { lSrcSet = value; m->SrcSet = (ulong)value.m; }
 		}
 
-		public UInt32 SrcBinding {
+		public uint SrcBinding {
 			get { return m->SrcBinding; }
 			set { m->SrcBinding = value; }
 		}
 
-		public UInt32 SrcArrayElement {
+		public uint SrcArrayElement {
 			get { return m->SrcArrayElement; }
 			set { m->SrcArrayElement = value; }
 		}
@@ -1068,20 +1068,20 @@ namespace VulkanSharp
 		DescriptorSet lDstSet;
 		public DescriptorSet DstSet {
 			get { return lDstSet; }
-			set { lDstSet = value; m->DstSet = (UInt64)value.m; }
+			set { lDstSet = value; m->DstSet = (ulong)value.m; }
 		}
 
-		public UInt32 DstBinding {
+		public uint DstBinding {
 			get { return m->DstBinding; }
 			set { m->DstBinding = value; }
 		}
 
-		public UInt32 DstArrayElement {
+		public uint DstArrayElement {
 			get { return m->DstArrayElement; }
 			set { m->DstArrayElement = value; }
 		}
 
-		public UInt32 DescriptorCount {
+		public uint DescriptorCount {
 			get { return m->DescriptorCount; }
 			set { m->DescriptorCount = value; }
 		}
@@ -1107,7 +1107,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class BufferCreateInfo
+	public unsafe class BufferCreateInfo
 	{
 		public BufferCreateFlags Flags {
 			get { return m->Flags; }
@@ -1129,20 +1129,20 @@ namespace VulkanSharp
 			set { m->SharingMode = value; }
 		}
 
-		public UInt32 QueueFamilyIndexCount {
+		public uint QueueFamilyIndexCount {
 			get { return m->QueueFamilyIndexCount; }
 			set { m->QueueFamilyIndexCount = value; }
 		}
 
-		public UInt32[] QueueFamilyIndices {
+		public uint[] QueueFamilyIndices {
 			get {
 				if (m->QueueFamilyIndexCount == 0)
 					return null;
-				var values = new UInt32 [m->QueueFamilyIndexCount];
+				var values = new uint [m->QueueFamilyIndexCount];
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->QueueFamilyIndices;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (uint*)m->QueueFamilyIndices;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -1155,11 +1155,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->QueueFamilyIndexCount = (uint)value.Length;
-				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(UInt32)*value.Length));
+				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->QueueFamilyIndices;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (uint*)m->QueueFamilyIndices;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -1186,9 +1186,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class BufferViewCreateInfo
+	public unsafe class BufferViewCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -1196,7 +1196,7 @@ namespace VulkanSharp
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (UInt64)value.m; }
+			set { lBuffer = value; m->Buffer = (ulong)value.m; }
 		}
 
 		public Format Format {
@@ -1235,31 +1235,31 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct ImageSubresource
+	public unsafe struct ImageSubresource
 	{
 		public ImageAspectFlags AspectMask;
-		public UInt32 MipLevel;
-		public UInt32 ArrayLayer;
+		public uint MipLevel;
+		public uint ArrayLayer;
 	}
 
-	unsafe public partial struct ImageSubresourceLayers
+	public unsafe struct ImageSubresourceLayers
 	{
 		public ImageAspectFlags AspectMask;
-		public UInt32 MipLevel;
-		public UInt32 BaseArrayLayer;
-		public UInt32 LayerCount;
+		public uint MipLevel;
+		public uint BaseArrayLayer;
+		public uint LayerCount;
 	}
 
-	unsafe public partial struct ImageSubresourceRange
+	public unsafe struct ImageSubresourceRange
 	{
 		public ImageAspectFlags AspectMask;
-		public UInt32 BaseMipLevel;
-		public UInt32 LevelCount;
-		public UInt32 BaseArrayLayer;
-		public UInt32 LayerCount;
+		public uint BaseMipLevel;
+		public uint LevelCount;
+		public uint BaseArrayLayer;
+		public uint LayerCount;
 	}
 
-	unsafe public partial class MemoryBarrier
+	public unsafe class MemoryBarrier
 	{
 		public AccessFlags SrcAccessMask {
 			get { return m->SrcAccessMask; }
@@ -1292,7 +1292,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class BufferMemoryBarrier
+	public unsafe class BufferMemoryBarrier
 	{
 		public AccessFlags SrcAccessMask {
 			get { return m->SrcAccessMask; }
@@ -1304,12 +1304,12 @@ namespace VulkanSharp
 			set { m->DstAccessMask = value; }
 		}
 
-		public UInt32 SrcQueueFamilyIndex {
+		public uint SrcQueueFamilyIndex {
 			get { return m->SrcQueueFamilyIndex; }
 			set { m->SrcQueueFamilyIndex = value; }
 		}
 
-		public UInt32 DstQueueFamilyIndex {
+		public uint DstQueueFamilyIndex {
 			get { return m->DstQueueFamilyIndex; }
 			set { m->DstQueueFamilyIndex = value; }
 		}
@@ -1317,7 +1317,7 @@ namespace VulkanSharp
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (UInt64)value.m; }
+			set { lBuffer = value; m->Buffer = (ulong)value.m; }
 		}
 
 		public DeviceSize Offset {
@@ -1351,7 +1351,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class ImageMemoryBarrier
+	public unsafe class ImageMemoryBarrier
 	{
 		public AccessFlags SrcAccessMask {
 			get { return m->SrcAccessMask; }
@@ -1373,12 +1373,12 @@ namespace VulkanSharp
 			set { m->NewLayout = value; }
 		}
 
-		public UInt32 SrcQueueFamilyIndex {
+		public uint SrcQueueFamilyIndex {
 			get { return m->SrcQueueFamilyIndex; }
 			set { m->SrcQueueFamilyIndex = value; }
 		}
 
-		public UInt32 DstQueueFamilyIndex {
+		public uint DstQueueFamilyIndex {
 			get { return m->DstQueueFamilyIndex; }
 			set { m->DstQueueFamilyIndex = value; }
 		}
@@ -1386,7 +1386,7 @@ namespace VulkanSharp
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (UInt64)value.m; }
+			set { lImage = value; m->Image = (ulong)value.m; }
 		}
 
 		public ImageSubresourceRange SubresourceRange {
@@ -1415,7 +1415,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class ImageCreateInfo
+	public unsafe class ImageCreateInfo
 	{
 		public ImageCreateFlags Flags {
 			get { return m->Flags; }
@@ -1437,12 +1437,12 @@ namespace VulkanSharp
 			set { m->Extent = value; }
 		}
 
-		public UInt32 MipLevels {
+		public uint MipLevels {
 			get { return m->MipLevels; }
 			set { m->MipLevels = value; }
 		}
 
-		public UInt32 ArrayLayers {
+		public uint ArrayLayers {
 			get { return m->ArrayLayers; }
 			set { m->ArrayLayers = value; }
 		}
@@ -1467,20 +1467,20 @@ namespace VulkanSharp
 			set { m->SharingMode = value; }
 		}
 
-		public UInt32 QueueFamilyIndexCount {
+		public uint QueueFamilyIndexCount {
 			get { return m->QueueFamilyIndexCount; }
 			set { m->QueueFamilyIndexCount = value; }
 		}
 
-		public UInt32[] QueueFamilyIndices {
+		public uint[] QueueFamilyIndices {
 			get {
 				if (m->QueueFamilyIndexCount == 0)
 					return null;
-				var values = new UInt32 [m->QueueFamilyIndexCount];
+				var values = new uint [m->QueueFamilyIndexCount];
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->QueueFamilyIndices;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (uint*)m->QueueFamilyIndices;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -1493,11 +1493,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->QueueFamilyIndexCount = (uint)value.Length;
-				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(UInt32)*value.Length));
+				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->QueueFamilyIndices;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (uint*)m->QueueFamilyIndices;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -1529,7 +1529,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct SubresourceLayout
+	public unsafe struct SubresourceLayout
 	{
 		public DeviceSize Offset;
 		public DeviceSize Size;
@@ -1538,9 +1538,9 @@ namespace VulkanSharp
 		public DeviceSize DepthPitch;
 	}
 
-	unsafe public partial class ImageViewCreateInfo
+	public unsafe class ImageViewCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -1548,7 +1548,7 @@ namespace VulkanSharp
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (UInt64)value.m; }
+			set { lImage = value; m->Image = (ulong)value.m; }
 		}
 
 		public ImageViewType ViewType {
@@ -1592,14 +1592,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct BufferCopy
+	public unsafe struct BufferCopy
 	{
 		public DeviceSize SrcOffset;
 		public DeviceSize DstOffset;
 		public DeviceSize Size;
 	}
 
-	unsafe public partial class SparseMemoryBind
+	public unsafe class SparseMemoryBind
 	{
 		public DeviceSize ResourceOffset {
 			get { return m->ResourceOffset; }
@@ -1614,7 +1614,7 @@ namespace VulkanSharp
 		DeviceMemory lMemory;
 		public DeviceMemory Memory {
 			get { return lMemory; }
-			set { lMemory = value; m->Memory = (UInt64)value.m; }
+			set { lMemory = value; m->Memory = (ulong)value.m; }
 		}
 
 		public DeviceSize MemoryOffset {
@@ -1647,7 +1647,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class SparseImageMemoryBind
+	public unsafe class SparseImageMemoryBind
 	{
 		public ImageSubresource Subresource {
 			get { return m->Subresource; }
@@ -1667,7 +1667,7 @@ namespace VulkanSharp
 		DeviceMemory lMemory;
 		public DeviceMemory Memory {
 			get { return lMemory; }
-			set { lMemory = value; m->Memory = (UInt64)value.m; }
+			set { lMemory = value; m->Memory = (ulong)value.m; }
 		}
 
 		public DeviceSize MemoryOffset {
@@ -1700,15 +1700,15 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class SparseBufferMemoryBindInfo
+	public unsafe class SparseBufferMemoryBindInfo
 	{
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (UInt64)value.m; }
+			set { lBuffer = value; m->Buffer = (ulong)value.m; }
 		}
 
-		public UInt32 BindCount {
+		public uint BindCount {
 			get { return m->BindCount; }
 			set { m->BindCount = value; }
 		}
@@ -1720,8 +1720,8 @@ namespace VulkanSharp
 				var values = new SparseMemoryBind [m->BindCount];
 				unsafe
 				{
-					Interop.SparseMemoryBind* ptr = (Interop.SparseMemoryBind*)m->Binds;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseMemoryBind ();
 						*values [i].m = ptr [i];
 					}
@@ -1739,8 +1739,8 @@ namespace VulkanSharp
 				m->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseMemoryBind)*value.Length));
 				unsafe
 				{
-					Interop.SparseMemoryBind* ptr = (Interop.SparseMemoryBind*)m->Binds;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -1766,15 +1766,15 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class SparseImageOpaqueMemoryBindInfo
+	public unsafe class SparseImageOpaqueMemoryBindInfo
 	{
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (UInt64)value.m; }
+			set { lImage = value; m->Image = (ulong)value.m; }
 		}
 
-		public UInt32 BindCount {
+		public uint BindCount {
 			get { return m->BindCount; }
 			set { m->BindCount = value; }
 		}
@@ -1786,8 +1786,8 @@ namespace VulkanSharp
 				var values = new SparseMemoryBind [m->BindCount];
 				unsafe
 				{
-					Interop.SparseMemoryBind* ptr = (Interop.SparseMemoryBind*)m->Binds;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseMemoryBind ();
 						*values [i].m = ptr [i];
 					}
@@ -1805,8 +1805,8 @@ namespace VulkanSharp
 				m->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseMemoryBind)*value.Length));
 				unsafe
 				{
-					Interop.SparseMemoryBind* ptr = (Interop.SparseMemoryBind*)m->Binds;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -1832,15 +1832,15 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class SparseImageMemoryBindInfo
+	public unsafe class SparseImageMemoryBindInfo
 	{
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (UInt64)value.m; }
+			set { lImage = value; m->Image = (ulong)value.m; }
 		}
 
-		public UInt32 BindCount {
+		public uint BindCount {
 			get { return m->BindCount; }
 			set { m->BindCount = value; }
 		}
@@ -1852,8 +1852,8 @@ namespace VulkanSharp
 				var values = new SparseImageMemoryBind [m->BindCount];
 				unsafe
 				{
-					Interop.SparseImageMemoryBind* ptr = (Interop.SparseImageMemoryBind*)m->Binds;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.SparseImageMemoryBind*)m->Binds;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseImageMemoryBind ();
 						*values [i].m = ptr [i];
 					}
@@ -1871,8 +1871,8 @@ namespace VulkanSharp
 				m->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageMemoryBind)*value.Length));
 				unsafe
 				{
-					Interop.SparseImageMemoryBind* ptr = (Interop.SparseImageMemoryBind*)m->Binds;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.SparseImageMemoryBind*)m->Binds;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -1898,9 +1898,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class BindSparseInfo
+	public unsafe class BindSparseInfo
 	{
-		public UInt32 WaitSemaphoreCount {
+		public uint WaitSemaphoreCount {
 			get { return m->WaitSemaphoreCount; }
 			set { m->WaitSemaphoreCount = value; }
 		}
@@ -1912,8 +1912,8 @@ namespace VulkanSharp
 				var values = new Semaphore [m->WaitSemaphoreCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->WaitSemaphores;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->WaitSemaphores;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
 						values [i].m = ptr [i];
 					}
@@ -1928,17 +1928,17 @@ namespace VulkanSharp
 					return;
 				}
 				m->WaitSemaphoreCount = (uint)value.Length;
-				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->WaitSemaphores;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->WaitSemaphores;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
 		}
 
-		public UInt32 BufferBindCount {
+		public uint BufferBindCount {
 			get { return m->BufferBindCount; }
 			set { m->BufferBindCount = value; }
 		}
@@ -1950,8 +1950,8 @@ namespace VulkanSharp
 				var values = new SparseBufferMemoryBindInfo [m->BufferBindCount];
 				unsafe
 				{
-					Interop.SparseBufferMemoryBindInfo* ptr = (Interop.SparseBufferMemoryBindInfo*)m->BufferBinds;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.SparseBufferMemoryBindInfo*)m->BufferBinds;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseBufferMemoryBindInfo ();
 						*values [i].m = ptr [i];
 					}
@@ -1969,14 +1969,14 @@ namespace VulkanSharp
 				m->BufferBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseBufferMemoryBindInfo)*value.Length));
 				unsafe
 				{
-					Interop.SparseBufferMemoryBindInfo* ptr = (Interop.SparseBufferMemoryBindInfo*)m->BufferBinds;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.SparseBufferMemoryBindInfo*)m->BufferBinds;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
 		}
 
-		public UInt32 ImageOpaqueBindCount {
+		public uint ImageOpaqueBindCount {
 			get { return m->ImageOpaqueBindCount; }
 			set { m->ImageOpaqueBindCount = value; }
 		}
@@ -1988,8 +1988,8 @@ namespace VulkanSharp
 				var values = new SparseImageOpaqueMemoryBindInfo [m->ImageOpaqueBindCount];
 				unsafe
 				{
-					Interop.SparseImageOpaqueMemoryBindInfo* ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)m->ImageOpaqueBinds;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)m->ImageOpaqueBinds;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseImageOpaqueMemoryBindInfo ();
 						*values [i].m = ptr [i];
 					}
@@ -2007,14 +2007,14 @@ namespace VulkanSharp
 				m->ImageOpaqueBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageOpaqueMemoryBindInfo)*value.Length));
 				unsafe
 				{
-					Interop.SparseImageOpaqueMemoryBindInfo* ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)m->ImageOpaqueBinds;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)m->ImageOpaqueBinds;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
 		}
 
-		public UInt32 ImageBindCount {
+		public uint ImageBindCount {
 			get { return m->ImageBindCount; }
 			set { m->ImageBindCount = value; }
 		}
@@ -2026,8 +2026,8 @@ namespace VulkanSharp
 				var values = new SparseImageMemoryBindInfo [m->ImageBindCount];
 				unsafe
 				{
-					Interop.SparseImageMemoryBindInfo* ptr = (Interop.SparseImageMemoryBindInfo*)m->ImageBinds;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.SparseImageMemoryBindInfo*)m->ImageBinds;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseImageMemoryBindInfo ();
 						*values [i].m = ptr [i];
 					}
@@ -2045,14 +2045,14 @@ namespace VulkanSharp
 				m->ImageBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageMemoryBindInfo)*value.Length));
 				unsafe
 				{
-					Interop.SparseImageMemoryBindInfo* ptr = (Interop.SparseImageMemoryBindInfo*)m->ImageBinds;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.SparseImageMemoryBindInfo*)m->ImageBinds;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
 		}
 
-		public UInt32 SignalSemaphoreCount {
+		public uint SignalSemaphoreCount {
 			get { return m->SignalSemaphoreCount; }
 			set { m->SignalSemaphoreCount = value; }
 		}
@@ -2064,8 +2064,8 @@ namespace VulkanSharp
 				var values = new Semaphore [m->SignalSemaphoreCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SignalSemaphores;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->SignalSemaphores;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
 						values [i].m = ptr [i];
 					}
@@ -2080,11 +2080,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->SignalSemaphoreCount = (uint)value.Length;
-				m->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SignalSemaphores;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->SignalSemaphores;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
@@ -2111,7 +2111,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct ImageCopy
+	public unsafe struct ImageCopy
 	{
 		public ImageSubresourceLayers SrcSubresource;
 		public Offset3D SrcOffset;
@@ -2120,7 +2120,7 @@ namespace VulkanSharp
 		public Extent3D Extent;
 	}
 
-	unsafe public partial class ImageBlit
+	public unsafe class ImageBlit
 	{
 		public ImageSubresourceLayers SrcSubresource {
 			get { return m->SrcSubresource; }
@@ -2130,7 +2130,7 @@ namespace VulkanSharp
 		public Offset3D[] SrcOffsets {
 			get {
 				var arr = new Offset3D [2];
-				for (int i = 0; i < 2; i++)
+				for (var i = 0; i < 2; i++)
 					unsafe
 					{
 						arr [i] = (&m->SrcOffsets0) [i];
@@ -2141,7 +2141,7 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 2)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
 						(&m->SrcOffsets0) [i] = value [i];
@@ -2157,7 +2157,7 @@ namespace VulkanSharp
 		public Offset3D[] DstOffsets {
 			get {
 				var arr = new Offset3D [2];
-				for (int i = 0; i < 2; i++)
+				for (var i = 0; i < 2; i++)
 					unsafe
 					{
 						arr [i] = (&m->DstOffsets0) [i];
@@ -2168,7 +2168,7 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 2)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
 						(&m->DstOffsets0) [i] = value [i];
@@ -2189,17 +2189,17 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct BufferImageCopy
+	public unsafe struct BufferImageCopy
 	{
 		public DeviceSize BufferOffset;
-		public UInt32 BufferRowLength;
-		public UInt32 BufferImageHeight;
+		public uint BufferRowLength;
+		public uint BufferImageHeight;
 		public ImageSubresourceLayers ImageSubresource;
 		public Offset3D ImageOffset;
 		public Extent3D ImageExtent;
 	}
 
-	unsafe public partial struct ImageResolve
+	public unsafe struct ImageResolve
 	{
 		public ImageSubresourceLayers SrcSubresource;
 		public Offset3D SrcOffset;
@@ -2208,9 +2208,9 @@ namespace VulkanSharp
 		public Extent3D Extent;
 	}
 
-	unsafe public partial class ShaderModuleCreateInfo
+	public unsafe partial class ShaderModuleCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -2220,15 +2220,15 @@ namespace VulkanSharp
 			set { m->CodeSize = value; }
 		}
 
-		public UInt32[] Code {
+		public uint[] Code {
 			get {
 				if (m->CodeSize == UIntPtr.Zero)
 					return null;
-				var values = new UInt32 [((uint)m->CodeSize >> 2)];
+				var values = new uint [((uint)m->CodeSize >> 2)];
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->Code;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (uint*)m->Code;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -2241,11 +2241,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->CodeSize = (UIntPtr)(value.Length << 2);
-				m->Code = Marshal.AllocHGlobal ((int)(sizeof(UInt32)*value.Length));
+				m->Code = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->Code;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (uint*)m->Code;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -2272,9 +2272,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DescriptorSetLayoutBinding
+	public unsafe class DescriptorSetLayoutBinding
 	{
-		public UInt32 Binding {
+		public uint Binding {
 			get { return m->Binding; }
 			set { m->Binding = value; }
 		}
@@ -2284,7 +2284,7 @@ namespace VulkanSharp
 			set { m->DescriptorType = value; }
 		}
 
-		public UInt32 DescriptorCount {
+		public uint DescriptorCount {
 			get { return m->DescriptorCount; }
 			set { m->DescriptorCount = value; }
 		}
@@ -2301,8 +2301,8 @@ namespace VulkanSharp
 				var values = new Sampler [m->DescriptorCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->ImmutableSamplers;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->ImmutableSamplers;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Sampler ();
 						values [i].m = ptr [i];
 					}
@@ -2317,11 +2317,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->DescriptorCount = (uint)value.Length;
-				m->ImmutableSamplers = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->ImmutableSamplers = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->ImmutableSamplers;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->ImmutableSamplers;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
@@ -2340,14 +2340,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DescriptorSetLayoutCreateInfo
+	public unsafe class DescriptorSetLayoutCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 BindingCount {
+		public uint BindingCount {
 			get { return m->BindingCount; }
 			set { m->BindingCount = value; }
 		}
@@ -2359,8 +2359,8 @@ namespace VulkanSharp
 				var values = new DescriptorSetLayoutBinding [m->BindingCount];
 				unsafe
 				{
-					Interop.DescriptorSetLayoutBinding* ptr = (Interop.DescriptorSetLayoutBinding*)m->Bindings;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.DescriptorSetLayoutBinding*)m->Bindings;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorSetLayoutBinding ();
 						*values [i].m = ptr [i];
 					}
@@ -2378,8 +2378,8 @@ namespace VulkanSharp
 				m->Bindings = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorSetLayoutBinding)*value.Length));
 				unsafe
 				{
-					Interop.DescriptorSetLayoutBinding* ptr = (Interop.DescriptorSetLayoutBinding*)m->Bindings;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.DescriptorSetLayoutBinding*)m->Bindings;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -2406,25 +2406,25 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct DescriptorPoolSize
+	public unsafe struct DescriptorPoolSize
 	{
 		public DescriptorType Type;
-		public UInt32 DescriptorCount;
+		public uint DescriptorCount;
 	}
 
-	unsafe public partial class DescriptorPoolCreateInfo
+	public unsafe class DescriptorPoolCreateInfo
 	{
 		public DescriptorPoolCreateFlags Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 MaxSets {
+		public uint MaxSets {
 			get { return m->MaxSets; }
 			set { m->MaxSets = value; }
 		}
 
-		public UInt32 PoolSizeCount {
+		public uint PoolSizeCount {
 			get { return m->PoolSizeCount; }
 			set { m->PoolSizeCount = value; }
 		}
@@ -2436,8 +2436,8 @@ namespace VulkanSharp
 				var values = new DescriptorPoolSize [m->PoolSizeCount];
 				unsafe
 				{
-					DescriptorPoolSize* ptr = (DescriptorPoolSize*)m->PoolSizes;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (DescriptorPoolSize*)m->PoolSizes;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -2453,8 +2453,8 @@ namespace VulkanSharp
 				m->PoolSizes = Marshal.AllocHGlobal ((int)(sizeof(DescriptorPoolSize)*value.Length));
 				unsafe
 				{
-					DescriptorPoolSize* ptr = (DescriptorPoolSize*)m->PoolSizes;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (DescriptorPoolSize*)m->PoolSizes;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -2481,15 +2481,15 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DescriptorSetAllocateInfo
+	public unsafe class DescriptorSetAllocateInfo
 	{
 		DescriptorPool lDescriptorPool;
 		public DescriptorPool DescriptorPool {
 			get { return lDescriptorPool; }
-			set { lDescriptorPool = value; m->DescriptorPool = (UInt64)value.m; }
+			set { lDescriptorPool = value; m->DescriptorPool = (ulong)value.m; }
 		}
 
-		public UInt32 DescriptorSetCount {
+		public uint DescriptorSetCount {
 			get { return m->DescriptorSetCount; }
 			set { m->DescriptorSetCount = value; }
 		}
@@ -2501,8 +2501,8 @@ namespace VulkanSharp
 				var values = new DescriptorSetLayout [m->DescriptorSetCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SetLayouts;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->SetLayouts;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorSetLayout ();
 						values [i].m = ptr [i];
 					}
@@ -2517,11 +2517,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->DescriptorSetCount = (uint)value.Length;
-				m->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SetLayouts;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->SetLayouts;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
@@ -2548,16 +2548,16 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct SpecializationMapEntry
+	public unsafe struct SpecializationMapEntry
 	{
-		public UInt32 ConstantID;
-		public UInt32 Offset;
+		public uint ConstantID;
+		public uint Offset;
 		public UIntPtr Size;
 	}
 
-	unsafe public partial class SpecializationInfo
+	public unsafe class SpecializationInfo
 	{
-		public UInt32 MapEntryCount {
+		public uint MapEntryCount {
 			get { return m->MapEntryCount; }
 			set { m->MapEntryCount = value; }
 		}
@@ -2569,8 +2569,8 @@ namespace VulkanSharp
 				var values = new SpecializationMapEntry [m->MapEntryCount];
 				unsafe
 				{
-					SpecializationMapEntry* ptr = (SpecializationMapEntry*)m->MapEntries;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (SpecializationMapEntry*)m->MapEntries;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -2586,8 +2586,8 @@ namespace VulkanSharp
 				m->MapEntries = Marshal.AllocHGlobal ((int)(sizeof(SpecializationMapEntry)*value.Length));
 				unsafe
 				{
-					SpecializationMapEntry* ptr = (SpecializationMapEntry*)m->MapEntries;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (SpecializationMapEntry*)m->MapEntries;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -2616,9 +2616,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineShaderStageCreateInfo
+	public unsafe class PipelineShaderStageCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -2631,7 +2631,7 @@ namespace VulkanSharp
 		ShaderModule lModule;
 		public ShaderModule Module {
 			get { return lModule; }
-			set { lModule = value; m->Module = (UInt64)value.m; }
+			set { lModule = value; m->Module = (ulong)value.m; }
 		}
 
 		public string Name {
@@ -2666,7 +2666,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class ComputePipelineCreateInfo
+	public unsafe class ComputePipelineCreateInfo
 	{
 		public PipelineCreateFlags Flags {
 			get { return m->Flags; }
@@ -2682,16 +2682,16 @@ namespace VulkanSharp
 		PipelineLayout lLayout;
 		public PipelineLayout Layout {
 			get { return lLayout; }
-			set { lLayout = value; m->Layout = (UInt64)value.m; }
+			set { lLayout = value; m->Layout = (ulong)value.m; }
 		}
 
 		Pipeline lBasePipelineHandle;
 		public Pipeline BasePipelineHandle {
 			get { return lBasePipelineHandle; }
-			set { lBasePipelineHandle = value; m->BasePipelineHandle = (UInt64)value.m; }
+			set { lBasePipelineHandle = value; m->BasePipelineHandle = (ulong)value.m; }
 		}
 
-		public Int32 BasePipelineIndex {
+		public int BasePipelineIndex {
 			get { return m->BasePipelineIndex; }
 			set { m->BasePipelineIndex = value; }
 		}
@@ -2718,29 +2718,29 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct VertexInputBindingDescription
+	public unsafe struct VertexInputBindingDescription
 	{
-		public UInt32 Binding;
-		public UInt32 Stride;
+		public uint Binding;
+		public uint Stride;
 		public VertexInputRate InputRate;
 	}
 
-	unsafe public partial struct VertexInputAttributeDescription
+	public unsafe struct VertexInputAttributeDescription
 	{
-		public UInt32 Location;
-		public UInt32 Binding;
+		public uint Location;
+		public uint Binding;
 		public Format Format;
-		public UInt32 Offset;
+		public uint Offset;
 	}
 
-	unsafe public partial class PipelineVertexInputStateCreateInfo
+	public unsafe class PipelineVertexInputStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 VertexBindingDescriptionCount {
+		public uint VertexBindingDescriptionCount {
 			get { return m->VertexBindingDescriptionCount; }
 			set { m->VertexBindingDescriptionCount = value; }
 		}
@@ -2752,8 +2752,8 @@ namespace VulkanSharp
 				var values = new VertexInputBindingDescription [m->VertexBindingDescriptionCount];
 				unsafe
 				{
-					VertexInputBindingDescription* ptr = (VertexInputBindingDescription*)m->VertexBindingDescriptions;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (VertexInputBindingDescription*)m->VertexBindingDescriptions;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -2769,14 +2769,14 @@ namespace VulkanSharp
 				m->VertexBindingDescriptions = Marshal.AllocHGlobal ((int)(sizeof(VertexInputBindingDescription)*value.Length));
 				unsafe
 				{
-					VertexInputBindingDescription* ptr = (VertexInputBindingDescription*)m->VertexBindingDescriptions;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (VertexInputBindingDescription*)m->VertexBindingDescriptions;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
 
-		public UInt32 VertexAttributeDescriptionCount {
+		public uint VertexAttributeDescriptionCount {
 			get { return m->VertexAttributeDescriptionCount; }
 			set { m->VertexAttributeDescriptionCount = value; }
 		}
@@ -2788,8 +2788,8 @@ namespace VulkanSharp
 				var values = new VertexInputAttributeDescription [m->VertexAttributeDescriptionCount];
 				unsafe
 				{
-					VertexInputAttributeDescription* ptr = (VertexInputAttributeDescription*)m->VertexAttributeDescriptions;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (VertexInputAttributeDescription*)m->VertexAttributeDescriptions;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -2805,8 +2805,8 @@ namespace VulkanSharp
 				m->VertexAttributeDescriptions = Marshal.AllocHGlobal ((int)(sizeof(VertexInputAttributeDescription)*value.Length));
 				unsafe
 				{
-					VertexInputAttributeDescription* ptr = (VertexInputAttributeDescription*)m->VertexAttributeDescriptions;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (VertexInputAttributeDescription*)m->VertexAttributeDescriptions;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -2833,9 +2833,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineInputAssemblyStateCreateInfo
+	public unsafe class PipelineInputAssemblyStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -2871,14 +2871,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineTessellationStateCreateInfo
+	public unsafe class PipelineTessellationStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 PatchControlPoints {
+		public uint PatchControlPoints {
 			get { return m->PatchControlPoints; }
 			set { m->PatchControlPoints = value; }
 		}
@@ -2904,14 +2904,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineViewportStateCreateInfo
+	public unsafe class PipelineViewportStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 ViewportCount {
+		public uint ViewportCount {
 			get { return m->ViewportCount; }
 			set { m->ViewportCount = value; }
 		}
@@ -2923,8 +2923,8 @@ namespace VulkanSharp
 				var values = new Viewport [m->ViewportCount];
 				unsafe
 				{
-					Viewport* ptr = (Viewport*)m->Viewports;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (Viewport*)m->Viewports;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -2940,14 +2940,14 @@ namespace VulkanSharp
 				m->Viewports = Marshal.AllocHGlobal ((int)(sizeof(Viewport)*value.Length));
 				unsafe
 				{
-					Viewport* ptr = (Viewport*)m->Viewports;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Viewport*)m->Viewports;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
 
-		public UInt32 ScissorCount {
+		public uint ScissorCount {
 			get { return m->ScissorCount; }
 			set { m->ScissorCount = value; }
 		}
@@ -2959,8 +2959,8 @@ namespace VulkanSharp
 				var values = new Rect2D [m->ScissorCount];
 				unsafe
 				{
-					Rect2D* ptr = (Rect2D*)m->Scissors;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (Rect2D*)m->Scissors;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -2976,8 +2976,8 @@ namespace VulkanSharp
 				m->Scissors = Marshal.AllocHGlobal ((int)(sizeof(Rect2D)*value.Length));
 				unsafe
 				{
-					Rect2D* ptr = (Rect2D*)m->Scissors;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Rect2D*)m->Scissors;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -3004,9 +3004,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineRasterizationStateCreateInfo
+	public unsafe class PipelineRasterizationStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -3082,9 +3082,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineMultisampleStateCreateInfo
+	public unsafe class PipelineMultisampleStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -3104,15 +3104,15 @@ namespace VulkanSharp
 			set { m->MinSampleShading = value; }
 		}
 
-		public UInt32[] SampleMask {
+		public uint[] SampleMask {
 			get {
 				if (m->RasterizationSamples == 0)
 					return null;
-				var values = new UInt32 [((uint)m->RasterizationSamples >> 5)];
+				var values = new uint [((uint)m->RasterizationSamples >> 5)];
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->SampleMask;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (uint*)m->SampleMask;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -3125,11 +3125,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->RasterizationSamples = (SampleCountFlags)(value.Length << 5);
-				m->SampleMask = Marshal.AllocHGlobal ((int)(sizeof(UInt32)*value.Length));
+				m->SampleMask = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->SampleMask;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (uint*)m->SampleMask;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -3166,7 +3166,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct PipelineColorBlendAttachmentState
+	public unsafe struct PipelineColorBlendAttachmentState
 	{
 		public Bool32 BlendEnable;
 		public BlendFactor SrcColorBlendFactor;
@@ -3178,9 +3178,9 @@ namespace VulkanSharp
 		public ColorComponentFlags ColorWriteMask;
 	}
 
-	unsafe public partial class PipelineColorBlendStateCreateInfo
+	public unsafe class PipelineColorBlendStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -3195,7 +3195,7 @@ namespace VulkanSharp
 			set { m->LogicOp = value; }
 		}
 
-		public UInt32 AttachmentCount {
+		public uint AttachmentCount {
 			get { return m->AttachmentCount; }
 			set { m->AttachmentCount = value; }
 		}
@@ -3207,8 +3207,8 @@ namespace VulkanSharp
 				var values = new PipelineColorBlendAttachmentState [m->AttachmentCount];
 				unsafe
 				{
-					PipelineColorBlendAttachmentState* ptr = (PipelineColorBlendAttachmentState*)m->Attachments;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (PipelineColorBlendAttachmentState*)m->Attachments;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -3224,8 +3224,8 @@ namespace VulkanSharp
 				m->Attachments = Marshal.AllocHGlobal ((int)(sizeof(PipelineColorBlendAttachmentState)*value.Length));
 				unsafe
 				{
-					PipelineColorBlendAttachmentState* ptr = (PipelineColorBlendAttachmentState*)m->Attachments;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (PipelineColorBlendAttachmentState*)m->Attachments;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -3234,7 +3234,7 @@ namespace VulkanSharp
 		public float[] BlendConstants {
 			get {
 				var arr = new float [4];
-				for (int i = 0; i < 4; i++)
+				for (var i = 0; i < 4; i++)
 					arr [i] = m->BlendConstants [i];
 				return arr;
 			}
@@ -3242,9 +3242,9 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 4)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->BlendConstants [i] = value [i];
-				for (int i = value.Length; i < 4; i++)
+				for (var i = value.Length; i < 4; i++)
 					m->BlendConstants [i] = 0;
 			}
 		}
@@ -3270,14 +3270,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineDynamicStateCreateInfo
+	public unsafe class PipelineDynamicStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 DynamicStateCount {
+		public uint DynamicStateCount {
 			get { return m->DynamicStateCount; }
 			set { m->DynamicStateCount = value; }
 		}
@@ -3289,8 +3289,8 @@ namespace VulkanSharp
 				var values = new DynamicState [m->DynamicStateCount];
 				unsafe
 				{
-					DynamicState* ptr = (DynamicState*)m->DynamicStates;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (DynamicState*)m->DynamicStates;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -3306,8 +3306,8 @@ namespace VulkanSharp
 				m->DynamicStates = Marshal.AllocHGlobal ((int)(sizeof(DynamicState)*value.Length));
 				unsafe
 				{
-					DynamicState* ptr = (DynamicState*)m->DynamicStates;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (DynamicState*)m->DynamicStates;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -3334,20 +3334,20 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct StencilOpState
+	public unsafe struct StencilOpState
 	{
 		public StencilOp FailOp;
 		public StencilOp PassOp;
 		public StencilOp DepthFailOp;
 		public CompareOp CompareOp;
-		public UInt32 CompareMask;
-		public UInt32 WriteMask;
-		public UInt32 Reference;
+		public uint CompareMask;
+		public uint WriteMask;
+		public uint Reference;
 	}
 
-	unsafe public partial class PipelineDepthStencilStateCreateInfo
+	public unsafe class PipelineDepthStencilStateCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -3418,14 +3418,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class GraphicsPipelineCreateInfo
+	public unsafe class GraphicsPipelineCreateInfo
 	{
 		public PipelineCreateFlags Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 StageCount {
+		public uint StageCount {
 			get { return m->StageCount; }
 			set { m->StageCount = value; }
 		}
@@ -3437,8 +3437,8 @@ namespace VulkanSharp
 				var values = new PipelineShaderStageCreateInfo [m->StageCount];
 				unsafe
 				{
-					Interop.PipelineShaderStageCreateInfo* ptr = (Interop.PipelineShaderStageCreateInfo*)m->Stages;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.PipelineShaderStageCreateInfo*)m->Stages;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new PipelineShaderStageCreateInfo ();
 						*values [i].m = ptr [i];
 					}
@@ -3456,8 +3456,8 @@ namespace VulkanSharp
 				m->Stages = Marshal.AllocHGlobal ((int)(sizeof(Interop.PipelineShaderStageCreateInfo)*value.Length));
 				unsafe
 				{
-					Interop.PipelineShaderStageCreateInfo* ptr = (Interop.PipelineShaderStageCreateInfo*)m->Stages;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.PipelineShaderStageCreateInfo*)m->Stages;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -3520,16 +3520,16 @@ namespace VulkanSharp
 		PipelineLayout lLayout;
 		public PipelineLayout Layout {
 			get { return lLayout; }
-			set { lLayout = value; m->Layout = (UInt64)value.m; }
+			set { lLayout = value; m->Layout = (ulong)value.m; }
 		}
 
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (UInt64)value.m; }
+			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
 		}
 
-		public UInt32 Subpass {
+		public uint Subpass {
 			get { return m->Subpass; }
 			set { m->Subpass = value; }
 		}
@@ -3537,10 +3537,10 @@ namespace VulkanSharp
 		Pipeline lBasePipelineHandle;
 		public Pipeline BasePipelineHandle {
 			get { return lBasePipelineHandle; }
-			set { lBasePipelineHandle = value; m->BasePipelineHandle = (UInt64)value.m; }
+			set { lBasePipelineHandle = value; m->BasePipelineHandle = (ulong)value.m; }
 		}
 
-		public Int32 BasePipelineIndex {
+		public int BasePipelineIndex {
 			get { return m->BasePipelineIndex; }
 			set { m->BasePipelineIndex = value; }
 		}
@@ -3566,9 +3566,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineCacheCreateInfo
+	public unsafe class PipelineCacheCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -3604,21 +3604,21 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct PushConstantRange
+	public unsafe struct PushConstantRange
 	{
 		public ShaderStageFlags StageFlags;
-		public UInt32 Offset;
-		public UInt32 Size;
+		public uint Offset;
+		public uint Size;
 	}
 
-	unsafe public partial class PipelineLayoutCreateInfo
+	public unsafe class PipelineLayoutCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 SetLayoutCount {
+		public uint SetLayoutCount {
 			get { return m->SetLayoutCount; }
 			set { m->SetLayoutCount = value; }
 		}
@@ -3630,8 +3630,8 @@ namespace VulkanSharp
 				var values = new DescriptorSetLayout [m->SetLayoutCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SetLayouts;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->SetLayouts;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorSetLayout ();
 						values [i].m = ptr [i];
 					}
@@ -3646,17 +3646,17 @@ namespace VulkanSharp
 					return;
 				}
 				m->SetLayoutCount = (uint)value.Length;
-				m->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SetLayouts;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->SetLayouts;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
 		}
 
-		public UInt32 PushConstantRangeCount {
+		public uint PushConstantRangeCount {
 			get { return m->PushConstantRangeCount; }
 			set { m->PushConstantRangeCount = value; }
 		}
@@ -3668,8 +3668,8 @@ namespace VulkanSharp
 				var values = new PushConstantRange [m->PushConstantRangeCount];
 				unsafe
 				{
-					PushConstantRange* ptr = (PushConstantRange*)m->PushConstantRanges;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (PushConstantRange*)m->PushConstantRanges;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -3685,8 +3685,8 @@ namespace VulkanSharp
 				m->PushConstantRanges = Marshal.AllocHGlobal ((int)(sizeof(PushConstantRange)*value.Length));
 				unsafe
 				{
-					PushConstantRange* ptr = (PushConstantRange*)m->PushConstantRanges;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (PushConstantRange*)m->PushConstantRanges;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -3713,9 +3713,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class SamplerCreateInfo
+	public unsafe class SamplerCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -3816,14 +3816,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class CommandPoolCreateInfo
+	public unsafe class CommandPoolCreateInfo
 	{
 		public CommandPoolCreateFlags Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 QueueFamilyIndex {
+		public uint QueueFamilyIndex {
 			get { return m->QueueFamilyIndex; }
 			set { m->QueueFamilyIndex = value; }
 		}
@@ -3849,12 +3849,12 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class CommandBufferAllocateInfo
+	public unsafe class CommandBufferAllocateInfo
 	{
 		CommandPool lCommandPool;
 		public CommandPool CommandPool {
 			get { return lCommandPool; }
-			set { lCommandPool = value; m->CommandPool = (UInt64)value.m; }
+			set { lCommandPool = value; m->CommandPool = (ulong)value.m; }
 		}
 
 		public CommandBufferLevel Level {
@@ -3862,7 +3862,7 @@ namespace VulkanSharp
 			set { m->Level = value; }
 		}
 
-		public UInt32 CommandBufferCount {
+		public uint CommandBufferCount {
 			get { return m->CommandBufferCount; }
 			set { m->CommandBufferCount = value; }
 		}
@@ -3888,15 +3888,15 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class CommandBufferInheritanceInfo
+	public unsafe class CommandBufferInheritanceInfo
 	{
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (UInt64)value.m; }
+			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
 		}
 
-		public UInt32 Subpass {
+		public uint Subpass {
 			get { return m->Subpass; }
 			set { m->Subpass = value; }
 		}
@@ -3904,7 +3904,7 @@ namespace VulkanSharp
 		Framebuffer lFramebuffer;
 		public Framebuffer Framebuffer {
 			get { return lFramebuffer; }
-			set { lFramebuffer = value; m->Framebuffer = (UInt64)value.m; }
+			set { lFramebuffer = value; m->Framebuffer = (ulong)value.m; }
 		}
 
 		public bool OcclusionQueryEnable {
@@ -3943,7 +3943,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class CommandBufferBeginInfo
+	public unsafe class CommandBufferBeginInfo
 	{
 		public CommandBufferUsageFlags Flags {
 			get { return m->Flags; }
@@ -3977,18 +3977,18 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class RenderPassBeginInfo
+	public unsafe class RenderPassBeginInfo
 	{
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (UInt64)value.m; }
+			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
 		}
 
 		Framebuffer lFramebuffer;
 		public Framebuffer Framebuffer {
 			get { return lFramebuffer; }
-			set { lFramebuffer = value; m->Framebuffer = (UInt64)value.m; }
+			set { lFramebuffer = value; m->Framebuffer = (ulong)value.m; }
 		}
 
 		public Rect2D RenderArea {
@@ -3996,7 +3996,7 @@ namespace VulkanSharp
 			set { m->RenderArea = value; }
 		}
 
-		public UInt32 ClearValueCount {
+		public uint ClearValueCount {
 			get { return m->ClearValueCount; }
 			set { m->ClearValueCount = value; }
 		}
@@ -4008,8 +4008,8 @@ namespace VulkanSharp
 				var values = new ClearValue [m->ClearValueCount];
 				unsafe
 				{
-					Interop.ClearValue* ptr = (Interop.ClearValue*)m->ClearValues;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.ClearValue*)m->ClearValues;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new ClearValue ();
 						*values [i].m = ptr [i];
 					}
@@ -4027,8 +4027,8 @@ namespace VulkanSharp
 				m->ClearValues = Marshal.AllocHGlobal ((int)(sizeof(Interop.ClearValue)*value.Length));
 				unsafe
 				{
-					Interop.ClearValue* ptr = (Interop.ClearValue*)m->ClearValues;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.ClearValue*)m->ClearValues;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
@@ -4055,20 +4055,20 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct ClearDepthStencilValue
+	public unsafe struct ClearDepthStencilValue
 	{
 		public float Depth;
-		public UInt32 Stencil;
+		public uint Stencil;
 	}
 
-	unsafe public partial struct ClearAttachment
+	public unsafe struct ClearAttachment
 	{
 		public ImageAspectFlags AspectMask;
-		public UInt32 ColorAttachment;
+		public uint ColorAttachment;
 		public IntPtr ClearValue;
 	}
 
-	unsafe public partial struct AttachmentDescription
+	public unsafe struct AttachmentDescription
 	{
 		public AttachmentDescriptionFlags Flags;
 		public Format Format;
@@ -4081,15 +4081,15 @@ namespace VulkanSharp
 		public ImageLayout FinalLayout;
 	}
 
-	unsafe public partial struct AttachmentReference
+	public unsafe struct AttachmentReference
 	{
-		public UInt32 Attachment;
+		public uint Attachment;
 		public ImageLayout Layout;
 	}
 
-	unsafe public partial class SubpassDescription
+	public unsafe class SubpassDescription
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -4099,7 +4099,7 @@ namespace VulkanSharp
 			set { m->PipelineBindPoint = value; }
 		}
 
-		public UInt32 InputAttachmentCount {
+		public uint InputAttachmentCount {
 			get { return m->InputAttachmentCount; }
 			set { m->InputAttachmentCount = value; }
 		}
@@ -4111,8 +4111,8 @@ namespace VulkanSharp
 				var values = new AttachmentReference [m->InputAttachmentCount];
 				unsafe
 				{
-					AttachmentReference* ptr = (AttachmentReference*)m->InputAttachments;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (AttachmentReference*)m->InputAttachments;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -4128,14 +4128,14 @@ namespace VulkanSharp
 				m->InputAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
 				unsafe
 				{
-					AttachmentReference* ptr = (AttachmentReference*)m->InputAttachments;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (AttachmentReference*)m->InputAttachments;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
 
-		public UInt32 ColorAttachmentCount {
+		public uint ColorAttachmentCount {
 			get { return m->ColorAttachmentCount; }
 			set { m->ColorAttachmentCount = value; }
 		}
@@ -4147,8 +4147,8 @@ namespace VulkanSharp
 				var values = new AttachmentReference [m->ColorAttachmentCount];
 				unsafe
 				{
-					AttachmentReference* ptr = (AttachmentReference*)m->ColorAttachments;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (AttachmentReference*)m->ColorAttachments;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -4164,8 +4164,8 @@ namespace VulkanSharp
 				m->ColorAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
 				unsafe
 				{
-					AttachmentReference* ptr = (AttachmentReference*)m->ColorAttachments;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (AttachmentReference*)m->ColorAttachments;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -4178,8 +4178,8 @@ namespace VulkanSharp
 				var values = new AttachmentReference [m->ColorAttachmentCount];
 				unsafe
 				{
-					AttachmentReference* ptr = (AttachmentReference*)m->ResolveAttachments;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (AttachmentReference*)m->ResolveAttachments;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -4195,8 +4195,8 @@ namespace VulkanSharp
 				m->ResolveAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
 				unsafe
 				{
-					AttachmentReference* ptr = (AttachmentReference*)m->ResolveAttachments;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (AttachmentReference*)m->ResolveAttachments;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -4207,20 +4207,20 @@ namespace VulkanSharp
 			set { m->DepthStencilAttachment = Interop.Structure.MarshalObjectToPointer (m->DepthStencilAttachment, value); }
 		}
 
-		public UInt32 PreserveAttachmentCount {
+		public uint PreserveAttachmentCount {
 			get { return m->PreserveAttachmentCount; }
 			set { m->PreserveAttachmentCount = value; }
 		}
 
-		public UInt32[] PreserveAttachments {
+		public uint[] PreserveAttachments {
 			get {
 				if (m->PreserveAttachmentCount == 0)
 					return null;
-				var values = new UInt32 [m->PreserveAttachmentCount];
+				var values = new uint [m->PreserveAttachmentCount];
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->PreserveAttachments;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (uint*)m->PreserveAttachments;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -4233,11 +4233,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->PreserveAttachmentCount = (uint)value.Length;
-				m->PreserveAttachments = Marshal.AllocHGlobal ((int)(sizeof(UInt32)*value.Length));
+				m->PreserveAttachments = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->PreserveAttachments;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (uint*)m->PreserveAttachments;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -4256,10 +4256,10 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct SubpassDependency
+	public unsafe struct SubpassDependency
 	{
-		public UInt32 SrcSubpass;
-		public UInt32 DstSubpass;
+		public uint SrcSubpass;
+		public uint DstSubpass;
 		public PipelineStageFlags SrcStageMask;
 		public PipelineStageFlags DstStageMask;
 		public AccessFlags SrcAccessMask;
@@ -4267,14 +4267,14 @@ namespace VulkanSharp
 		public DependencyFlags DependencyFlags;
 	}
 
-	unsafe public partial class RenderPassCreateInfo
+	public unsafe class RenderPassCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
 
-		public UInt32 AttachmentCount {
+		public uint AttachmentCount {
 			get { return m->AttachmentCount; }
 			set { m->AttachmentCount = value; }
 		}
@@ -4286,8 +4286,8 @@ namespace VulkanSharp
 				var values = new AttachmentDescription [m->AttachmentCount];
 				unsafe
 				{
-					AttachmentDescription* ptr = (AttachmentDescription*)m->Attachments;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (AttachmentDescription*)m->Attachments;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -4303,14 +4303,14 @@ namespace VulkanSharp
 				m->Attachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentDescription)*value.Length));
 				unsafe
 				{
-					AttachmentDescription* ptr = (AttachmentDescription*)m->Attachments;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (AttachmentDescription*)m->Attachments;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
 
-		public UInt32 SubpassCount {
+		public uint SubpassCount {
 			get { return m->SubpassCount; }
 			set { m->SubpassCount = value; }
 		}
@@ -4322,8 +4322,8 @@ namespace VulkanSharp
 				var values = new SubpassDescription [m->SubpassCount];
 				unsafe
 				{
-					Interop.SubpassDescription* ptr = (Interop.SubpassDescription*)m->Subpasses;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (Interop.SubpassDescription*)m->Subpasses;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SubpassDescription ();
 						*values [i].m = ptr [i];
 					}
@@ -4341,14 +4341,14 @@ namespace VulkanSharp
 				m->Subpasses = Marshal.AllocHGlobal ((int)(sizeof(Interop.SubpassDescription)*value.Length));
 				unsafe
 				{
-					Interop.SubpassDescription* ptr = (Interop.SubpassDescription*)m->Subpasses;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Interop.SubpassDescription*)m->Subpasses;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = *value [i].m;
 				}
 			}
 		}
 
-		public UInt32 DependencyCount {
+		public uint DependencyCount {
 			get { return m->DependencyCount; }
 			set { m->DependencyCount = value; }
 		}
@@ -4360,8 +4360,8 @@ namespace VulkanSharp
 				var values = new SubpassDependency [m->DependencyCount];
 				unsafe
 				{
-					SubpassDependency* ptr = (SubpassDependency*)m->Dependencies;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (SubpassDependency*)m->Dependencies;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -4377,8 +4377,8 @@ namespace VulkanSharp
 				m->Dependencies = Marshal.AllocHGlobal ((int)(sizeof(SubpassDependency)*value.Length));
 				unsafe
 				{
-					SubpassDependency* ptr = (SubpassDependency*)m->Dependencies;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (SubpassDependency*)m->Dependencies;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -4405,9 +4405,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class EventCreateInfo
+	public unsafe class EventCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -4433,7 +4433,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class FenceCreateInfo
+	public unsafe class FenceCreateInfo
 	{
 		public FenceCreateFlags Flags {
 			get { return m->Flags; }
@@ -4461,7 +4461,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct PhysicalDeviceFeatures
+	public unsafe struct PhysicalDeviceFeatures
 	{
 		public Bool32 RobustBufferAccess;
 		public Bool32 FullDrawIndexUint32;
@@ -4520,7 +4520,7 @@ namespace VulkanSharp
 		public Bool32 InheritedQueries;
 	}
 
-	unsafe public partial struct PhysicalDeviceSparseProperties
+	public unsafe struct PhysicalDeviceSparseProperties
 	{
 		public Bool32 ResidencyStandard2DBlockShape;
 		public Bool32 ResidencyStandard2DMultisampleBlockShape;
@@ -4529,59 +4529,59 @@ namespace VulkanSharp
 		public Bool32 ResidencyNonResidentStrict;
 	}
 
-	unsafe public partial class PhysicalDeviceLimits
+	public unsafe class PhysicalDeviceLimits
 	{
-		public UInt32 MaxImageDimension1D {
+		public uint MaxImageDimension1D {
 			get { return m->MaxImageDimension1D; }
 			set { m->MaxImageDimension1D = value; }
 		}
 
-		public UInt32 MaxImageDimension2D {
+		public uint MaxImageDimension2D {
 			get { return m->MaxImageDimension2D; }
 			set { m->MaxImageDimension2D = value; }
 		}
 
-		public UInt32 MaxImageDimension3D {
+		public uint MaxImageDimension3D {
 			get { return m->MaxImageDimension3D; }
 			set { m->MaxImageDimension3D = value; }
 		}
 
-		public UInt32 MaxImageDimensionCube {
+		public uint MaxImageDimensionCube {
 			get { return m->MaxImageDimensionCube; }
 			set { m->MaxImageDimensionCube = value; }
 		}
 
-		public UInt32 MaxImageArrayLayers {
+		public uint MaxImageArrayLayers {
 			get { return m->MaxImageArrayLayers; }
 			set { m->MaxImageArrayLayers = value; }
 		}
 
-		public UInt32 MaxTexelBufferElements {
+		public uint MaxTexelBufferElements {
 			get { return m->MaxTexelBufferElements; }
 			set { m->MaxTexelBufferElements = value; }
 		}
 
-		public UInt32 MaxUniformBufferRange {
+		public uint MaxUniformBufferRange {
 			get { return m->MaxUniformBufferRange; }
 			set { m->MaxUniformBufferRange = value; }
 		}
 
-		public UInt32 MaxStorageBufferRange {
+		public uint MaxStorageBufferRange {
 			get { return m->MaxStorageBufferRange; }
 			set { m->MaxStorageBufferRange = value; }
 		}
 
-		public UInt32 MaxPushConstantsSize {
+		public uint MaxPushConstantsSize {
 			get { return m->MaxPushConstantsSize; }
 			set { m->MaxPushConstantsSize = value; }
 		}
 
-		public UInt32 MaxMemoryAllocationCount {
+		public uint MaxMemoryAllocationCount {
 			get { return m->MaxMemoryAllocationCount; }
 			set { m->MaxMemoryAllocationCount = value; }
 		}
 
-		public UInt32 MaxSamplerAllocationCount {
+		public uint MaxSamplerAllocationCount {
 			get { return m->MaxSamplerAllocationCount; }
 			set { m->MaxSamplerAllocationCount = value; }
 		}
@@ -4596,205 +4596,205 @@ namespace VulkanSharp
 			set { m->SparseAddressSpaceSize = value; }
 		}
 
-		public UInt32 MaxBoundDescriptorSets {
+		public uint MaxBoundDescriptorSets {
 			get { return m->MaxBoundDescriptorSets; }
 			set { m->MaxBoundDescriptorSets = value; }
 		}
 
-		public UInt32 MaxPerStageDescriptorSamplers {
+		public uint MaxPerStageDescriptorSamplers {
 			get { return m->MaxPerStageDescriptorSamplers; }
 			set { m->MaxPerStageDescriptorSamplers = value; }
 		}
 
-		public UInt32 MaxPerStageDescriptorUniformBuffers {
+		public uint MaxPerStageDescriptorUniformBuffers {
 			get { return m->MaxPerStageDescriptorUniformBuffers; }
 			set { m->MaxPerStageDescriptorUniformBuffers = value; }
 		}
 
-		public UInt32 MaxPerStageDescriptorStorageBuffers {
+		public uint MaxPerStageDescriptorStorageBuffers {
 			get { return m->MaxPerStageDescriptorStorageBuffers; }
 			set { m->MaxPerStageDescriptorStorageBuffers = value; }
 		}
 
-		public UInt32 MaxPerStageDescriptorSampledImages {
+		public uint MaxPerStageDescriptorSampledImages {
 			get { return m->MaxPerStageDescriptorSampledImages; }
 			set { m->MaxPerStageDescriptorSampledImages = value; }
 		}
 
-		public UInt32 MaxPerStageDescriptorStorageImages {
+		public uint MaxPerStageDescriptorStorageImages {
 			get { return m->MaxPerStageDescriptorStorageImages; }
 			set { m->MaxPerStageDescriptorStorageImages = value; }
 		}
 
-		public UInt32 MaxPerStageDescriptorInputAttachments {
+		public uint MaxPerStageDescriptorInputAttachments {
 			get { return m->MaxPerStageDescriptorInputAttachments; }
 			set { m->MaxPerStageDescriptorInputAttachments = value; }
 		}
 
-		public UInt32 MaxPerStageResources {
+		public uint MaxPerStageResources {
 			get { return m->MaxPerStageResources; }
 			set { m->MaxPerStageResources = value; }
 		}
 
-		public UInt32 MaxDescriptorSetSamplers {
+		public uint MaxDescriptorSetSamplers {
 			get { return m->MaxDescriptorSetSamplers; }
 			set { m->MaxDescriptorSetSamplers = value; }
 		}
 
-		public UInt32 MaxDescriptorSetUniformBuffers {
+		public uint MaxDescriptorSetUniformBuffers {
 			get { return m->MaxDescriptorSetUniformBuffers; }
 			set { m->MaxDescriptorSetUniformBuffers = value; }
 		}
 
-		public UInt32 MaxDescriptorSetUniformBuffersDynamic {
+		public uint MaxDescriptorSetUniformBuffersDynamic {
 			get { return m->MaxDescriptorSetUniformBuffersDynamic; }
 			set { m->MaxDescriptorSetUniformBuffersDynamic = value; }
 		}
 
-		public UInt32 MaxDescriptorSetStorageBuffers {
+		public uint MaxDescriptorSetStorageBuffers {
 			get { return m->MaxDescriptorSetStorageBuffers; }
 			set { m->MaxDescriptorSetStorageBuffers = value; }
 		}
 
-		public UInt32 MaxDescriptorSetStorageBuffersDynamic {
+		public uint MaxDescriptorSetStorageBuffersDynamic {
 			get { return m->MaxDescriptorSetStorageBuffersDynamic; }
 			set { m->MaxDescriptorSetStorageBuffersDynamic = value; }
 		}
 
-		public UInt32 MaxDescriptorSetSampledImages {
+		public uint MaxDescriptorSetSampledImages {
 			get { return m->MaxDescriptorSetSampledImages; }
 			set { m->MaxDescriptorSetSampledImages = value; }
 		}
 
-		public UInt32 MaxDescriptorSetStorageImages {
+		public uint MaxDescriptorSetStorageImages {
 			get { return m->MaxDescriptorSetStorageImages; }
 			set { m->MaxDescriptorSetStorageImages = value; }
 		}
 
-		public UInt32 MaxDescriptorSetInputAttachments {
+		public uint MaxDescriptorSetInputAttachments {
 			get { return m->MaxDescriptorSetInputAttachments; }
 			set { m->MaxDescriptorSetInputAttachments = value; }
 		}
 
-		public UInt32 MaxVertexInputAttributes {
+		public uint MaxVertexInputAttributes {
 			get { return m->MaxVertexInputAttributes; }
 			set { m->MaxVertexInputAttributes = value; }
 		}
 
-		public UInt32 MaxVertexInputBindings {
+		public uint MaxVertexInputBindings {
 			get { return m->MaxVertexInputBindings; }
 			set { m->MaxVertexInputBindings = value; }
 		}
 
-		public UInt32 MaxVertexInputAttributeOffset {
+		public uint MaxVertexInputAttributeOffset {
 			get { return m->MaxVertexInputAttributeOffset; }
 			set { m->MaxVertexInputAttributeOffset = value; }
 		}
 
-		public UInt32 MaxVertexInputBindingStride {
+		public uint MaxVertexInputBindingStride {
 			get { return m->MaxVertexInputBindingStride; }
 			set { m->MaxVertexInputBindingStride = value; }
 		}
 
-		public UInt32 MaxVertexOutputComponents {
+		public uint MaxVertexOutputComponents {
 			get { return m->MaxVertexOutputComponents; }
 			set { m->MaxVertexOutputComponents = value; }
 		}
 
-		public UInt32 MaxTessellationGenerationLevel {
+		public uint MaxTessellationGenerationLevel {
 			get { return m->MaxTessellationGenerationLevel; }
 			set { m->MaxTessellationGenerationLevel = value; }
 		}
 
-		public UInt32 MaxTessellationPatchSize {
+		public uint MaxTessellationPatchSize {
 			get { return m->MaxTessellationPatchSize; }
 			set { m->MaxTessellationPatchSize = value; }
 		}
 
-		public UInt32 MaxTessellationControlPerVertexInputComponents {
+		public uint MaxTessellationControlPerVertexInputComponents {
 			get { return m->MaxTessellationControlPerVertexInputComponents; }
 			set { m->MaxTessellationControlPerVertexInputComponents = value; }
 		}
 
-		public UInt32 MaxTessellationControlPerVertexOutputComponents {
+		public uint MaxTessellationControlPerVertexOutputComponents {
 			get { return m->MaxTessellationControlPerVertexOutputComponents; }
 			set { m->MaxTessellationControlPerVertexOutputComponents = value; }
 		}
 
-		public UInt32 MaxTessellationControlPerPatchOutputComponents {
+		public uint MaxTessellationControlPerPatchOutputComponents {
 			get { return m->MaxTessellationControlPerPatchOutputComponents; }
 			set { m->MaxTessellationControlPerPatchOutputComponents = value; }
 		}
 
-		public UInt32 MaxTessellationControlTotalOutputComponents {
+		public uint MaxTessellationControlTotalOutputComponents {
 			get { return m->MaxTessellationControlTotalOutputComponents; }
 			set { m->MaxTessellationControlTotalOutputComponents = value; }
 		}
 
-		public UInt32 MaxTessellationEvaluationInputComponents {
+		public uint MaxTessellationEvaluationInputComponents {
 			get { return m->MaxTessellationEvaluationInputComponents; }
 			set { m->MaxTessellationEvaluationInputComponents = value; }
 		}
 
-		public UInt32 MaxTessellationEvaluationOutputComponents {
+		public uint MaxTessellationEvaluationOutputComponents {
 			get { return m->MaxTessellationEvaluationOutputComponents; }
 			set { m->MaxTessellationEvaluationOutputComponents = value; }
 		}
 
-		public UInt32 MaxGeometryShaderInvocations {
+		public uint MaxGeometryShaderInvocations {
 			get { return m->MaxGeometryShaderInvocations; }
 			set { m->MaxGeometryShaderInvocations = value; }
 		}
 
-		public UInt32 MaxGeometryInputComponents {
+		public uint MaxGeometryInputComponents {
 			get { return m->MaxGeometryInputComponents; }
 			set { m->MaxGeometryInputComponents = value; }
 		}
 
-		public UInt32 MaxGeometryOutputComponents {
+		public uint MaxGeometryOutputComponents {
 			get { return m->MaxGeometryOutputComponents; }
 			set { m->MaxGeometryOutputComponents = value; }
 		}
 
-		public UInt32 MaxGeometryOutputVertices {
+		public uint MaxGeometryOutputVertices {
 			get { return m->MaxGeometryOutputVertices; }
 			set { m->MaxGeometryOutputVertices = value; }
 		}
 
-		public UInt32 MaxGeometryTotalOutputComponents {
+		public uint MaxGeometryTotalOutputComponents {
 			get { return m->MaxGeometryTotalOutputComponents; }
 			set { m->MaxGeometryTotalOutputComponents = value; }
 		}
 
-		public UInt32 MaxFragmentInputComponents {
+		public uint MaxFragmentInputComponents {
 			get { return m->MaxFragmentInputComponents; }
 			set { m->MaxFragmentInputComponents = value; }
 		}
 
-		public UInt32 MaxFragmentOutputAttachments {
+		public uint MaxFragmentOutputAttachments {
 			get { return m->MaxFragmentOutputAttachments; }
 			set { m->MaxFragmentOutputAttachments = value; }
 		}
 
-		public UInt32 MaxFragmentDualSrcAttachments {
+		public uint MaxFragmentDualSrcAttachments {
 			get { return m->MaxFragmentDualSrcAttachments; }
 			set { m->MaxFragmentDualSrcAttachments = value; }
 		}
 
-		public UInt32 MaxFragmentCombinedOutputResources {
+		public uint MaxFragmentCombinedOutputResources {
 			get { return m->MaxFragmentCombinedOutputResources; }
 			set { m->MaxFragmentCombinedOutputResources = value; }
 		}
 
-		public UInt32 MaxComputeSharedMemorySize {
+		public uint MaxComputeSharedMemorySize {
 			get { return m->MaxComputeSharedMemorySize; }
 			set { m->MaxComputeSharedMemorySize = value; }
 		}
 
-		public UInt32[] MaxComputeWorkGroupCount {
+		public uint[] MaxComputeWorkGroupCount {
 			get {
-				var arr = new UInt32 [3];
-				for (int i = 0; i < 3; i++)
+				var arr = new uint [3];
+				for (var i = 0; i < 3; i++)
 					arr [i] = m->MaxComputeWorkGroupCount [i];
 				return arr;
 			}
@@ -4802,22 +4802,22 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 3)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->MaxComputeWorkGroupCount [i] = value [i];
-				for (int i = value.Length; i < 3; i++)
+				for (var i = value.Length; i < 3; i++)
 					m->MaxComputeWorkGroupCount [i] = 0;
 			}
 		}
 
-		public UInt32 MaxComputeWorkGroupInvocations {
+		public uint MaxComputeWorkGroupInvocations {
 			get { return m->MaxComputeWorkGroupInvocations; }
 			set { m->MaxComputeWorkGroupInvocations = value; }
 		}
 
-		public UInt32[] MaxComputeWorkGroupSize {
+		public uint[] MaxComputeWorkGroupSize {
 			get {
-				var arr = new UInt32 [3];
-				for (int i = 0; i < 3; i++)
+				var arr = new uint [3];
+				for (var i = 0; i < 3; i++)
 					arr [i] = m->MaxComputeWorkGroupSize [i];
 				return arr;
 			}
@@ -4825,34 +4825,34 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 3)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->MaxComputeWorkGroupSize [i] = value [i];
-				for (int i = value.Length; i < 3; i++)
+				for (var i = value.Length; i < 3; i++)
 					m->MaxComputeWorkGroupSize [i] = 0;
 			}
 		}
 
-		public UInt32 SubPixelPrecisionBits {
+		public uint SubPixelPrecisionBits {
 			get { return m->SubPixelPrecisionBits; }
 			set { m->SubPixelPrecisionBits = value; }
 		}
 
-		public UInt32 SubTexelPrecisionBits {
+		public uint SubTexelPrecisionBits {
 			get { return m->SubTexelPrecisionBits; }
 			set { m->SubTexelPrecisionBits = value; }
 		}
 
-		public UInt32 MipmapPrecisionBits {
+		public uint MipmapPrecisionBits {
 			get { return m->MipmapPrecisionBits; }
 			set { m->MipmapPrecisionBits = value; }
 		}
 
-		public UInt32 MaxDrawIndexedIndexValue {
+		public uint MaxDrawIndexedIndexValue {
 			get { return m->MaxDrawIndexedIndexValue; }
 			set { m->MaxDrawIndexedIndexValue = value; }
 		}
 
-		public UInt32 MaxDrawIndirectCount {
+		public uint MaxDrawIndirectCount {
 			get { return m->MaxDrawIndirectCount; }
 			set { m->MaxDrawIndirectCount = value; }
 		}
@@ -4867,15 +4867,15 @@ namespace VulkanSharp
 			set { m->MaxSamplerAnisotropy = value; }
 		}
 
-		public UInt32 MaxViewports {
+		public uint MaxViewports {
 			get { return m->MaxViewports; }
 			set { m->MaxViewports = value; }
 		}
 
-		public UInt32[] MaxViewportDimensions {
+		public uint[] MaxViewportDimensions {
 			get {
-				var arr = new UInt32 [2];
-				for (int i = 0; i < 2; i++)
+				var arr = new uint [2];
+				for (var i = 0; i < 2; i++)
 					arr [i] = m->MaxViewportDimensions [i];
 				return arr;
 			}
@@ -4883,9 +4883,9 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 2)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->MaxViewportDimensions [i] = value [i];
-				for (int i = value.Length; i < 2; i++)
+				for (var i = value.Length; i < 2; i++)
 					m->MaxViewportDimensions [i] = 0;
 			}
 		}
@@ -4893,7 +4893,7 @@ namespace VulkanSharp
 		public float[] ViewportBoundsRange {
 			get {
 				var arr = new float [2];
-				for (int i = 0; i < 2; i++)
+				for (var i = 0; i < 2; i++)
 					arr [i] = m->ViewportBoundsRange [i];
 				return arr;
 			}
@@ -4901,14 +4901,14 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 2)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->ViewportBoundsRange [i] = value [i];
-				for (int i = value.Length; i < 2; i++)
+				for (var i = value.Length; i < 2; i++)
 					m->ViewportBoundsRange [i] = 0;
 			}
 		}
 
-		public UInt32 ViewportSubPixelBits {
+		public uint ViewportSubPixelBits {
 			get { return m->ViewportSubPixelBits; }
 			set { m->ViewportSubPixelBits = value; }
 		}
@@ -4933,22 +4933,22 @@ namespace VulkanSharp
 			set { m->MinStorageBufferOffsetAlignment = value; }
 		}
 
-		public Int32 MinTexelOffset {
+		public int MinTexelOffset {
 			get { return m->MinTexelOffset; }
 			set { m->MinTexelOffset = value; }
 		}
 
-		public UInt32 MaxTexelOffset {
+		public uint MaxTexelOffset {
 			get { return m->MaxTexelOffset; }
 			set { m->MaxTexelOffset = value; }
 		}
 
-		public Int32 MinTexelGatherOffset {
+		public int MinTexelGatherOffset {
 			get { return m->MinTexelGatherOffset; }
 			set { m->MinTexelGatherOffset = value; }
 		}
 
-		public UInt32 MaxTexelGatherOffset {
+		public uint MaxTexelGatherOffset {
 			get { return m->MaxTexelGatherOffset; }
 			set { m->MaxTexelGatherOffset = value; }
 		}
@@ -4963,22 +4963,22 @@ namespace VulkanSharp
 			set { m->MaxInterpolationOffset = value; }
 		}
 
-		public UInt32 SubPixelInterpolationOffsetBits {
+		public uint SubPixelInterpolationOffsetBits {
 			get { return m->SubPixelInterpolationOffsetBits; }
 			set { m->SubPixelInterpolationOffsetBits = value; }
 		}
 
-		public UInt32 MaxFramebufferWidth {
+		public uint MaxFramebufferWidth {
 			get { return m->MaxFramebufferWidth; }
 			set { m->MaxFramebufferWidth = value; }
 		}
 
-		public UInt32 MaxFramebufferHeight {
+		public uint MaxFramebufferHeight {
 			get { return m->MaxFramebufferHeight; }
 			set { m->MaxFramebufferHeight = value; }
 		}
 
-		public UInt32 MaxFramebufferLayers {
+		public uint MaxFramebufferLayers {
 			get { return m->MaxFramebufferLayers; }
 			set { m->MaxFramebufferLayers = value; }
 		}
@@ -5003,7 +5003,7 @@ namespace VulkanSharp
 			set { m->FramebufferNoAttachmentsSampleCounts = value; }
 		}
 
-		public UInt32 MaxColorAttachments {
+		public uint MaxColorAttachments {
 			get { return m->MaxColorAttachments; }
 			set { m->MaxColorAttachments = value; }
 		}
@@ -5033,7 +5033,7 @@ namespace VulkanSharp
 			set { m->StorageImageSampleCounts = value; }
 		}
 
-		public UInt32 MaxSampleMaskWords {
+		public uint MaxSampleMaskWords {
 			get { return m->MaxSampleMaskWords; }
 			set { m->MaxSampleMaskWords = value; }
 		}
@@ -5048,22 +5048,22 @@ namespace VulkanSharp
 			set { m->TimestampPeriod = value; }
 		}
 
-		public UInt32 MaxClipDistances {
+		public uint MaxClipDistances {
 			get { return m->MaxClipDistances; }
 			set { m->MaxClipDistances = value; }
 		}
 
-		public UInt32 MaxCullDistances {
+		public uint MaxCullDistances {
 			get { return m->MaxCullDistances; }
 			set { m->MaxCullDistances = value; }
 		}
 
-		public UInt32 MaxCombinedClipAndCullDistances {
+		public uint MaxCombinedClipAndCullDistances {
 			get { return m->MaxCombinedClipAndCullDistances; }
 			set { m->MaxCombinedClipAndCullDistances = value; }
 		}
 
-		public UInt32 DiscreteQueuePriorities {
+		public uint DiscreteQueuePriorities {
 			get { return m->DiscreteQueuePriorities; }
 			set { m->DiscreteQueuePriorities = value; }
 		}
@@ -5071,7 +5071,7 @@ namespace VulkanSharp
 		public float[] PointSizeRange {
 			get {
 				var arr = new float [2];
-				for (int i = 0; i < 2; i++)
+				for (var i = 0; i < 2; i++)
 					arr [i] = m->PointSizeRange [i];
 				return arr;
 			}
@@ -5079,9 +5079,9 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 2)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->PointSizeRange [i] = value [i];
-				for (int i = value.Length; i < 2; i++)
+				for (var i = value.Length; i < 2; i++)
 					m->PointSizeRange [i] = 0;
 			}
 		}
@@ -5089,7 +5089,7 @@ namespace VulkanSharp
 		public float[] LineWidthRange {
 			get {
 				var arr = new float [2];
-				for (int i = 0; i < 2; i++)
+				for (var i = 0; i < 2; i++)
 					arr [i] = m->LineWidthRange [i];
 				return arr;
 			}
@@ -5097,9 +5097,9 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 2)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->LineWidthRange [i] = value [i];
-				for (int i = value.Length; i < 2; i++)
+				for (var i = value.Length; i < 2; i++)
 					m->LineWidthRange [i] = 0;
 			}
 		}
@@ -5152,9 +5152,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class SemaphoreCreateInfo
+	public unsafe class SemaphoreCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -5180,9 +5180,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class QueryPoolCreateInfo
+	public unsafe class QueryPoolCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -5192,7 +5192,7 @@ namespace VulkanSharp
 			set { m->QueryType = value; }
 		}
 
-		public UInt32 QueryCount {
+		public uint QueryCount {
 			get { return m->QueryCount; }
 			set { m->QueryCount = value; }
 		}
@@ -5223,9 +5223,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class FramebufferCreateInfo
+	public unsafe class FramebufferCreateInfo
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -5233,10 +5233,10 @@ namespace VulkanSharp
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (UInt64)value.m; }
+			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
 		}
 
-		public UInt32 AttachmentCount {
+		public uint AttachmentCount {
 			get { return m->AttachmentCount; }
 			set { m->AttachmentCount = value; }
 		}
@@ -5248,8 +5248,8 @@ namespace VulkanSharp
 				var values = new ImageView [m->AttachmentCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->Attachments;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->Attachments;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new ImageView ();
 						values [i].m = ptr [i];
 					}
@@ -5264,27 +5264,27 @@ namespace VulkanSharp
 					return;
 				}
 				m->AttachmentCount = (uint)value.Length;
-				m->Attachments = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->Attachments = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->Attachments;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->Attachments;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
 		}
 
-		public UInt32 Width {
+		public uint Width {
 			get { return m->Width; }
 			set { m->Width = value; }
 		}
 
-		public UInt32 Height {
+		public uint Height {
 			get { return m->Height; }
 			set { m->Height = value; }
 		}
 
-		public UInt32 Layers {
+		public uint Layers {
 			get { return m->Layers; }
 			set { m->Layers = value; }
 		}
@@ -5310,33 +5310,33 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct DrawIndirectCommand
+	public unsafe struct DrawIndirectCommand
 	{
-		public UInt32 VertexCount;
-		public UInt32 InstanceCount;
-		public UInt32 FirstVertex;
-		public UInt32 FirstInstance;
+		public uint VertexCount;
+		public uint InstanceCount;
+		public uint FirstVertex;
+		public uint FirstInstance;
 	}
 
-	unsafe public partial struct DrawIndexedIndirectCommand
+	public unsafe struct DrawIndexedIndirectCommand
 	{
-		public UInt32 IndexCount;
-		public UInt32 InstanceCount;
-		public UInt32 FirstIndex;
-		public Int32 VertexOffset;
-		public UInt32 FirstInstance;
+		public uint IndexCount;
+		public uint InstanceCount;
+		public uint FirstIndex;
+		public int VertexOffset;
+		public uint FirstInstance;
 	}
 
-	unsafe public partial struct DispatchIndirectCommand
+	public unsafe struct DispatchIndirectCommand
 	{
-		public UInt32 X;
-		public UInt32 Y;
-		public UInt32 Z;
+		public uint X;
+		public uint Y;
+		public uint Z;
 	}
 
-	unsafe public partial class SubmitInfo
+	public unsafe class SubmitInfo
 	{
-		public UInt32 WaitSemaphoreCount {
+		public uint WaitSemaphoreCount {
 			get { return m->WaitSemaphoreCount; }
 			set { m->WaitSemaphoreCount = value; }
 		}
@@ -5348,8 +5348,8 @@ namespace VulkanSharp
 				var values = new Semaphore [m->WaitSemaphoreCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->WaitSemaphores;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->WaitSemaphores;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
 						values [i].m = ptr [i];
 					}
@@ -5364,11 +5364,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->WaitSemaphoreCount = (uint)value.Length;
-				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->WaitSemaphores;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->WaitSemaphores;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
@@ -5381,8 +5381,8 @@ namespace VulkanSharp
 				var values = new PipelineStageFlags [m->WaitSemaphoreCount];
 				unsafe
 				{
-					PipelineStageFlags* ptr = (PipelineStageFlags*)m->WaitDstStageMask;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (PipelineStageFlags*)m->WaitDstStageMask;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -5398,14 +5398,14 @@ namespace VulkanSharp
 				m->WaitDstStageMask = Marshal.AllocHGlobal ((int)(sizeof(PipelineStageFlags)*value.Length));
 				unsafe
 				{
-					PipelineStageFlags* ptr = (PipelineStageFlags*)m->WaitDstStageMask;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (PipelineStageFlags*)m->WaitDstStageMask;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
 
-		public UInt32 CommandBufferCount {
+		public uint CommandBufferCount {
 			get { return m->CommandBufferCount; }
 			set { m->CommandBufferCount = value; }
 		}
@@ -5417,8 +5417,8 @@ namespace VulkanSharp
 				var values = new CommandBuffer [m->CommandBufferCount];
 				unsafe
 				{
-					IntPtr* ptr = (IntPtr*)m->CommandBuffers;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (IntPtr*)m->CommandBuffers;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new CommandBuffer ();
 						values [i].m = ptr [i];
 					}
@@ -5436,14 +5436,14 @@ namespace VulkanSharp
 				m->CommandBuffers = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*value.Length));
 				unsafe
 				{
-					IntPtr* ptr = (IntPtr*)m->CommandBuffers;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (IntPtr*)m->CommandBuffers;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
 		}
 
-		public UInt32 SignalSemaphoreCount {
+		public uint SignalSemaphoreCount {
 			get { return m->SignalSemaphoreCount; }
 			set { m->SignalSemaphoreCount = value; }
 		}
@@ -5455,8 +5455,8 @@ namespace VulkanSharp
 				var values = new Semaphore [m->SignalSemaphoreCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SignalSemaphores;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->SignalSemaphores;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
 						values [i].m = ptr [i];
 					}
@@ -5471,11 +5471,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->SignalSemaphoreCount = (uint)value.Length;
-				m->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->SignalSemaphores;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->SignalSemaphores;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
@@ -5502,12 +5502,12 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DisplayPropertiesKhr
+	public unsafe class DisplayPropertiesKhr
 	{
 		DisplayKhr lDisplay;
 		public DisplayKhr Display {
 			get { return lDisplay; }
-			set { lDisplay = value; m->Display = (UInt64)value.m; }
+			set { lDisplay = value; m->Display = (ulong)value.m; }
 		}
 
 		public string DisplayName {
@@ -5560,15 +5560,15 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DisplayPlanePropertiesKhr
+	public unsafe class DisplayPlanePropertiesKhr
 	{
 		DisplayKhr lCurrentDisplay;
 		public DisplayKhr CurrentDisplay {
 			get { return lCurrentDisplay; }
-			set { lCurrentDisplay = value; m->CurrentDisplay = (UInt64)value.m; }
+			set { lCurrentDisplay = value; m->CurrentDisplay = (ulong)value.m; }
 		}
 
-		public UInt32 CurrentStackIndex {
+		public uint CurrentStackIndex {
 			get { return m->CurrentStackIndex; }
 			set { m->CurrentStackIndex = value; }
 		}
@@ -5593,18 +5593,18 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct DisplayModeParametersKhr
+	public unsafe struct DisplayModeParametersKhr
 	{
 		public Extent2D VisibleRegion;
-		public UInt32 RefreshRate;
+		public uint RefreshRate;
 	}
 
-	unsafe public partial class DisplayModePropertiesKhr
+	public unsafe class DisplayModePropertiesKhr
 	{
 		DisplayModeKhr lDisplayMode;
 		public DisplayModeKhr DisplayMode {
 			get { return lDisplayMode; }
-			set { lDisplayMode = value; m->DisplayMode = (UInt64)value.m; }
+			set { lDisplayMode = value; m->DisplayMode = (ulong)value.m; }
 		}
 
 		public DisplayModeParametersKhr Parameters {
@@ -5632,9 +5632,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DisplayModeCreateInfoKhr
+	public unsafe class DisplayModeCreateInfoKhr
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -5665,7 +5665,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct DisplayPlaneCapabilitiesKhr
+	public unsafe struct DisplayPlaneCapabilitiesKhr
 	{
 		public DisplayPlaneAlphaFlagsKhr SupportedAlpha;
 		public Offset2D MinSrcPosition;
@@ -5678,9 +5678,9 @@ namespace VulkanSharp
 		public Extent2D MaxDstExtent;
 	}
 
-	unsafe public partial class DisplaySurfaceCreateInfoKhr
+	public unsafe class DisplaySurfaceCreateInfoKhr
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -5688,15 +5688,15 @@ namespace VulkanSharp
 		DisplayModeKhr lDisplayMode;
 		public DisplayModeKhr DisplayMode {
 			get { return lDisplayMode; }
-			set { lDisplayMode = value; m->DisplayMode = (UInt64)value.m; }
+			set { lDisplayMode = value; m->DisplayMode = (ulong)value.m; }
 		}
 
-		public UInt32 PlaneIndex {
+		public uint PlaneIndex {
 			get { return m->PlaneIndex; }
 			set { m->PlaneIndex = value; }
 		}
 
-		public UInt32 PlaneStackIndex {
+		public uint PlaneStackIndex {
 			get { return m->PlaneStackIndex; }
 			set { m->PlaneStackIndex = value; }
 		}
@@ -5742,7 +5742,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DisplayPresentInfoKhr
+	public unsafe class DisplayPresentInfoKhr
 	{
 		public Rect2D SrcRect {
 			get { return m->SrcRect; }
@@ -5780,29 +5780,29 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial struct SurfaceCapabilitiesKhr
+	public unsafe struct SurfaceCapabilitiesKhr
 	{
-		public UInt32 MinImageCount;
-		public UInt32 MaxImageCount;
+		public uint MinImageCount;
+		public uint MaxImageCount;
 		public Extent2D CurrentExtent;
 		public Extent2D MinImageExtent;
 		public Extent2D MaxImageExtent;
-		public UInt32 MaxImageArrayLayers;
+		public uint MaxImageArrayLayers;
 		public SurfaceTransformFlagsKhr SupportedTransforms;
 		public SurfaceTransformFlagsKhr CurrentTransform;
 		public CompositeAlphaFlagsKhr SupportedCompositeAlpha;
 		public ImageUsageFlags SupportedUsageFlags;
 	}
 
-	unsafe public partial struct SurfaceFormatKhr
+	public unsafe struct SurfaceFormatKhr
 	{
 		public Format Format;
 		public ColorSpaceKhr ColorSpace;
 	}
 
-	unsafe public partial class SwapchainCreateInfoKhr
+	public unsafe class SwapchainCreateInfoKhr
 	{
-		public UInt32 Flags {
+		public uint Flags {
 			get { return m->Flags; }
 			set { m->Flags = value; }
 		}
@@ -5810,10 +5810,10 @@ namespace VulkanSharp
 		SurfaceKhr lSurface;
 		public SurfaceKhr Surface {
 			get { return lSurface; }
-			set { lSurface = value; m->Surface = (UInt64)value.m; }
+			set { lSurface = value; m->Surface = (ulong)value.m; }
 		}
 
-		public UInt32 MinImageCount {
+		public uint MinImageCount {
 			get { return m->MinImageCount; }
 			set { m->MinImageCount = value; }
 		}
@@ -5833,7 +5833,7 @@ namespace VulkanSharp
 			set { m->ImageExtent = value; }
 		}
 
-		public UInt32 ImageArrayLayers {
+		public uint ImageArrayLayers {
 			get { return m->ImageArrayLayers; }
 			set { m->ImageArrayLayers = value; }
 		}
@@ -5848,20 +5848,20 @@ namespace VulkanSharp
 			set { m->ImageSharingMode = value; }
 		}
 
-		public UInt32 QueueFamilyIndexCount {
+		public uint QueueFamilyIndexCount {
 			get { return m->QueueFamilyIndexCount; }
 			set { m->QueueFamilyIndexCount = value; }
 		}
 
-		public UInt32[] QueueFamilyIndices {
+		public uint[] QueueFamilyIndices {
 			get {
 				if (m->QueueFamilyIndexCount == 0)
 					return null;
-				var values = new UInt32 [m->QueueFamilyIndexCount];
+				var values = new uint [m->QueueFamilyIndexCount];
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->QueueFamilyIndices;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (uint*)m->QueueFamilyIndices;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -5874,11 +5874,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->QueueFamilyIndexCount = (uint)value.Length;
-				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(UInt32)*value.Length));
+				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->QueueFamilyIndices;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (uint*)m->QueueFamilyIndices;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -5907,7 +5907,7 @@ namespace VulkanSharp
 		SwapchainKhr lOldSwapchain;
 		public SwapchainKhr OldSwapchain {
 			get { return lOldSwapchain; }
-			set { lOldSwapchain = value; m->OldSwapchain = (UInt64)value.m; }
+			set { lOldSwapchain = value; m->OldSwapchain = (ulong)value.m; }
 		}
 		internal Interop.SwapchainCreateInfoKhr* m;
 
@@ -5931,9 +5931,9 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PresentInfoKhr
+	public unsafe class PresentInfoKhr
 	{
-		public UInt32 WaitSemaphoreCount {
+		public uint WaitSemaphoreCount {
 			get { return m->WaitSemaphoreCount; }
 			set { m->WaitSemaphoreCount = value; }
 		}
@@ -5945,8 +5945,8 @@ namespace VulkanSharp
 				var values = new Semaphore [m->WaitSemaphoreCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->WaitSemaphores;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->WaitSemaphores;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
 						values [i].m = ptr [i];
 					}
@@ -5961,17 +5961,17 @@ namespace VulkanSharp
 					return;
 				}
 				m->WaitSemaphoreCount = (uint)value.Length;
-				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->WaitSemaphores;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->WaitSemaphores;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
 		}
 
-		public UInt32 SwapchainCount {
+		public uint SwapchainCount {
 			get { return m->SwapchainCount; }
 			set { m->SwapchainCount = value; }
 		}
@@ -5983,8 +5983,8 @@ namespace VulkanSharp
 				var values = new SwapchainKhr [m->SwapchainCount];
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->Swapchains;
-					for (int i = 0; i < values.Length; i++) {
+					var ptr = (ulong*)m->Swapchains;
+					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SwapchainKhr ();
 						values [i].m = ptr [i];
 					}
@@ -5999,25 +5999,25 @@ namespace VulkanSharp
 					return;
 				}
 				m->SwapchainCount = (uint)value.Length;
-				m->Swapchains = Marshal.AllocHGlobal ((int)(sizeof(UInt64)*value.Length));
+				m->Swapchains = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					UInt64* ptr = (UInt64*)m->Swapchains;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (ulong*)m->Swapchains;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i].m;
 				}
 			}
 		}
 
-		public UInt32[] ImageIndices {
+		public uint[] ImageIndices {
 			get {
 				if (m->SwapchainCount == 0)
 					return null;
-				var values = new UInt32 [m->SwapchainCount];
+				var values = new uint [m->SwapchainCount];
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->ImageIndices;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (uint*)m->ImageIndices;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -6030,11 +6030,11 @@ namespace VulkanSharp
 					return;
 				}
 				m->SwapchainCount = (uint)value.Length;
-				m->ImageIndices = Marshal.AllocHGlobal ((int)(sizeof(UInt32)*value.Length));
+				m->ImageIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					UInt32* ptr = (UInt32*)m->ImageIndices;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (uint*)m->ImageIndices;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -6047,8 +6047,8 @@ namespace VulkanSharp
 				var values = new Result [m->SwapchainCount];
 				unsafe
 				{
-					Result* ptr = (Result*)m->Results;
-					for (int i = 0; i < values.Length; i++) 
+					var ptr = (Result*)m->Results;
+					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
 				return values;
@@ -6064,8 +6064,8 @@ namespace VulkanSharp
 				m->Results = Marshal.AllocHGlobal ((int)(sizeof(Result)*value.Length));
 				unsafe
 				{
-					Result* ptr = (Result*)m->Results;
-					for (int i = 0; i < value.Length; i++)
+					var ptr = (Result*)m->Results;
+					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
@@ -6092,7 +6092,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DebugReportCallbackCreateInfoExt
+	public unsafe class DebugReportCallbackCreateInfoExt
 	{
 		public DebugReportFlagsExt Flags {
 			get { return m->Flags; }
@@ -6130,7 +6130,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class PipelineRasterizationStateRasterizationOrderAmd
+	public unsafe class PipelineRasterizationStateRasterizationOrderAmd
 	{
 		public RasterizationOrderAmd RasterizationOrder {
 			get { return m->RasterizationOrder; }
@@ -6158,14 +6158,14 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DebugMarkerObjectNameInfoExt
+	public unsafe class DebugMarkerObjectNameInfoExt
 	{
 		public DebugReportObjectTypeExt ObjectType {
 			get { return m->ObjectType; }
 			set { m->ObjectType = value; }
 		}
 
-		public UInt64 Object {
+		public ulong Object {
 			get { return m->Object; }
 			set { m->Object = value; }
 		}
@@ -6196,19 +6196,19 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DebugMarkerObjectTagInfoExt
+	public unsafe class DebugMarkerObjectTagInfoExt
 	{
 		public DebugReportObjectTypeExt ObjectType {
 			get { return m->ObjectType; }
 			set { m->ObjectType = value; }
 		}
 
-		public UInt64 Object {
+		public ulong Object {
 			get { return m->Object; }
 			set { m->Object = value; }
 		}
 
-		public UInt64 TagName {
+		public ulong TagName {
 			get { return m->TagName; }
 			set { m->TagName = value; }
 		}
@@ -6244,7 +6244,7 @@ namespace VulkanSharp
 
 	}
 
-	unsafe public partial class DebugMarkerMarkerInfoExt
+	public unsafe class DebugMarkerMarkerInfoExt
 	{
 		public string MarkerName {
 			get { return Marshal.PtrToStringAnsi (m->MarkerName); }
@@ -6254,7 +6254,7 @@ namespace VulkanSharp
 		public float[] Color {
 			get {
 				var arr = new float [4];
-				for (int i = 0; i < 4; i++)
+				for (var i = 0; i < 4; i++)
 					arr [i] = m->Color [i];
 				return arr;
 			}
@@ -6262,9 +6262,9 @@ namespace VulkanSharp
 			set {
 				if (value.Length > 4)
 					throw new Exception ("array too long");
-				for (int i = 0; i < value.Length; i++)
+				for (var i = 0; i < value.Length; i++)
 					m->Color [i] = value [i];
-				for (int i = value.Length; i < 4; i++)
+				for (var i = value.Length; i < 4; i++)
 					m->Color [i] = 0;
 			}
 		}

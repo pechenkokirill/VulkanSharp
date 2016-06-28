@@ -2,12 +2,13 @@ using System;
 
 namespace VulkanSharp.Interop
 {
-	internal partial struct PhysicalDeviceProperties
+	// ReSharper disable InconsistentNaming
+	internal struct PhysicalDeviceProperties
 	{
-		internal UInt32 ApiVersion;
-		internal UInt32 DriverVersion;
-		internal UInt32 VendorID;
-		internal UInt32 DeviceID;
+		internal uint ApiVersion;
+		internal uint DriverVersion;
+		internal uint VendorID;
+		internal uint DeviceID;
 		internal PhysicalDeviceType DeviceType;
 		internal unsafe fixed byte DeviceName[256];
 		internal unsafe fixed byte PipelineCacheUUID[16];
@@ -15,32 +16,32 @@ namespace VulkanSharp.Interop
 		internal PhysicalDeviceSparseProperties SparseProperties;
 	}
 
-	internal partial struct ExtensionProperties
+	internal struct ExtensionProperties
 	{
 		internal unsafe fixed byte ExtensionName[256];
-		internal UInt32 SpecVersion;
+		internal uint SpecVersion;
 	}
 
-	internal partial struct LayerProperties
+	internal struct LayerProperties
 	{
 		internal unsafe fixed byte LayerName[256];
-		internal UInt32 SpecVersion;
-		internal UInt32 ImplementationVersion;
+		internal uint SpecVersion;
+		internal uint ImplementationVersion;
 		internal unsafe fixed byte Description[256];
 	}
 
-	internal partial struct ApplicationInfo
+	internal struct ApplicationInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal IntPtr ApplicationName;
-		internal UInt32 ApplicationVersion;
+		internal uint ApplicationVersion;
 		internal IntPtr EngineName;
-		internal UInt32 EngineVersion;
-		internal UInt32 ApiVersion;
+		internal uint EngineVersion;
+		internal uint ApiVersion;
 	}
 
-	public partial struct AllocationCallbacks
+	public struct AllocationCallbacks
 	{
 		internal IntPtr UserData;
 		internal IntPtr PfnAllocation;
@@ -50,45 +51,45 @@ namespace VulkanSharp.Interop
 		internal IntPtr PfnInternalFree;
 	}
 
-	internal partial struct DeviceQueueCreateInfo
+	internal struct DeviceQueueCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 QueueFamilyIndex;
-		internal UInt32 QueueCount;
+		internal uint Flags;
+		internal uint QueueFamilyIndex;
+		internal uint QueueCount;
 		internal IntPtr QueuePriorities;
 	}
 
-	internal partial struct DeviceCreateInfo
+	internal struct DeviceCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 QueueCreateInfoCount;
+		internal uint Flags;
+		internal uint QueueCreateInfoCount;
 		internal IntPtr QueueCreateInfos;
-		internal UInt32 EnabledLayerCount;
+		internal uint EnabledLayerCount;
 		internal IntPtr EnabledLayerNames;
-		internal UInt32 EnabledExtensionCount;
+		internal uint EnabledExtensionCount;
 		internal IntPtr EnabledExtensionNames;
 		internal IntPtr EnabledFeatures;
 	}
 
-	internal partial struct InstanceCreateInfo
+	internal struct InstanceCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal IntPtr ApplicationInfo;
-		internal UInt32 EnabledLayerCount;
+		internal uint EnabledLayerCount;
 		internal IntPtr EnabledLayerNames;
-		internal UInt32 EnabledExtensionCount;
+		internal uint EnabledExtensionCount;
 		internal IntPtr EnabledExtensionNames;
 	}
 
-	internal partial struct PhysicalDeviceMemoryProperties
+	internal struct PhysicalDeviceMemoryProperties
 	{
-		internal UInt32 MemoryTypeCount;
+		internal uint MemoryTypeCount;
 		internal MemoryType MemoryTypes0;
 		internal MemoryType MemoryTypes1;
 		internal MemoryType MemoryTypes2;
@@ -121,7 +122,7 @@ namespace VulkanSharp.Interop
 		internal MemoryType MemoryTypes29;
 		internal MemoryType MemoryTypes30;
 		internal MemoryType MemoryTypes31;
-		internal UInt32 MemoryHeapCount;
+		internal uint MemoryHeapCount;
 		internal MemoryHeap MemoryHeaps0;
 		internal MemoryHeap MemoryHeaps1;
 		internal MemoryHeap MemoryHeaps2;
@@ -140,65 +141,65 @@ namespace VulkanSharp.Interop
 		internal MemoryHeap MemoryHeaps15;
 	}
 
-	internal partial struct MemoryAllocateInfo
+	internal struct MemoryAllocateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal DeviceSize AllocationSize;
-		internal UInt32 MemoryTypeIndex;
+		internal uint MemoryTypeIndex;
 	}
 
-	internal partial struct MappedMemoryRange
+	internal struct MappedMemoryRange
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt64 Memory;
+		internal ulong Memory;
 		internal DeviceSize Offset;
 		internal DeviceSize Size;
 	}
 
-	internal partial struct DescriptorBufferInfo
+	internal struct DescriptorBufferInfo
 	{
-		internal UInt64 Buffer;
+		internal ulong Buffer;
 		internal DeviceSize Offset;
 		internal DeviceSize Range;
 	}
 
-	internal partial struct DescriptorImageInfo
+	internal struct DescriptorImageInfo
 	{
-		internal UInt64 Sampler;
-		internal UInt64 ImageView;
+		internal ulong Sampler;
+		internal ulong ImageView;
 		internal ImageLayout ImageLayout;
 	}
 
-	internal partial struct WriteDescriptorSet
+	internal struct WriteDescriptorSet
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt64 DstSet;
-		internal UInt32 DstBinding;
-		internal UInt32 DstArrayElement;
-		internal UInt32 DescriptorCount;
+		internal ulong DstSet;
+		internal uint DstBinding;
+		internal uint DstArrayElement;
+		internal uint DescriptorCount;
 		internal DescriptorType DescriptorType;
 		internal IntPtr ImageInfo;
 		internal IntPtr BufferInfo;
 		internal IntPtr TexelBufferView;
 	}
 
-	internal partial struct CopyDescriptorSet
+	internal struct CopyDescriptorSet
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt64 SrcSet;
-		internal UInt32 SrcBinding;
-		internal UInt32 SrcArrayElement;
-		internal UInt64 DstSet;
-		internal UInt32 DstBinding;
-		internal UInt32 DstArrayElement;
-		internal UInt32 DescriptorCount;
+		internal ulong SrcSet;
+		internal uint SrcBinding;
+		internal uint SrcArrayElement;
+		internal ulong DstSet;
+		internal uint DstBinding;
+		internal uint DstArrayElement;
+		internal uint DescriptorCount;
 	}
 
-	internal partial struct BufferCreateInfo
+	internal struct BufferCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
@@ -206,22 +207,22 @@ namespace VulkanSharp.Interop
 		internal DeviceSize Size;
 		internal BufferUsageFlags Usage;
 		internal SharingMode SharingMode;
-		internal UInt32 QueueFamilyIndexCount;
+		internal uint QueueFamilyIndexCount;
 		internal IntPtr QueueFamilyIndices;
 	}
 
-	internal partial struct BufferViewCreateInfo
+	internal struct BufferViewCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt64 Buffer;
+		internal uint Flags;
+		internal ulong Buffer;
 		internal Format Format;
 		internal DeviceSize Offset;
 		internal DeviceSize Range;
 	}
 
-	internal partial struct MemoryBarrier
+	internal struct MemoryBarrier
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
@@ -229,20 +230,20 @@ namespace VulkanSharp.Interop
 		internal AccessFlags DstAccessMask;
 	}
 
-	internal partial struct BufferMemoryBarrier
+	internal struct BufferMemoryBarrier
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal AccessFlags SrcAccessMask;
 		internal AccessFlags DstAccessMask;
-		internal UInt32 SrcQueueFamilyIndex;
-		internal UInt32 DstQueueFamilyIndex;
-		internal UInt64 Buffer;
+		internal uint SrcQueueFamilyIndex;
+		internal uint DstQueueFamilyIndex;
+		internal ulong Buffer;
 		internal DeviceSize Offset;
 		internal DeviceSize Size;
 	}
 
-	internal partial struct ImageMemoryBarrier
+	internal struct ImageMemoryBarrier
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
@@ -250,13 +251,13 @@ namespace VulkanSharp.Interop
 		internal AccessFlags DstAccessMask;
 		internal ImageLayout OldLayout;
 		internal ImageLayout NewLayout;
-		internal UInt32 SrcQueueFamilyIndex;
-		internal UInt32 DstQueueFamilyIndex;
-		internal UInt64 Image;
+		internal uint SrcQueueFamilyIndex;
+		internal uint DstQueueFamilyIndex;
+		internal ulong Image;
 		internal ImageSubresourceRange SubresourceRange;
 	}
 
-	internal partial struct ImageCreateInfo
+	internal struct ImageCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
@@ -264,86 +265,86 @@ namespace VulkanSharp.Interop
 		internal ImageType ImageType;
 		internal Format Format;
 		internal Extent3D Extent;
-		internal UInt32 MipLevels;
-		internal UInt32 ArrayLayers;
+		internal uint MipLevels;
+		internal uint ArrayLayers;
 		internal SampleCountFlags Samples;
 		internal ImageTiling Tiling;
 		internal ImageUsageFlags Usage;
 		internal SharingMode SharingMode;
-		internal UInt32 QueueFamilyIndexCount;
+		internal uint QueueFamilyIndexCount;
 		internal IntPtr QueueFamilyIndices;
 		internal ImageLayout InitialLayout;
 	}
 
-	internal partial struct ImageViewCreateInfo
+	internal struct ImageViewCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt64 Image;
+		internal uint Flags;
+		internal ulong Image;
 		internal ImageViewType ViewType;
 		internal Format Format;
 		internal ComponentMapping Components;
 		internal ImageSubresourceRange SubresourceRange;
 	}
 
-	internal partial struct SparseMemoryBind
+	internal struct SparseMemoryBind
 	{
 		internal DeviceSize ResourceOffset;
 		internal DeviceSize Size;
-		internal UInt64 Memory;
+		internal ulong Memory;
 		internal DeviceSize MemoryOffset;
 		internal SparseMemoryBindFlags Flags;
 	}
 
-	internal partial struct SparseImageMemoryBind
+	internal struct SparseImageMemoryBind
 	{
 		internal ImageSubresource Subresource;
 		internal Offset3D Offset;
 		internal Extent3D Extent;
-		internal UInt64 Memory;
+		internal ulong Memory;
 		internal DeviceSize MemoryOffset;
 		internal SparseMemoryBindFlags Flags;
 	}
 
-	internal partial struct SparseBufferMemoryBindInfo
+	internal struct SparseBufferMemoryBindInfo
 	{
-		internal UInt64 Buffer;
-		internal UInt32 BindCount;
+		internal ulong Buffer;
+		internal uint BindCount;
 		internal IntPtr Binds;
 	}
 
-	internal partial struct SparseImageOpaqueMemoryBindInfo
+	internal struct SparseImageOpaqueMemoryBindInfo
 	{
-		internal UInt64 Image;
-		internal UInt32 BindCount;
+		internal ulong Image;
+		internal uint BindCount;
 		internal IntPtr Binds;
 	}
 
-	internal partial struct SparseImageMemoryBindInfo
+	internal struct SparseImageMemoryBindInfo
 	{
-		internal UInt64 Image;
-		internal UInt32 BindCount;
+		internal ulong Image;
+		internal uint BindCount;
 		internal IntPtr Binds;
 	}
 
-	internal partial struct BindSparseInfo
+	internal struct BindSparseInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 WaitSemaphoreCount;
+		internal uint WaitSemaphoreCount;
 		internal IntPtr WaitSemaphores;
-		internal UInt32 BufferBindCount;
+		internal uint BufferBindCount;
 		internal IntPtr BufferBinds;
-		internal UInt32 ImageOpaqueBindCount;
+		internal uint ImageOpaqueBindCount;
 		internal IntPtr ImageOpaqueBinds;
-		internal UInt32 ImageBindCount;
+		internal uint ImageBindCount;
 		internal IntPtr ImageBinds;
-		internal UInt32 SignalSemaphoreCount;
+		internal uint SignalSemaphoreCount;
 		internal IntPtr SignalSemaphores;
 	}
 
-	internal partial struct ImageBlit
+	internal struct ImageBlit
 	{
 		internal ImageSubresourceLayers SrcSubresource;
 		internal Offset3D SrcOffsets0;
@@ -353,126 +354,126 @@ namespace VulkanSharp.Interop
 		internal Offset3D DstOffsets1;
 	}
 
-	internal partial struct ShaderModuleCreateInfo
+	internal struct ShaderModuleCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal UIntPtr CodeSize;
 		internal IntPtr Code;
 	}
 
-	internal partial struct DescriptorSetLayoutBinding
+	internal struct DescriptorSetLayoutBinding
 	{
-		internal UInt32 Binding;
+		internal uint Binding;
 		internal DescriptorType DescriptorType;
-		internal UInt32 DescriptorCount;
+		internal uint DescriptorCount;
 		internal ShaderStageFlags StageFlags;
 		internal IntPtr ImmutableSamplers;
 	}
 
-	internal partial struct DescriptorSetLayoutCreateInfo
+	internal struct DescriptorSetLayoutCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 BindingCount;
+		internal uint Flags;
+		internal uint BindingCount;
 		internal IntPtr Bindings;
 	}
 
-	internal partial struct DescriptorPoolCreateInfo
+	internal struct DescriptorPoolCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal DescriptorPoolCreateFlags Flags;
-		internal UInt32 MaxSets;
-		internal UInt32 PoolSizeCount;
+		internal uint MaxSets;
+		internal uint PoolSizeCount;
 		internal IntPtr PoolSizes;
 	}
 
-	internal partial struct DescriptorSetAllocateInfo
+	internal struct DescriptorSetAllocateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt64 DescriptorPool;
-		internal UInt32 DescriptorSetCount;
+		internal ulong DescriptorPool;
+		internal uint DescriptorSetCount;
 		internal IntPtr SetLayouts;
 	}
 
-	internal partial struct SpecializationInfo
+	internal struct SpecializationInfo
 	{
-		internal UInt32 MapEntryCount;
+		internal uint MapEntryCount;
 		internal IntPtr MapEntries;
 		internal UIntPtr DataSize;
 		internal IntPtr Data;
 	}
 
-	internal partial struct PipelineShaderStageCreateInfo
+	internal struct PipelineShaderStageCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal ShaderStageFlags Stage;
-		internal UInt64 Module;
+		internal ulong Module;
 		internal IntPtr Name;
 		internal IntPtr SpecializationInfo;
 	}
 
-	internal partial struct ComputePipelineCreateInfo
+	internal struct ComputePipelineCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal PipelineCreateFlags Flags;
 		internal PipelineShaderStageCreateInfo Stage;
-		internal UInt64 Layout;
-		internal UInt64 BasePipelineHandle;
-		internal Int32 BasePipelineIndex;
+		internal ulong Layout;
+		internal ulong BasePipelineHandle;
+		internal int BasePipelineIndex;
 	}
 
-	internal partial struct PipelineVertexInputStateCreateInfo
+	internal struct PipelineVertexInputStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 VertexBindingDescriptionCount;
+		internal uint Flags;
+		internal uint VertexBindingDescriptionCount;
 		internal IntPtr VertexBindingDescriptions;
-		internal UInt32 VertexAttributeDescriptionCount;
+		internal uint VertexAttributeDescriptionCount;
 		internal IntPtr VertexAttributeDescriptions;
 	}
 
-	internal partial struct PipelineInputAssemblyStateCreateInfo
+	internal struct PipelineInputAssemblyStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal PrimitiveTopology Topology;
 		internal Bool32 PrimitiveRestartEnable;
 	}
 
-	internal partial struct PipelineTessellationStateCreateInfo
+	internal struct PipelineTessellationStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 PatchControlPoints;
+		internal uint Flags;
+		internal uint PatchControlPoints;
 	}
 
-	internal partial struct PipelineViewportStateCreateInfo
+	internal struct PipelineViewportStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 ViewportCount;
+		internal uint Flags;
+		internal uint ViewportCount;
 		internal IntPtr Viewports;
-		internal UInt32 ScissorCount;
+		internal uint ScissorCount;
 		internal IntPtr Scissors;
 	}
 
-	internal partial struct PipelineRasterizationStateCreateInfo
+	internal struct PipelineRasterizationStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal Bool32 DepthClampEnable;
 		internal Bool32 RasterizerDiscardEnable;
 		internal PolygonMode PolygonMode;
@@ -485,11 +486,11 @@ namespace VulkanSharp.Interop
 		internal float LineWidth;
 	}
 
-	internal partial struct PipelineMultisampleStateCreateInfo
+	internal struct PipelineMultisampleStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal SampleCountFlags RasterizationSamples;
 		internal Bool32 SampleShadingEnable;
 		internal float MinSampleShading;
@@ -498,32 +499,32 @@ namespace VulkanSharp.Interop
 		internal Bool32 AlphaToOneEnable;
 	}
 
-	internal partial struct PipelineColorBlendStateCreateInfo
+	internal struct PipelineColorBlendStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal Bool32 LogicOpEnable;
 		internal LogicOp LogicOp;
-		internal UInt32 AttachmentCount;
+		internal uint AttachmentCount;
 		internal IntPtr Attachments;
 		internal unsafe fixed float BlendConstants[4];
 	}
 
-	internal partial struct PipelineDynamicStateCreateInfo
+	internal struct PipelineDynamicStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 DynamicStateCount;
+		internal uint Flags;
+		internal uint DynamicStateCount;
 		internal IntPtr DynamicStates;
 	}
 
-	internal partial struct PipelineDepthStencilStateCreateInfo
+	internal struct PipelineDepthStencilStateCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal Bool32 DepthTestEnable;
 		internal Bool32 DepthWriteEnable;
 		internal CompareOp DepthCompareOp;
@@ -535,12 +536,12 @@ namespace VulkanSharp.Interop
 		internal float MaxDepthBounds;
 	}
 
-	internal partial struct GraphicsPipelineCreateInfo
+	internal struct GraphicsPipelineCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal PipelineCreateFlags Flags;
-		internal UInt32 StageCount;
+		internal uint StageCount;
 		internal IntPtr Stages;
 		internal IntPtr VertexInputState;
 		internal IntPtr InputAssemblyState;
@@ -551,38 +552,38 @@ namespace VulkanSharp.Interop
 		internal IntPtr DepthStencilState;
 		internal IntPtr ColorBlendState;
 		internal IntPtr DynamicState;
-		internal UInt64 Layout;
-		internal UInt64 RenderPass;
-		internal UInt32 Subpass;
-		internal UInt64 BasePipelineHandle;
-		internal Int32 BasePipelineIndex;
+		internal ulong Layout;
+		internal ulong RenderPass;
+		internal uint Subpass;
+		internal ulong BasePipelineHandle;
+		internal int BasePipelineIndex;
 	}
 
-	internal partial struct PipelineCacheCreateInfo
+	internal struct PipelineCacheCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal UIntPtr InitialDataSize;
 		internal IntPtr InitialData;
 	}
 
-	internal partial struct PipelineLayoutCreateInfo
+	internal struct PipelineLayoutCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 SetLayoutCount;
+		internal uint Flags;
+		internal uint SetLayoutCount;
 		internal IntPtr SetLayouts;
-		internal UInt32 PushConstantRangeCount;
+		internal uint PushConstantRangeCount;
 		internal IntPtr PushConstantRanges;
 	}
 
-	internal partial struct SamplerCreateInfo
+	internal struct SamplerCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal Filter MagFilter;
 		internal Filter MinFilter;
 		internal SamplerMipmapMode MipmapMode;
@@ -600,36 +601,36 @@ namespace VulkanSharp.Interop
 		internal Bool32 UnnormalizedCoordinates;
 	}
 
-	internal partial struct CommandPoolCreateInfo
+	internal struct CommandPoolCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal CommandPoolCreateFlags Flags;
-		internal UInt32 QueueFamilyIndex;
+		internal uint QueueFamilyIndex;
 	}
 
-	internal partial struct CommandBufferAllocateInfo
+	internal struct CommandBufferAllocateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt64 CommandPool;
+		internal ulong CommandPool;
 		internal CommandBufferLevel Level;
-		internal UInt32 CommandBufferCount;
+		internal uint CommandBufferCount;
 	}
 
-	internal partial struct CommandBufferInheritanceInfo
+	internal struct CommandBufferInheritanceInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt64 RenderPass;
-		internal UInt32 Subpass;
-		internal UInt64 Framebuffer;
+		internal ulong RenderPass;
+		internal uint Subpass;
+		internal ulong Framebuffer;
 		internal Bool32 OcclusionQueryEnable;
 		internal QueryControlFlags QueryFlags;
 		internal QueryPipelineStatisticFlags PipelineStatistics;
 	}
 
-	internal partial struct CommandBufferBeginInfo
+	internal struct CommandBufferBeginInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
@@ -637,157 +638,157 @@ namespace VulkanSharp.Interop
 		internal IntPtr InheritanceInfo;
 	}
 
-	internal partial struct RenderPassBeginInfo
+	internal struct RenderPassBeginInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt64 RenderPass;
-		internal UInt64 Framebuffer;
+		internal ulong RenderPass;
+		internal ulong Framebuffer;
 		internal Rect2D RenderArea;
-		internal UInt32 ClearValueCount;
+		internal uint ClearValueCount;
 		internal IntPtr ClearValues;
 	}
 
-	internal partial struct SubpassDescription
+	internal struct SubpassDescription
 	{
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal PipelineBindPoint PipelineBindPoint;
-		internal UInt32 InputAttachmentCount;
+		internal uint InputAttachmentCount;
 		internal IntPtr InputAttachments;
-		internal UInt32 ColorAttachmentCount;
+		internal uint ColorAttachmentCount;
 		internal IntPtr ColorAttachments;
 		internal IntPtr ResolveAttachments;
 		internal IntPtr DepthStencilAttachment;
-		internal UInt32 PreserveAttachmentCount;
+		internal uint PreserveAttachmentCount;
 		internal IntPtr PreserveAttachments;
 	}
 
-	internal partial struct RenderPassCreateInfo
+	internal struct RenderPassCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt32 AttachmentCount;
+		internal uint Flags;
+		internal uint AttachmentCount;
 		internal IntPtr Attachments;
-		internal UInt32 SubpassCount;
+		internal uint SubpassCount;
 		internal IntPtr Subpasses;
-		internal UInt32 DependencyCount;
+		internal uint DependencyCount;
 		internal IntPtr Dependencies;
 	}
 
-	internal partial struct EventCreateInfo
+	internal struct EventCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 	}
 
-	internal partial struct FenceCreateInfo
+	internal struct FenceCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal FenceCreateFlags Flags;
 	}
 
-	internal partial struct PhysicalDeviceLimits
+	internal struct PhysicalDeviceLimits
 	{
-		internal UInt32 MaxImageDimension1D;
-		internal UInt32 MaxImageDimension2D;
-		internal UInt32 MaxImageDimension3D;
-		internal UInt32 MaxImageDimensionCube;
-		internal UInt32 MaxImageArrayLayers;
-		internal UInt32 MaxTexelBufferElements;
-		internal UInt32 MaxUniformBufferRange;
-		internal UInt32 MaxStorageBufferRange;
-		internal UInt32 MaxPushConstantsSize;
-		internal UInt32 MaxMemoryAllocationCount;
-		internal UInt32 MaxSamplerAllocationCount;
+		internal uint MaxImageDimension1D;
+		internal uint MaxImageDimension2D;
+		internal uint MaxImageDimension3D;
+		internal uint MaxImageDimensionCube;
+		internal uint MaxImageArrayLayers;
+		internal uint MaxTexelBufferElements;
+		internal uint MaxUniformBufferRange;
+		internal uint MaxStorageBufferRange;
+		internal uint MaxPushConstantsSize;
+		internal uint MaxMemoryAllocationCount;
+		internal uint MaxSamplerAllocationCount;
 		internal DeviceSize BufferImageGranularity;
 		internal DeviceSize SparseAddressSpaceSize;
-		internal UInt32 MaxBoundDescriptorSets;
-		internal UInt32 MaxPerStageDescriptorSamplers;
-		internal UInt32 MaxPerStageDescriptorUniformBuffers;
-		internal UInt32 MaxPerStageDescriptorStorageBuffers;
-		internal UInt32 MaxPerStageDescriptorSampledImages;
-		internal UInt32 MaxPerStageDescriptorStorageImages;
-		internal UInt32 MaxPerStageDescriptorInputAttachments;
-		internal UInt32 MaxPerStageResources;
-		internal UInt32 MaxDescriptorSetSamplers;
-		internal UInt32 MaxDescriptorSetUniformBuffers;
-		internal UInt32 MaxDescriptorSetUniformBuffersDynamic;
-		internal UInt32 MaxDescriptorSetStorageBuffers;
-		internal UInt32 MaxDescriptorSetStorageBuffersDynamic;
-		internal UInt32 MaxDescriptorSetSampledImages;
-		internal UInt32 MaxDescriptorSetStorageImages;
-		internal UInt32 MaxDescriptorSetInputAttachments;
-		internal UInt32 MaxVertexInputAttributes;
-		internal UInt32 MaxVertexInputBindings;
-		internal UInt32 MaxVertexInputAttributeOffset;
-		internal UInt32 MaxVertexInputBindingStride;
-		internal UInt32 MaxVertexOutputComponents;
-		internal UInt32 MaxTessellationGenerationLevel;
-		internal UInt32 MaxTessellationPatchSize;
-		internal UInt32 MaxTessellationControlPerVertexInputComponents;
-		internal UInt32 MaxTessellationControlPerVertexOutputComponents;
-		internal UInt32 MaxTessellationControlPerPatchOutputComponents;
-		internal UInt32 MaxTessellationControlTotalOutputComponents;
-		internal UInt32 MaxTessellationEvaluationInputComponents;
-		internal UInt32 MaxTessellationEvaluationOutputComponents;
-		internal UInt32 MaxGeometryShaderInvocations;
-		internal UInt32 MaxGeometryInputComponents;
-		internal UInt32 MaxGeometryOutputComponents;
-		internal UInt32 MaxGeometryOutputVertices;
-		internal UInt32 MaxGeometryTotalOutputComponents;
-		internal UInt32 MaxFragmentInputComponents;
-		internal UInt32 MaxFragmentOutputAttachments;
-		internal UInt32 MaxFragmentDualSrcAttachments;
-		internal UInt32 MaxFragmentCombinedOutputResources;
-		internal UInt32 MaxComputeSharedMemorySize;
-		internal unsafe fixed UInt32 MaxComputeWorkGroupCount[3];
-		internal UInt32 MaxComputeWorkGroupInvocations;
-		internal unsafe fixed UInt32 MaxComputeWorkGroupSize[3];
-		internal UInt32 SubPixelPrecisionBits;
-		internal UInt32 SubTexelPrecisionBits;
-		internal UInt32 MipmapPrecisionBits;
-		internal UInt32 MaxDrawIndexedIndexValue;
-		internal UInt32 MaxDrawIndirectCount;
+		internal uint MaxBoundDescriptorSets;
+		internal uint MaxPerStageDescriptorSamplers;
+		internal uint MaxPerStageDescriptorUniformBuffers;
+		internal uint MaxPerStageDescriptorStorageBuffers;
+		internal uint MaxPerStageDescriptorSampledImages;
+		internal uint MaxPerStageDescriptorStorageImages;
+		internal uint MaxPerStageDescriptorInputAttachments;
+		internal uint MaxPerStageResources;
+		internal uint MaxDescriptorSetSamplers;
+		internal uint MaxDescriptorSetUniformBuffers;
+		internal uint MaxDescriptorSetUniformBuffersDynamic;
+		internal uint MaxDescriptorSetStorageBuffers;
+		internal uint MaxDescriptorSetStorageBuffersDynamic;
+		internal uint MaxDescriptorSetSampledImages;
+		internal uint MaxDescriptorSetStorageImages;
+		internal uint MaxDescriptorSetInputAttachments;
+		internal uint MaxVertexInputAttributes;
+		internal uint MaxVertexInputBindings;
+		internal uint MaxVertexInputAttributeOffset;
+		internal uint MaxVertexInputBindingStride;
+		internal uint MaxVertexOutputComponents;
+		internal uint MaxTessellationGenerationLevel;
+		internal uint MaxTessellationPatchSize;
+		internal uint MaxTessellationControlPerVertexInputComponents;
+		internal uint MaxTessellationControlPerVertexOutputComponents;
+		internal uint MaxTessellationControlPerPatchOutputComponents;
+		internal uint MaxTessellationControlTotalOutputComponents;
+		internal uint MaxTessellationEvaluationInputComponents;
+		internal uint MaxTessellationEvaluationOutputComponents;
+		internal uint MaxGeometryShaderInvocations;
+		internal uint MaxGeometryInputComponents;
+		internal uint MaxGeometryOutputComponents;
+		internal uint MaxGeometryOutputVertices;
+		internal uint MaxGeometryTotalOutputComponents;
+		internal uint MaxFragmentInputComponents;
+		internal uint MaxFragmentOutputAttachments;
+		internal uint MaxFragmentDualSrcAttachments;
+		internal uint MaxFragmentCombinedOutputResources;
+		internal uint MaxComputeSharedMemorySize;
+		internal unsafe fixed uint MaxComputeWorkGroupCount[3];
+		internal uint MaxComputeWorkGroupInvocations;
+		internal unsafe fixed uint MaxComputeWorkGroupSize[3];
+		internal uint SubPixelPrecisionBits;
+		internal uint SubTexelPrecisionBits;
+		internal uint MipmapPrecisionBits;
+		internal uint MaxDrawIndexedIndexValue;
+		internal uint MaxDrawIndirectCount;
 		internal float MaxSamplerLodBias;
 		internal float MaxSamplerAnisotropy;
-		internal UInt32 MaxViewports;
-		internal unsafe fixed UInt32 MaxViewportDimensions[2];
+		internal uint MaxViewports;
+		internal unsafe fixed uint MaxViewportDimensions[2];
 		internal unsafe fixed float ViewportBoundsRange[2];
-		internal UInt32 ViewportSubPixelBits;
+		internal uint ViewportSubPixelBits;
 		internal UIntPtr MinMemoryMapAlignment;
 		internal DeviceSize MinTexelBufferOffsetAlignment;
 		internal DeviceSize MinUniformBufferOffsetAlignment;
 		internal DeviceSize MinStorageBufferOffsetAlignment;
-		internal Int32 MinTexelOffset;
-		internal UInt32 MaxTexelOffset;
-		internal Int32 MinTexelGatherOffset;
-		internal UInt32 MaxTexelGatherOffset;
+		internal int MinTexelOffset;
+		internal uint MaxTexelOffset;
+		internal int MinTexelGatherOffset;
+		internal uint MaxTexelGatherOffset;
 		internal float MinInterpolationOffset;
 		internal float MaxInterpolationOffset;
-		internal UInt32 SubPixelInterpolationOffsetBits;
-		internal UInt32 MaxFramebufferWidth;
-		internal UInt32 MaxFramebufferHeight;
-		internal UInt32 MaxFramebufferLayers;
+		internal uint SubPixelInterpolationOffsetBits;
+		internal uint MaxFramebufferWidth;
+		internal uint MaxFramebufferHeight;
+		internal uint MaxFramebufferLayers;
 		internal SampleCountFlags FramebufferColorSampleCounts;
 		internal SampleCountFlags FramebufferDepthSampleCounts;
 		internal SampleCountFlags FramebufferStencilSampleCounts;
 		internal SampleCountFlags FramebufferNoAttachmentsSampleCounts;
-		internal UInt32 MaxColorAttachments;
+		internal uint MaxColorAttachments;
 		internal SampleCountFlags SampledImageColorSampleCounts;
 		internal SampleCountFlags SampledImageIntegerSampleCounts;
 		internal SampleCountFlags SampledImageDepthSampleCounts;
 		internal SampleCountFlags SampledImageStencilSampleCounts;
 		internal SampleCountFlags StorageImageSampleCounts;
-		internal UInt32 MaxSampleMaskWords;
+		internal uint MaxSampleMaskWords;
 		internal Bool32 TimestampComputeAndGraphics;
 		internal float TimestampPeriod;
-		internal UInt32 MaxClipDistances;
-		internal UInt32 MaxCullDistances;
-		internal UInt32 MaxCombinedClipAndCullDistances;
-		internal UInt32 DiscreteQueuePriorities;
+		internal uint MaxClipDistances;
+		internal uint MaxCullDistances;
+		internal uint MaxCombinedClipAndCullDistances;
+		internal uint DiscreteQueuePriorities;
 		internal unsafe fixed float PointSizeRange[2];
 		internal unsafe fixed float LineWidthRange[2];
 		internal float PointSizeGranularity;
@@ -799,52 +800,52 @@ namespace VulkanSharp.Interop
 		internal DeviceSize NonCoherentAtomSize;
 	}
 
-	internal partial struct SemaphoreCreateInfo
+	internal struct SemaphoreCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 	}
 
-	internal partial struct QueryPoolCreateInfo
+	internal struct QueryPoolCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal QueryType QueryType;
-		internal UInt32 QueryCount;
+		internal uint QueryCount;
 		internal QueryPipelineStatisticFlags PipelineStatistics;
 	}
 
-	internal partial struct FramebufferCreateInfo
+	internal struct FramebufferCreateInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt64 RenderPass;
-		internal UInt32 AttachmentCount;
+		internal uint Flags;
+		internal ulong RenderPass;
+		internal uint AttachmentCount;
 		internal IntPtr Attachments;
-		internal UInt32 Width;
-		internal UInt32 Height;
-		internal UInt32 Layers;
+		internal uint Width;
+		internal uint Height;
+		internal uint Layers;
 	}
 
-	internal partial struct SubmitInfo
+	internal struct SubmitInfo
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 WaitSemaphoreCount;
+		internal uint WaitSemaphoreCount;
 		internal IntPtr WaitSemaphores;
 		internal IntPtr WaitDstStageMask;
-		internal UInt32 CommandBufferCount;
+		internal uint CommandBufferCount;
 		internal IntPtr CommandBuffers;
-		internal UInt32 SignalSemaphoreCount;
+		internal uint SignalSemaphoreCount;
 		internal IntPtr SignalSemaphores;
 	}
 
-	internal partial struct DisplayPropertiesKhr
+	internal struct DisplayPropertiesKhr
 	{
-		internal UInt64 Display;
+		internal ulong Display;
 		internal IntPtr DisplayName;
 		internal Extent2D PhysicalDimensions;
 		internal Extent2D PhysicalResolution;
@@ -853,41 +854,41 @@ namespace VulkanSharp.Interop
 		internal Bool32 PersistentContent;
 	}
 
-	internal partial struct DisplayPlanePropertiesKhr
+	internal struct DisplayPlanePropertiesKhr
 	{
-		internal UInt64 CurrentDisplay;
-		internal UInt32 CurrentStackIndex;
+		internal ulong CurrentDisplay;
+		internal uint CurrentStackIndex;
 	}
 
-	internal partial struct DisplayModePropertiesKhr
+	internal struct DisplayModePropertiesKhr
 	{
-		internal UInt64 DisplayMode;
+		internal ulong DisplayMode;
 		internal DisplayModeParametersKhr Parameters;
 	}
 
-	internal partial struct DisplayModeCreateInfoKhr
+	internal struct DisplayModeCreateInfoKhr
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
+		internal uint Flags;
 		internal DisplayModeParametersKhr Parameters;
 	}
 
-	internal partial struct DisplaySurfaceCreateInfoKhr
+	internal struct DisplaySurfaceCreateInfoKhr
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt64 DisplayMode;
-		internal UInt32 PlaneIndex;
-		internal UInt32 PlaneStackIndex;
+		internal uint Flags;
+		internal ulong DisplayMode;
+		internal uint PlaneIndex;
+		internal uint PlaneStackIndex;
 		internal SurfaceTransformFlagsKhr Transform;
 		internal float GlobalAlpha;
 		internal DisplayPlaneAlphaFlagsKhr AlphaMode;
 		internal Extent2D ImageExtent;
 	}
 
-	internal partial struct DisplayPresentInfoKhr
+	internal struct DisplayPresentInfoKhr
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
@@ -896,41 +897,41 @@ namespace VulkanSharp.Interop
 		internal Bool32 Persistent;
 	}
 
-	internal partial struct SwapchainCreateInfoKhr
+	internal struct SwapchainCreateInfoKhr
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 Flags;
-		internal UInt64 Surface;
-		internal UInt32 MinImageCount;
+		internal uint Flags;
+		internal ulong Surface;
+		internal uint MinImageCount;
 		internal Format ImageFormat;
 		internal ColorSpaceKhr ImageColorSpace;
 		internal Extent2D ImageExtent;
-		internal UInt32 ImageArrayLayers;
+		internal uint ImageArrayLayers;
 		internal ImageUsageFlags ImageUsage;
 		internal SharingMode ImageSharingMode;
-		internal UInt32 QueueFamilyIndexCount;
+		internal uint QueueFamilyIndexCount;
 		internal IntPtr QueueFamilyIndices;
 		internal SurfaceTransformFlagsKhr PreTransform;
 		internal CompositeAlphaFlagsKhr CompositeAlpha;
 		internal PresentModeKhr PresentMode;
 		internal Bool32 Clipped;
-		internal UInt64 OldSwapchain;
+		internal ulong OldSwapchain;
 	}
 
-	internal partial struct PresentInfoKhr
+	internal struct PresentInfoKhr
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
-		internal UInt32 WaitSemaphoreCount;
+		internal uint WaitSemaphoreCount;
 		internal IntPtr WaitSemaphores;
-		internal UInt32 SwapchainCount;
+		internal uint SwapchainCount;
 		internal IntPtr Swapchains;
 		internal IntPtr ImageIndices;
 		internal IntPtr Results;
 	}
 
-	internal partial struct DebugReportCallbackCreateInfoExt
+	internal struct DebugReportCallbackCreateInfoExt
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
@@ -939,34 +940,34 @@ namespace VulkanSharp.Interop
 		internal IntPtr UserData;
 	}
 
-	internal partial struct PipelineRasterizationStateRasterizationOrderAmd
+	internal struct PipelineRasterizationStateRasterizationOrderAmd
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal RasterizationOrderAmd RasterizationOrder;
 	}
 
-	internal partial struct DebugMarkerObjectNameInfoExt
+	internal struct DebugMarkerObjectNameInfoExt
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal DebugReportObjectTypeExt ObjectType;
-		internal UInt64 Object;
+		internal ulong Object;
 		internal IntPtr ObjectName;
 	}
 
-	internal partial struct DebugMarkerObjectTagInfoExt
+	internal struct DebugMarkerObjectTagInfoExt
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
 		internal DebugReportObjectTypeExt ObjectType;
-		internal UInt64 Object;
-		internal UInt64 TagName;
+		internal ulong Object;
+		internal ulong TagName;
 		internal UIntPtr TagSize;
 		internal IntPtr Tag;
 	}
 
-	internal partial struct DebugMarkerMarkerInfoExt
+	internal struct DebugMarkerMarkerInfoExt
 	{
 		internal StructureType SType;
 		internal IntPtr Next;
