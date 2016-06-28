@@ -5,7 +5,7 @@ namespace VulkanSharp.Windows
 	// ReSharper disable InconsistentNaming
 	public static class InstanceExtension
 	{
-		public static SurfaceKhr CreateWin32SurfaceKHR(this Instance instance, Win32SurfaceCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator) {
+		public static SurfaceKhr CreateWin32SurfaceKHR(this Instance instance, Win32SurfaceCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				var pSurface = new SurfaceKhr();
 

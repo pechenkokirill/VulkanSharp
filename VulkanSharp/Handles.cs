@@ -10,7 +10,7 @@ namespace VulkanSharp
 		protected IntPtr _handle;
 		public IntPtr Handle => _handle;
 
-		public DebugReportCallbackExt CreateDebugReportCallbackEXT(DebugReportCallbackCreateInfoExt pCreateInfo, AllocationCallbacks pAllocator) {
+		public DebugReportCallbackExt CreateDebugReportCallbackEXT(DebugReportCallbackCreateInfoExt pCreateInfo, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				var pCallback = new DebugReportCallbackExt();
 
@@ -22,7 +22,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public SurfaceKhr CreateDisplayPlaneSurfaceKHR(DisplaySurfaceCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator) {
+		public SurfaceKhr CreateDisplayPlaneSurfaceKHR(DisplaySurfaceCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				var pSurface = new SurfaceKhr();
 
@@ -38,19 +38,19 @@ namespace VulkanSharp
 			NativeMethods.vkDebugReportMessageEXT(_handle, flags, objectType, @object, location, messageCode, pLayerPrefix, pMessage);
 		}
 
-		public void Destroy(AllocationCallbacks pAllocator) {
+		public void Destroy(AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyInstance(_handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyDebugReportCallbackEXT(DebugReportCallbackExt callback, AllocationCallbacks pAllocator) {
+		public void DestroyDebugReportCallbackEXT(DebugReportCallbackExt callback, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyDebugReportCallbackEXT(_handle, callback._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroySurfaceKHR(SurfaceKhr surface, AllocationCallbacks pAllocator) {
+		public void DestroySurfaceKHR(SurfaceKhr surface, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroySurfaceKHR(_handle, surface._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
@@ -93,7 +93,7 @@ namespace VulkanSharp
 			_handle = handle;
 		}
 
-		public Device CreateDevice(DeviceCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Device CreateDevice(DeviceCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				var pDevice = new Device();
 
@@ -105,7 +105,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public DisplayModeKhr CreateDisplayModeKHR(DisplayKhr display, DisplayModeCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator) {
+		public DisplayModeKhr CreateDisplayModeKHR(DisplayKhr display, DisplayModeCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				var pMode = new DisplayModeKhr();
 
@@ -487,7 +487,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public DeviceMemory AllocateMemory(MemoryAllocateInfo pAllocateInfo, AllocationCallbacks pAllocator) {
+		public DeviceMemory AllocateMemory(MemoryAllocateInfo pAllocateInfo, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				var pMemory = new DeviceMemory();
 
@@ -509,7 +509,7 @@ namespace VulkanSharp
 			if (result != Result.Success) throw new ResultException(result);
 		}
 
-		public Buffer CreateBuffer(BufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Buffer CreateBuffer(BufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				var pBuffer = new Buffer();
 
@@ -521,7 +521,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public BufferView CreateBufferView(BufferViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public BufferView CreateBufferView(BufferViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			BufferView pView;
 			unsafe {
@@ -534,7 +534,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public CommandPool CreateCommandPool(CommandPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public CommandPool CreateCommandPool(CommandPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			CommandPool pCommandPool;
 			unsafe {
@@ -547,7 +547,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Pipeline[] CreateComputePipelines(PipelineCache pipelineCache, uint createInfoCount, ComputePipelineCreateInfo pCreateInfos, AllocationCallbacks pAllocator) {
+		public Pipeline[] CreateComputePipelines(PipelineCache pipelineCache, uint createInfoCount, ComputePipelineCreateInfo pCreateInfos, AllocationCallbacks pAllocator = null) {
 			Result result;
 			unsafe {
 				if (createInfoCount <= 0) return null;
@@ -568,7 +568,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public DescriptorPool CreateDescriptorPool(DescriptorPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public DescriptorPool CreateDescriptorPool(DescriptorPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			DescriptorPool pDescriptorPool;
 			unsafe {
@@ -581,7 +581,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public DescriptorSetLayout CreateDescriptorSetLayout(DescriptorSetLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public DescriptorSetLayout CreateDescriptorSetLayout(DescriptorSetLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			DescriptorSetLayout pSetLayout;
 			unsafe {
@@ -594,7 +594,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Event CreateEvent(EventCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Event CreateEvent(EventCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			Event pEvent;
 			unsafe {
@@ -607,7 +607,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Fence CreateFence(FenceCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Fence CreateFence(FenceCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			Fence pFence;
 			unsafe {
@@ -620,7 +620,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Framebuffer CreateFramebuffer(FramebufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Framebuffer CreateFramebuffer(FramebufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			Framebuffer pFramebuffer;
 			unsafe {
@@ -633,7 +633,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Pipeline[] CreateGraphicsPipelines(PipelineCache pipelineCache, uint createInfoCount, GraphicsPipelineCreateInfo pCreateInfos, AllocationCallbacks pAllocator) {
+		public Pipeline[] CreateGraphicsPipelines(PipelineCache pipelineCache, uint createInfoCount, GraphicsPipelineCreateInfo pCreateInfos, AllocationCallbacks pAllocator = null) {
 			Result result;
 			unsafe {
 				if (createInfoCount <= 0) return null;
@@ -654,7 +654,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Image CreateImage(ImageCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Image CreateImage(ImageCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			Image pImage;
 			unsafe {
@@ -667,7 +667,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public ImageView CreateImageView(ImageViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public ImageView CreateImageView(ImageViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			ImageView pView;
 			unsafe {
@@ -680,7 +680,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public PipelineCache CreatePipelineCache(PipelineCacheCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public PipelineCache CreatePipelineCache(PipelineCacheCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			PipelineCache pPipelineCache;
 			unsafe {
@@ -693,7 +693,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public PipelineLayout CreatePipelineLayout(PipelineLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public PipelineLayout CreatePipelineLayout(PipelineLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			PipelineLayout pPipelineLayout;
 			unsafe {
@@ -706,7 +706,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public QueryPool CreateQueryPool(QueryPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public QueryPool CreateQueryPool(QueryPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			QueryPool pQueryPool;
 			unsafe {
@@ -719,7 +719,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public RenderPass CreateRenderPass(RenderPassCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public RenderPass CreateRenderPass(RenderPassCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			RenderPass pRenderPass;
 			unsafe {
@@ -732,7 +732,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Sampler CreateSampler(SamplerCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Sampler CreateSampler(SamplerCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			Sampler pSampler;
 			unsafe {
@@ -745,7 +745,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public Semaphore CreateSemaphore(SemaphoreCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public Semaphore CreateSemaphore(SemaphoreCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			Semaphore pSemaphore;
 			unsafe {
@@ -758,7 +758,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public ShaderModule CreateShaderModule(ShaderModuleCreateInfo pCreateInfo, AllocationCallbacks pAllocator) {
+		public ShaderModule CreateShaderModule(ShaderModuleCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			ShaderModule pShaderModule;
 			unsafe {
@@ -771,7 +771,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public SwapchainKhr[] CreateSharedSwapchainsKHR(uint swapchainCount, SwapchainCreateInfoKhr pCreateInfos, AllocationCallbacks pAllocator) {
+		public SwapchainKhr[] CreateSharedSwapchainsKHR(uint swapchainCount, SwapchainCreateInfoKhr pCreateInfos, AllocationCallbacks pAllocator = null) {
 			Result result;
 			unsafe {
 				if (swapchainCount <= 0) return null;
@@ -792,7 +792,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public SwapchainKhr CreateSwapchainKHR(SwapchainCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator) {
+		public SwapchainKhr CreateSwapchainKHR(SwapchainCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator = null) {
 			Result result;
 			SwapchainKhr pSwapchain;
 			unsafe {
@@ -829,121 +829,121 @@ namespace VulkanSharp
 			}
 		}
 
-		public void Destroy(AllocationCallbacks pAllocator) {
+		public void Destroy(AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyDevice(_handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyBuffer(Buffer buffer, AllocationCallbacks pAllocator) {
+		public void DestroyBuffer(Buffer buffer, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyBuffer(_handle, buffer._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyBufferView(BufferView bufferView, AllocationCallbacks pAllocator) {
+		public void DestroyBufferView(BufferView bufferView, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyBufferView(_handle, bufferView._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyCommandPool(CommandPool commandPool, AllocationCallbacks pAllocator) {
+		public void DestroyCommandPool(CommandPool commandPool, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyCommandPool(_handle, commandPool._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyDescriptorPool(DescriptorPool descriptorPool, AllocationCallbacks pAllocator) {
+		public void DestroyDescriptorPool(DescriptorPool descriptorPool, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyDescriptorPool(_handle, descriptorPool._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyDescriptorSetLayout(DescriptorSetLayout descriptorSetLayout, AllocationCallbacks pAllocator) {
+		public void DestroyDescriptorSetLayout(DescriptorSetLayout descriptorSetLayout, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyDescriptorSetLayout(_handle, descriptorSetLayout._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyEvent(Event @event, AllocationCallbacks pAllocator) {
+		public void DestroyEvent(Event @event, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyEvent(_handle, @event._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyFence(Fence fence, AllocationCallbacks pAllocator) {
+		public void DestroyFence(Fence fence, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyFence(_handle, fence._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyFramebuffer(Framebuffer framebuffer, AllocationCallbacks pAllocator) {
+		public void DestroyFramebuffer(Framebuffer framebuffer, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyFramebuffer(_handle, framebuffer._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyImage(Image image, AllocationCallbacks pAllocator) {
+		public void DestroyImage(Image image, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyImage(_handle, image._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyImageView(ImageView imageView, AllocationCallbacks pAllocator) {
+		public void DestroyImageView(ImageView imageView, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyImageView(_handle, imageView._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyPipeline(Pipeline pipeline, AllocationCallbacks pAllocator) {
+		public void DestroyPipeline(Pipeline pipeline, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyPipeline(_handle, pipeline._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyPipelineCache(PipelineCache pipelineCache, AllocationCallbacks pAllocator) {
+		public void DestroyPipelineCache(PipelineCache pipelineCache, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyPipelineCache(_handle, pipelineCache._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyPipelineLayout(PipelineLayout pipelineLayout, AllocationCallbacks pAllocator) {
+		public void DestroyPipelineLayout(PipelineLayout pipelineLayout, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyPipelineLayout(_handle, pipelineLayout._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyQueryPool(QueryPool queryPool, AllocationCallbacks pAllocator) {
+		public void DestroyQueryPool(QueryPool queryPool, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyQueryPool(_handle, queryPool._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyRenderPass(RenderPass renderPass, AllocationCallbacks pAllocator) {
+		public void DestroyRenderPass(RenderPass renderPass, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyRenderPass(_handle, renderPass._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroySampler(Sampler sampler, AllocationCallbacks pAllocator) {
+		public void DestroySampler(Sampler sampler, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroySampler(_handle, sampler._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroySemaphore(Semaphore semaphore, AllocationCallbacks pAllocator) {
+		public void DestroySemaphore(Semaphore semaphore, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroySemaphore(_handle, semaphore._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroyShaderModule(ShaderModule shaderModule, AllocationCallbacks pAllocator) {
+		public void DestroyShaderModule(ShaderModule shaderModule, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroyShaderModule(_handle, shaderModule._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
 		}
 
-		public void DestroySwapchainKHR(SwapchainKhr swapchain, AllocationCallbacks pAllocator) {
+		public void DestroySwapchainKHR(SwapchainKhr swapchain, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkDestroySwapchainKHR(_handle, swapchain._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
@@ -971,7 +971,7 @@ namespace VulkanSharp
 			}
 		}
 
-		public void FreeMemory(DeviceMemory memory, AllocationCallbacks pAllocator) {
+		public void FreeMemory(DeviceMemory memory, AllocationCallbacks pAllocator = null) {
 			unsafe {
 				NativeMethods.vkFreeMemory(_handle, memory._handle, pAllocator != null ? pAllocator.Handle : null);
 			}
