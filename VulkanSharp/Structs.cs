@@ -119,7 +119,7 @@ namespace VulkanSharp
 		PhysicalDeviceLimits lLimits;
 		public PhysicalDeviceLimits Limits {
 			get { return lLimits; }
-			set { lLimits = value; _handle->Limits = *value.m; }
+			set { lLimits = value; _handle->Limits = *value._handle; }
 		}
 
 		public PhysicalDeviceSparseProperties SparseProperties {
@@ -517,30 +517,30 @@ namespace VulkanSharp
 	public unsafe class InstanceCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		ApplicationInfo lApplicationInfo;
 		public ApplicationInfo ApplicationInfo {
 			get { return lApplicationInfo; }
-			set { lApplicationInfo = value; m->ApplicationInfo = (IntPtr)value._handle; }
+			set { lApplicationInfo = value; _handle->ApplicationInfo = (IntPtr)value._handle; }
 		}
 
 		public uint EnabledLayerCount {
-			get { return m->EnabledLayerCount; }
-			set { m->EnabledLayerCount = value; }
+			get { return _handle->EnabledLayerCount; }
+			set { _handle->EnabledLayerCount = value; }
 		}
 
 		public string[] EnabledLayerNames {
 			get {
-				if (m->EnabledLayerCount == 0)
+				if (_handle->EnabledLayerCount == 0)
 					return null;
-				var strings = new string [m->EnabledLayerCount];
+				var strings = new string [_handle->EnabledLayerCount];
 				unsafe
 				{
-					var ptr = (void**)m->EnabledLayerNames;
-					for (var i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)_handle->EnabledLayerNames;
+					for (var i = 0; i < _handle->EnabledLayerCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -548,35 +548,35 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->EnabledLayerCount = 0;
-					m->EnabledLayerNames = IntPtr.Zero;
+					_handle->EnabledLayerCount = 0;
+					_handle->EnabledLayerNames = IntPtr.Zero;
 					return;
 				}
-				m->EnabledLayerCount = (uint)value.Length;
-				m->EnabledLayerNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledLayerCount));
+				_handle->EnabledLayerCount = (uint)value.Length;
+				_handle->EnabledLayerNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*_handle->EnabledLayerCount));
 				unsafe
 				{
-					var ptr = (void**)m->EnabledLayerNames;
-					for (var i = 0; i < m->EnabledLayerCount; i++)
+					var ptr = (void**)_handle->EnabledLayerNames;
+					for (var i = 0; i < _handle->EnabledLayerCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
 		}
 
 		public uint EnabledExtensionCount {
-			get { return m->EnabledExtensionCount; }
-			set { m->EnabledExtensionCount = value; }
+			get { return _handle->EnabledExtensionCount; }
+			set { _handle->EnabledExtensionCount = value; }
 		}
 
 		public string[] EnabledExtensionNames {
 			get {
-				if (m->EnabledExtensionCount == 0)
+				if (_handle->EnabledExtensionCount == 0)
 					return null;
-				var strings = new string [m->EnabledExtensionCount];
+				var strings = new string [_handle->EnabledExtensionCount];
 				unsafe
 				{
-					var ptr = (void**)m->EnabledExtensionNames;
-					for (var i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)_handle->EnabledExtensionNames;
+					for (var i = 0; i < _handle->EnabledExtensionCount; i++)
 						strings [i] = Marshal.PtrToStringAnsi ((IntPtr)ptr [i]);
 				}
 				return strings;
@@ -584,38 +584,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->EnabledExtensionCount = 0;
-					m->EnabledExtensionNames = IntPtr.Zero;
+					_handle->EnabledExtensionCount = 0;
+					_handle->EnabledExtensionNames = IntPtr.Zero;
 					return;
 				}
-				m->EnabledExtensionCount = (uint)value.Length;
-				m->EnabledExtensionNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*m->EnabledExtensionCount));
+				_handle->EnabledExtensionCount = (uint)value.Length;
+				_handle->EnabledExtensionNames = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*_handle->EnabledExtensionCount));
 				unsafe
 				{
-					var ptr = (void**)m->EnabledExtensionNames;
-					for (var i = 0; i < m->EnabledExtensionCount; i++)
+					var ptr = (void**)_handle->EnabledExtensionNames;
+					for (var i = 0; i < _handle->EnabledExtensionCount; i++)
 						ptr [i] = (void*) Marshal.StringToHGlobalAnsi (value [i]);
 				}
 			}
 		}
-		public Interop.InstanceCreateInfo* m;
+		public Interop.InstanceCreateInfo* _handle;
 
 		public InstanceCreateInfo ()
 		{
-			m = (Interop.InstanceCreateInfo*) Interop.Structure.Allocate (typeof (Interop.InstanceCreateInfo));
+			_handle = (Interop.InstanceCreateInfo*) Interop.Structure.Allocate (typeof (Interop.InstanceCreateInfo));
 			Initialize ();
 		}
 
 		public InstanceCreateInfo (Interop.InstanceCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.InstanceCreateInfo;
+			_handle->SType = StructureType.InstanceCreateInfo;
 		}
 
 	}
@@ -631,70 +631,70 @@ namespace VulkanSharp
 	public unsafe class PhysicalDeviceMemoryProperties
 	{
 		public uint MemoryTypeCount {
-			get { return m->MemoryTypeCount; }
-			set { m->MemoryTypeCount = value; }
+			get { return _handle->MemoryTypeCount; }
+			set { _handle->MemoryTypeCount = value; }
 		}
 
 		public MemoryType[] MemoryTypes {
 			get {
-				var arr = new MemoryType [m->MemoryTypeCount];
-				for (var i = 0; i < m->MemoryTypeCount; i++)
+				var arr = new MemoryType [_handle->MemoryTypeCount];
+				for (var i = 0; i < _handle->MemoryTypeCount; i++)
 					unsafe
 					{
-						arr [i] = (&m->MemoryTypes0) [i];
+						arr [i] = (&_handle->MemoryTypes0) [i];
 					}
 				return arr;
 			}
 
 			set {
-				if (value.Length > m->MemoryTypeCount)
+				if (value.Length > _handle->MemoryTypeCount)
 					throw new Exception ("array too long");
-				m->MemoryTypeCount = (uint)value.Length;
+				_handle->MemoryTypeCount = (uint)value.Length;
 				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
-						(&m->MemoryTypes0) [i] = value [i];
+						(&_handle->MemoryTypes0) [i] = value [i];
 					}
 			}
 		}
 
 		public uint MemoryHeapCount {
-			get { return m->MemoryHeapCount; }
-			set { m->MemoryHeapCount = value; }
+			get { return _handle->MemoryHeapCount; }
+			set { _handle->MemoryHeapCount = value; }
 		}
 
 		public MemoryHeap[] MemoryHeaps {
 			get {
-				var arr = new MemoryHeap [m->MemoryHeapCount];
-				for (var i = 0; i < m->MemoryHeapCount; i++)
+				var arr = new MemoryHeap [_handle->MemoryHeapCount];
+				for (var i = 0; i < _handle->MemoryHeapCount; i++)
 					unsafe
 					{
-						arr [i] = (&m->MemoryHeaps0) [i];
+						arr [i] = (&_handle->MemoryHeaps0) [i];
 					}
 				return arr;
 			}
 
 			set {
-				if (value.Length > m->MemoryHeapCount)
+				if (value.Length > _handle->MemoryHeapCount)
 					throw new Exception ("array too long");
-				m->MemoryHeapCount = (uint)value.Length;
+				_handle->MemoryHeapCount = (uint)value.Length;
 				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
-						(&m->MemoryHeaps0) [i] = value [i];
+						(&_handle->MemoryHeaps0) [i] = value [i];
 					}
 			}
 		}
-		public Interop.PhysicalDeviceMemoryProperties* m;
+		public Interop.PhysicalDeviceMemoryProperties* _handle;
 
 		public PhysicalDeviceMemoryProperties ()
 		{
-			m = (Interop.PhysicalDeviceMemoryProperties*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceMemoryProperties));
+			_handle = (Interop.PhysicalDeviceMemoryProperties*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceMemoryProperties));
 		}
 
 		public PhysicalDeviceMemoryProperties (Interop.PhysicalDeviceMemoryProperties* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -702,32 +702,32 @@ namespace VulkanSharp
 	public unsafe class MemoryAllocateInfo
 	{
 		public DeviceSize AllocationSize {
-			get { return m->AllocationSize; }
-			set { m->AllocationSize = value; }
+			get { return _handle->AllocationSize; }
+			set { _handle->AllocationSize = value; }
 		}
 
 		public uint MemoryTypeIndex {
-			get { return m->MemoryTypeIndex; }
-			set { m->MemoryTypeIndex = value; }
+			get { return _handle->MemoryTypeIndex; }
+			set { _handle->MemoryTypeIndex = value; }
 		}
-		public Interop.MemoryAllocateInfo* m;
+		public Interop.MemoryAllocateInfo* _handle;
 
 		public MemoryAllocateInfo ()
 		{
-			m = (Interop.MemoryAllocateInfo*) Interop.Structure.Allocate (typeof (Interop.MemoryAllocateInfo));
+			_handle = (Interop.MemoryAllocateInfo*) Interop.Structure.Allocate (typeof (Interop.MemoryAllocateInfo));
 			Initialize ();
 		}
 
 		public MemoryAllocateInfo (Interop.MemoryAllocateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.MemoryAllocateInfo;
+			_handle->SType = StructureType.MemoryAllocateInfo;
 		}
 
 	}
@@ -772,36 +772,36 @@ namespace VulkanSharp
 		DeviceMemory lMemory;
 		public DeviceMemory Memory {
 			get { return lMemory; }
-			set { lMemory = value; m->Memory = (ulong)value.m; }
+			set { lMemory = value; _handle->Memory = (ulong)value._handle; }
 		}
 
 		public DeviceSize Offset {
-			get { return m->Offset; }
-			set { m->Offset = value; }
+			get { return _handle->Offset; }
+			set { _handle->Offset = value; }
 		}
 
 		public DeviceSize Size {
-			get { return m->Size; }
-			set { m->Size = value; }
+			get { return _handle->Size; }
+			set { _handle->Size = value; }
 		}
-		public Interop.MappedMemoryRange* m;
+		public Interop.MappedMemoryRange* _handle;
 
 		public MappedMemoryRange ()
 		{
-			m = (Interop.MappedMemoryRange*) Interop.Structure.Allocate (typeof (Interop.MappedMemoryRange));
+			_handle = (Interop.MappedMemoryRange*) Interop.Structure.Allocate (typeof (Interop.MappedMemoryRange));
 			Initialize ();
 		}
 
 		public MappedMemoryRange (Interop.MappedMemoryRange* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.MappedMemoryRange;
+			_handle->SType = StructureType.MappedMemoryRange;
 		}
 
 	}
@@ -827,29 +827,29 @@ namespace VulkanSharp
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (ulong)value.m; }
+			set { lBuffer = value; _handle->Buffer = (ulong)value._handle; }
 		}
 
 		public DeviceSize Offset {
-			get { return m->Offset; }
-			set { m->Offset = value; }
+			get { return _handle->Offset; }
+			set { _handle->Offset = value; }
 		}
 
 		public DeviceSize Range {
-			get { return m->Range; }
-			set { m->Range = value; }
+			get { return _handle->Range; }
+			set { _handle->Range = value; }
 		}
-		public Interop.DescriptorBufferInfo* m;
+		public Interop.DescriptorBufferInfo* _handle;
 
 		public DescriptorBufferInfo ()
 		{
-			m = (Interop.DescriptorBufferInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorBufferInfo));
+			_handle = (Interop.DescriptorBufferInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorBufferInfo));
 			Initialize ();
 		}
 
 		public DescriptorBufferInfo (Interop.DescriptorBufferInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -865,30 +865,30 @@ namespace VulkanSharp
 		Sampler lSampler;
 		public Sampler Sampler {
 			get { return lSampler; }
-			set { lSampler = value; m->Sampler = (ulong)value.m; }
+			set { lSampler = value; _handle->Sampler = (ulong)value._handle; }
 		}
 
 		ImageView lImageView;
 		public ImageView ImageView {
 			get { return lImageView; }
-			set { lImageView = value; m->ImageView = (ulong)value.m; }
+			set { lImageView = value; _handle->ImageView = (ulong)value._handle; }
 		}
 
 		public ImageLayout ImageLayout {
-			get { return m->ImageLayout; }
-			set { m->ImageLayout = value; }
+			get { return _handle->ImageLayout; }
+			set { _handle->ImageLayout = value; }
 		}
-		public Interop.DescriptorImageInfo* m;
+		public Interop.DescriptorImageInfo* _handle;
 
 		public DescriptorImageInfo ()
 		{
-			m = (Interop.DescriptorImageInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorImageInfo));
+			_handle = (Interop.DescriptorImageInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorImageInfo));
 			Initialize ();
 		}
 
 		public DescriptorImageInfo (Interop.DescriptorImageInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -904,40 +904,40 @@ namespace VulkanSharp
 		DescriptorSet lDstSet;
 		public DescriptorSet DstSet {
 			get { return lDstSet; }
-			set { lDstSet = value; m->DstSet = (ulong)value.m; }
+			set { lDstSet = value; _handle->DstSet = (ulong)value._handle; }
 		}
 
 		public uint DstBinding {
-			get { return m->DstBinding; }
-			set { m->DstBinding = value; }
+			get { return _handle->DstBinding; }
+			set { _handle->DstBinding = value; }
 		}
 
 		public uint DstArrayElement {
-			get { return m->DstArrayElement; }
-			set { m->DstArrayElement = value; }
+			get { return _handle->DstArrayElement; }
+			set { _handle->DstArrayElement = value; }
 		}
 
 		public uint DescriptorCount {
-			get { return m->DescriptorCount; }
-			set { m->DescriptorCount = value; }
+			get { return _handle->DescriptorCount; }
+			set { _handle->DescriptorCount = value; }
 		}
 
 		public DescriptorType DescriptorType {
-			get { return m->DescriptorType; }
-			set { m->DescriptorType = value; }
+			get { return _handle->DescriptorType; }
+			set { _handle->DescriptorType = value; }
 		}
 
 		public DescriptorImageInfo[] ImageInfo {
 			get {
-				if (m->DescriptorCount == 0)
+				if (_handle->DescriptorCount == 0)
 					return null;
-				var values = new DescriptorImageInfo [m->DescriptorCount];
+				var values = new DescriptorImageInfo [_handle->DescriptorCount];
 				unsafe
 				{
-					var ptr = (Interop.DescriptorImageInfo*)m->ImageInfo;
+					var ptr = (Interop.DescriptorImageInfo*)_handle->ImageInfo;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorImageInfo ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -945,32 +945,32 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->DescriptorCount = 0;
-					m->ImageInfo = IntPtr.Zero;
+					_handle->DescriptorCount = 0;
+					_handle->ImageInfo = IntPtr.Zero;
 					return;
 				}
-				m->DescriptorCount = (uint)value.Length;
-				m->ImageInfo = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorImageInfo)*value.Length));
+				_handle->DescriptorCount = (uint)value.Length;
+				_handle->ImageInfo = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorImageInfo)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.DescriptorImageInfo*)m->ImageInfo;
+					var ptr = (Interop.DescriptorImageInfo*)_handle->ImageInfo;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
 
 		public DescriptorBufferInfo[] BufferInfo {
 			get {
-				if (m->DescriptorCount == 0)
+				if (_handle->DescriptorCount == 0)
 					return null;
-				var values = new DescriptorBufferInfo [m->DescriptorCount];
+				var values = new DescriptorBufferInfo [_handle->DescriptorCount];
 				unsafe
 				{
-					var ptr = (Interop.DescriptorBufferInfo*)m->BufferInfo;
+					var ptr = (Interop.DescriptorBufferInfo*)_handle->BufferInfo;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorBufferInfo ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -978,32 +978,32 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->DescriptorCount = 0;
-					m->BufferInfo = IntPtr.Zero;
+					_handle->DescriptorCount = 0;
+					_handle->BufferInfo = IntPtr.Zero;
 					return;
 				}
-				m->DescriptorCount = (uint)value.Length;
-				m->BufferInfo = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorBufferInfo)*value.Length));
+				_handle->DescriptorCount = (uint)value.Length;
+				_handle->BufferInfo = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorBufferInfo)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.DescriptorBufferInfo*)m->BufferInfo;
+					var ptr = (Interop.DescriptorBufferInfo*)_handle->BufferInfo;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
 
 		public BufferView[] TexelBufferView {
 			get {
-				if (m->DescriptorCount == 0)
+				if (_handle->DescriptorCount == 0)
 					return null;
-				var values = new BufferView [m->DescriptorCount];
+				var values = new BufferView [_handle->DescriptorCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->TexelBufferView;
+					var ptr = (ulong*)_handle->TexelBufferView;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new BufferView ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -1011,38 +1011,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->DescriptorCount = 0;
-					m->TexelBufferView = IntPtr.Zero;
+					_handle->DescriptorCount = 0;
+					_handle->TexelBufferView = IntPtr.Zero;
 					return;
 				}
-				m->DescriptorCount = (uint)value.Length;
-				m->TexelBufferView = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->DescriptorCount = (uint)value.Length;
+				_handle->TexelBufferView = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->TexelBufferView;
+					var ptr = (ulong*)_handle->TexelBufferView;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
-		public Interop.WriteDescriptorSet* m;
+		public Interop.WriteDescriptorSet* _handle;
 
 		public WriteDescriptorSet ()
 		{
-			m = (Interop.WriteDescriptorSet*) Interop.Structure.Allocate (typeof (Interop.WriteDescriptorSet));
+			_handle = (Interop.WriteDescriptorSet*) Interop.Structure.Allocate (typeof (Interop.WriteDescriptorSet));
 			Initialize ();
 		}
 
 		public WriteDescriptorSet (Interop.WriteDescriptorSet* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.WriteDescriptorSet;
+			_handle->SType = StructureType.WriteDescriptorSet;
 		}
 
 	}
@@ -1052,57 +1052,57 @@ namespace VulkanSharp
 		DescriptorSet lSrcSet;
 		public DescriptorSet SrcSet {
 			get { return lSrcSet; }
-			set { lSrcSet = value; m->SrcSet = (ulong)value.m; }
+			set { lSrcSet = value; _handle->SrcSet = (ulong)value._handle; }
 		}
 
 		public uint SrcBinding {
-			get { return m->SrcBinding; }
-			set { m->SrcBinding = value; }
+			get { return _handle->SrcBinding; }
+			set { _handle->SrcBinding = value; }
 		}
 
 		public uint SrcArrayElement {
-			get { return m->SrcArrayElement; }
-			set { m->SrcArrayElement = value; }
+			get { return _handle->SrcArrayElement; }
+			set { _handle->SrcArrayElement = value; }
 		}
 
 		DescriptorSet lDstSet;
 		public DescriptorSet DstSet {
 			get { return lDstSet; }
-			set { lDstSet = value; m->DstSet = (ulong)value.m; }
+			set { lDstSet = value; _handle->DstSet = (ulong)value._handle; }
 		}
 
 		public uint DstBinding {
-			get { return m->DstBinding; }
-			set { m->DstBinding = value; }
+			get { return _handle->DstBinding; }
+			set { _handle->DstBinding = value; }
 		}
 
 		public uint DstArrayElement {
-			get { return m->DstArrayElement; }
-			set { m->DstArrayElement = value; }
+			get { return _handle->DstArrayElement; }
+			set { _handle->DstArrayElement = value; }
 		}
 
 		public uint DescriptorCount {
-			get { return m->DescriptorCount; }
-			set { m->DescriptorCount = value; }
+			get { return _handle->DescriptorCount; }
+			set { _handle->DescriptorCount = value; }
 		}
-		public Interop.CopyDescriptorSet* m;
+		public Interop.CopyDescriptorSet* _handle;
 
 		public CopyDescriptorSet ()
 		{
-			m = (Interop.CopyDescriptorSet*) Interop.Structure.Allocate (typeof (Interop.CopyDescriptorSet));
+			_handle = (Interop.CopyDescriptorSet*) Interop.Structure.Allocate (typeof (Interop.CopyDescriptorSet));
 			Initialize ();
 		}
 
 		public CopyDescriptorSet (Interop.CopyDescriptorSet* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.CopyDescriptorSet;
+			_handle->SType = StructureType.CopyDescriptorSet;
 		}
 
 	}
@@ -1110,38 +1110,38 @@ namespace VulkanSharp
 	public unsafe class BufferCreateInfo
 	{
 		public BufferCreateFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public DeviceSize Size {
-			get { return m->Size; }
-			set { m->Size = value; }
+			get { return _handle->Size; }
+			set { _handle->Size = value; }
 		}
 
 		public BufferUsageFlags Usage {
-			get { return m->Usage; }
-			set { m->Usage = value; }
+			get { return _handle->Usage; }
+			set { _handle->Usage = value; }
 		}
 
 		public SharingMode SharingMode {
-			get { return m->SharingMode; }
-			set { m->SharingMode = value; }
+			get { return _handle->SharingMode; }
+			set { _handle->SharingMode = value; }
 		}
 
 		public uint QueueFamilyIndexCount {
-			get { return m->QueueFamilyIndexCount; }
-			set { m->QueueFamilyIndexCount = value; }
+			get { return _handle->QueueFamilyIndexCount; }
+			set { _handle->QueueFamilyIndexCount = value; }
 		}
 
 		public uint[] QueueFamilyIndices {
 			get {
-				if (m->QueueFamilyIndexCount == 0)
+				if (_handle->QueueFamilyIndexCount == 0)
 					return null;
-				var values = new uint [m->QueueFamilyIndexCount];
+				var values = new uint [_handle->QueueFamilyIndexCount];
 				unsafe
 				{
-					var ptr = (uint*)m->QueueFamilyIndices;
+					var ptr = (uint*)_handle->QueueFamilyIndices;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -1150,38 +1150,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->QueueFamilyIndexCount = 0;
-					m->QueueFamilyIndices = IntPtr.Zero;
+					_handle->QueueFamilyIndexCount = 0;
+					_handle->QueueFamilyIndices = IntPtr.Zero;
 					return;
 				}
-				m->QueueFamilyIndexCount = (uint)value.Length;
-				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
+				_handle->QueueFamilyIndexCount = (uint)value.Length;
+				_handle->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					var ptr = (uint*)m->QueueFamilyIndices;
+					var ptr = (uint*)_handle->QueueFamilyIndices;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.BufferCreateInfo* m;
+		public Interop.BufferCreateInfo* _handle;
 
 		public BufferCreateInfo ()
 		{
-			m = (Interop.BufferCreateInfo*) Interop.Structure.Allocate (typeof (Interop.BufferCreateInfo));
+			_handle = (Interop.BufferCreateInfo*) Interop.Structure.Allocate (typeof (Interop.BufferCreateInfo));
 			Initialize ();
 		}
 
 		public BufferCreateInfo (Interop.BufferCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.BufferCreateInfo;
+			_handle->SType = StructureType.BufferCreateInfo;
 		}
 
 	}
@@ -1189,48 +1189,48 @@ namespace VulkanSharp
 	public unsafe class BufferViewCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (ulong)value.m; }
+			set { lBuffer = value; _handle->Buffer = (ulong)value._handle; }
 		}
 
 		public Format Format {
-			get { return m->Format; }
-			set { m->Format = value; }
+			get { return _handle->Format; }
+			set { _handle->Format = value; }
 		}
 
 		public DeviceSize Offset {
-			get { return m->Offset; }
-			set { m->Offset = value; }
+			get { return _handle->Offset; }
+			set { _handle->Offset = value; }
 		}
 
 		public DeviceSize Range {
-			get { return m->Range; }
-			set { m->Range = value; }
+			get { return _handle->Range; }
+			set { _handle->Range = value; }
 		}
-		public Interop.BufferViewCreateInfo* m;
+		public Interop.BufferViewCreateInfo* _handle;
 
 		public BufferViewCreateInfo ()
 		{
-			m = (Interop.BufferViewCreateInfo*) Interop.Structure.Allocate (typeof (Interop.BufferViewCreateInfo));
+			_handle = (Interop.BufferViewCreateInfo*) Interop.Structure.Allocate (typeof (Interop.BufferViewCreateInfo));
 			Initialize ();
 		}
 
 		public BufferViewCreateInfo (Interop.BufferViewCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.BufferViewCreateInfo;
+			_handle->SType = StructureType.BufferViewCreateInfo;
 		}
 
 	}
@@ -1262,32 +1262,32 @@ namespace VulkanSharp
 	public unsafe class MemoryBarrier
 	{
 		public AccessFlags SrcAccessMask {
-			get { return m->SrcAccessMask; }
-			set { m->SrcAccessMask = value; }
+			get { return _handle->SrcAccessMask; }
+			set { _handle->SrcAccessMask = value; }
 		}
 
 		public AccessFlags DstAccessMask {
-			get { return m->DstAccessMask; }
-			set { m->DstAccessMask = value; }
+			get { return _handle->DstAccessMask; }
+			set { _handle->DstAccessMask = value; }
 		}
-		public Interop.MemoryBarrier* m;
+		public Interop.MemoryBarrier* _handle;
 
 		public MemoryBarrier ()
 		{
-			m = (Interop.MemoryBarrier*) Interop.Structure.Allocate (typeof (Interop.MemoryBarrier));
+			_handle = (Interop.MemoryBarrier*) Interop.Structure.Allocate (typeof (Interop.MemoryBarrier));
 			Initialize ();
 		}
 
 		public MemoryBarrier (Interop.MemoryBarrier* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.MemoryBarrier;
+			_handle->SType = StructureType.MemoryBarrier;
 		}
 
 	}
@@ -1295,58 +1295,58 @@ namespace VulkanSharp
 	public unsafe class BufferMemoryBarrier
 	{
 		public AccessFlags SrcAccessMask {
-			get { return m->SrcAccessMask; }
-			set { m->SrcAccessMask = value; }
+			get { return _handle->SrcAccessMask; }
+			set { _handle->SrcAccessMask = value; }
 		}
 
 		public AccessFlags DstAccessMask {
-			get { return m->DstAccessMask; }
-			set { m->DstAccessMask = value; }
+			get { return _handle->DstAccessMask; }
+			set { _handle->DstAccessMask = value; }
 		}
 
 		public uint SrcQueueFamilyIndex {
-			get { return m->SrcQueueFamilyIndex; }
-			set { m->SrcQueueFamilyIndex = value; }
+			get { return _handle->SrcQueueFamilyIndex; }
+			set { _handle->SrcQueueFamilyIndex = value; }
 		}
 
 		public uint DstQueueFamilyIndex {
-			get { return m->DstQueueFamilyIndex; }
-			set { m->DstQueueFamilyIndex = value; }
+			get { return _handle->DstQueueFamilyIndex; }
+			set { _handle->DstQueueFamilyIndex = value; }
 		}
 
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (ulong)value.m; }
+			set { lBuffer = value; _handle->Buffer = (ulong)value._handle; }
 		}
 
 		public DeviceSize Offset {
-			get { return m->Offset; }
-			set { m->Offset = value; }
+			get { return _handle->Offset; }
+			set { _handle->Offset = value; }
 		}
 
 		public DeviceSize Size {
-			get { return m->Size; }
-			set { m->Size = value; }
+			get { return _handle->Size; }
+			set { _handle->Size = value; }
 		}
-		public Interop.BufferMemoryBarrier* m;
+		public Interop.BufferMemoryBarrier* _handle;
 
 		public BufferMemoryBarrier ()
 		{
-			m = (Interop.BufferMemoryBarrier*) Interop.Structure.Allocate (typeof (Interop.BufferMemoryBarrier));
+			_handle = (Interop.BufferMemoryBarrier*) Interop.Structure.Allocate (typeof (Interop.BufferMemoryBarrier));
 			Initialize ();
 		}
 
 		public BufferMemoryBarrier (Interop.BufferMemoryBarrier* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.BufferMemoryBarrier;
+			_handle->SType = StructureType.BufferMemoryBarrier;
 		}
 
 	}
@@ -1354,63 +1354,63 @@ namespace VulkanSharp
 	public unsafe class ImageMemoryBarrier
 	{
 		public AccessFlags SrcAccessMask {
-			get { return m->SrcAccessMask; }
-			set { m->SrcAccessMask = value; }
+			get { return _handle->SrcAccessMask; }
+			set { _handle->SrcAccessMask = value; }
 		}
 
 		public AccessFlags DstAccessMask {
-			get { return m->DstAccessMask; }
-			set { m->DstAccessMask = value; }
+			get { return _handle->DstAccessMask; }
+			set { _handle->DstAccessMask = value; }
 		}
 
 		public ImageLayout OldLayout {
-			get { return m->OldLayout; }
-			set { m->OldLayout = value; }
+			get { return _handle->OldLayout; }
+			set { _handle->OldLayout = value; }
 		}
 
 		public ImageLayout NewLayout {
-			get { return m->NewLayout; }
-			set { m->NewLayout = value; }
+			get { return _handle->NewLayout; }
+			set { _handle->NewLayout = value; }
 		}
 
 		public uint SrcQueueFamilyIndex {
-			get { return m->SrcQueueFamilyIndex; }
-			set { m->SrcQueueFamilyIndex = value; }
+			get { return _handle->SrcQueueFamilyIndex; }
+			set { _handle->SrcQueueFamilyIndex = value; }
 		}
 
 		public uint DstQueueFamilyIndex {
-			get { return m->DstQueueFamilyIndex; }
-			set { m->DstQueueFamilyIndex = value; }
+			get { return _handle->DstQueueFamilyIndex; }
+			set { _handle->DstQueueFamilyIndex = value; }
 		}
 
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (ulong)value.m; }
+			set { lImage = value; _handle->Image = (ulong)value._handle; }
 		}
 
 		public ImageSubresourceRange SubresourceRange {
-			get { return m->SubresourceRange; }
-			set { m->SubresourceRange = value; }
+			get { return _handle->SubresourceRange; }
+			set { _handle->SubresourceRange = value; }
 		}
-		public Interop.ImageMemoryBarrier* m;
+		public Interop.ImageMemoryBarrier* _handle;
 
 		public ImageMemoryBarrier ()
 		{
-			m = (Interop.ImageMemoryBarrier*) Interop.Structure.Allocate (typeof (Interop.ImageMemoryBarrier));
+			_handle = (Interop.ImageMemoryBarrier*) Interop.Structure.Allocate (typeof (Interop.ImageMemoryBarrier));
 			Initialize ();
 		}
 
 		public ImageMemoryBarrier (Interop.ImageMemoryBarrier* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.ImageMemoryBarrier;
+			_handle->SType = StructureType.ImageMemoryBarrier;
 		}
 
 	}
@@ -1418,68 +1418,68 @@ namespace VulkanSharp
 	public unsafe class ImageCreateInfo
 	{
 		public ImageCreateFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public ImageType ImageType {
-			get { return m->ImageType; }
-			set { m->ImageType = value; }
+			get { return _handle->ImageType; }
+			set { _handle->ImageType = value; }
 		}
 
 		public Format Format {
-			get { return m->Format; }
-			set { m->Format = value; }
+			get { return _handle->Format; }
+			set { _handle->Format = value; }
 		}
 
 		public Extent3D Extent {
-			get { return m->Extent; }
-			set { m->Extent = value; }
+			get { return _handle->Extent; }
+			set { _handle->Extent = value; }
 		}
 
 		public uint MipLevels {
-			get { return m->MipLevels; }
-			set { m->MipLevels = value; }
+			get { return _handle->MipLevels; }
+			set { _handle->MipLevels = value; }
 		}
 
 		public uint ArrayLayers {
-			get { return m->ArrayLayers; }
-			set { m->ArrayLayers = value; }
+			get { return _handle->ArrayLayers; }
+			set { _handle->ArrayLayers = value; }
 		}
 
 		public SampleCountFlags Samples {
-			get { return m->Samples; }
-			set { m->Samples = value; }
+			get { return _handle->Samples; }
+			set { _handle->Samples = value; }
 		}
 
 		public ImageTiling Tiling {
-			get { return m->Tiling; }
-			set { m->Tiling = value; }
+			get { return _handle->Tiling; }
+			set { _handle->Tiling = value; }
 		}
 
 		public ImageUsageFlags Usage {
-			get { return m->Usage; }
-			set { m->Usage = value; }
+			get { return _handle->Usage; }
+			set { _handle->Usage = value; }
 		}
 
 		public SharingMode SharingMode {
-			get { return m->SharingMode; }
-			set { m->SharingMode = value; }
+			get { return _handle->SharingMode; }
+			set { _handle->SharingMode = value; }
 		}
 
 		public uint QueueFamilyIndexCount {
-			get { return m->QueueFamilyIndexCount; }
-			set { m->QueueFamilyIndexCount = value; }
+			get { return _handle->QueueFamilyIndexCount; }
+			set { _handle->QueueFamilyIndexCount = value; }
 		}
 
 		public uint[] QueueFamilyIndices {
 			get {
-				if (m->QueueFamilyIndexCount == 0)
+				if (_handle->QueueFamilyIndexCount == 0)
 					return null;
-				var values = new uint [m->QueueFamilyIndexCount];
+				var values = new uint [_handle->QueueFamilyIndexCount];
 				unsafe
 				{
-					var ptr = (uint*)m->QueueFamilyIndices;
+					var ptr = (uint*)_handle->QueueFamilyIndices;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -1488,15 +1488,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->QueueFamilyIndexCount = 0;
-					m->QueueFamilyIndices = IntPtr.Zero;
+					_handle->QueueFamilyIndexCount = 0;
+					_handle->QueueFamilyIndices = IntPtr.Zero;
 					return;
 				}
-				m->QueueFamilyIndexCount = (uint)value.Length;
-				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
+				_handle->QueueFamilyIndexCount = (uint)value.Length;
+				_handle->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					var ptr = (uint*)m->QueueFamilyIndices;
+					var ptr = (uint*)_handle->QueueFamilyIndices;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -1504,27 +1504,27 @@ namespace VulkanSharp
 		}
 
 		public ImageLayout InitialLayout {
-			get { return m->InitialLayout; }
-			set { m->InitialLayout = value; }
+			get { return _handle->InitialLayout; }
+			set { _handle->InitialLayout = value; }
 		}
-		public Interop.ImageCreateInfo* m;
+		public Interop.ImageCreateInfo* _handle;
 
 		public ImageCreateInfo ()
 		{
-			m = (Interop.ImageCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ImageCreateInfo));
+			_handle = (Interop.ImageCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ImageCreateInfo));
 			Initialize ();
 		}
 
 		public ImageCreateInfo (Interop.ImageCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.ImageCreateInfo;
+			_handle->SType = StructureType.ImageCreateInfo;
 		}
 
 	}
@@ -1541,53 +1541,53 @@ namespace VulkanSharp
 	public unsafe class ImageViewCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (ulong)value.m; }
+			set { lImage = value; _handle->Image = (ulong)value._handle; }
 		}
 
 		public ImageViewType ViewType {
-			get { return m->ViewType; }
-			set { m->ViewType = value; }
+			get { return _handle->ViewType; }
+			set { _handle->ViewType = value; }
 		}
 
 		public Format Format {
-			get { return m->Format; }
-			set { m->Format = value; }
+			get { return _handle->Format; }
+			set { _handle->Format = value; }
 		}
 
 		public ComponentMapping Components {
-			get { return m->Components; }
-			set { m->Components = value; }
+			get { return _handle->Components; }
+			set { _handle->Components = value; }
 		}
 
 		public ImageSubresourceRange SubresourceRange {
-			get { return m->SubresourceRange; }
-			set { m->SubresourceRange = value; }
+			get { return _handle->SubresourceRange; }
+			set { _handle->SubresourceRange = value; }
 		}
-		public Interop.ImageViewCreateInfo* m;
+		public Interop.ImageViewCreateInfo* _handle;
 
 		public ImageViewCreateInfo ()
 		{
-			m = (Interop.ImageViewCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ImageViewCreateInfo));
+			_handle = (Interop.ImageViewCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ImageViewCreateInfo));
 			Initialize ();
 		}
 
 		public ImageViewCreateInfo (Interop.ImageViewCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.ImageViewCreateInfo;
+			_handle->SType = StructureType.ImageViewCreateInfo;
 		}
 
 	}
@@ -1602,41 +1602,41 @@ namespace VulkanSharp
 	public unsafe class SparseMemoryBind
 	{
 		public DeviceSize ResourceOffset {
-			get { return m->ResourceOffset; }
-			set { m->ResourceOffset = value; }
+			get { return _handle->ResourceOffset; }
+			set { _handle->ResourceOffset = value; }
 		}
 
 		public DeviceSize Size {
-			get { return m->Size; }
-			set { m->Size = value; }
+			get { return _handle->Size; }
+			set { _handle->Size = value; }
 		}
 
 		DeviceMemory lMemory;
 		public DeviceMemory Memory {
 			get { return lMemory; }
-			set { lMemory = value; m->Memory = (ulong)value.m; }
+			set { lMemory = value; _handle->Memory = (ulong)value._handle; }
 		}
 
 		public DeviceSize MemoryOffset {
-			get { return m->MemoryOffset; }
-			set { m->MemoryOffset = value; }
+			get { return _handle->MemoryOffset; }
+			set { _handle->MemoryOffset = value; }
 		}
 
 		public SparseMemoryBindFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
-		public Interop.SparseMemoryBind* m;
+		public Interop.SparseMemoryBind* _handle;
 
 		public SparseMemoryBind ()
 		{
-			m = (Interop.SparseMemoryBind*) Interop.Structure.Allocate (typeof (Interop.SparseMemoryBind));
+			_handle = (Interop.SparseMemoryBind*) Interop.Structure.Allocate (typeof (Interop.SparseMemoryBind));
 			Initialize ();
 		}
 
 		public SparseMemoryBind (Interop.SparseMemoryBind* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -1650,46 +1650,46 @@ namespace VulkanSharp
 	public unsafe class SparseImageMemoryBind
 	{
 		public ImageSubresource Subresource {
-			get { return m->Subresource; }
-			set { m->Subresource = value; }
+			get { return _handle->Subresource; }
+			set { _handle->Subresource = value; }
 		}
 
 		public Offset3D Offset {
-			get { return m->Offset; }
-			set { m->Offset = value; }
+			get { return _handle->Offset; }
+			set { _handle->Offset = value; }
 		}
 
 		public Extent3D Extent {
-			get { return m->Extent; }
-			set { m->Extent = value; }
+			get { return _handle->Extent; }
+			set { _handle->Extent = value; }
 		}
 
 		DeviceMemory lMemory;
 		public DeviceMemory Memory {
 			get { return lMemory; }
-			set { lMemory = value; m->Memory = (ulong)value.m; }
+			set { lMemory = value; _handle->Memory = (ulong)value._handle; }
 		}
 
 		public DeviceSize MemoryOffset {
-			get { return m->MemoryOffset; }
-			set { m->MemoryOffset = value; }
+			get { return _handle->MemoryOffset; }
+			set { _handle->MemoryOffset = value; }
 		}
 
 		public SparseMemoryBindFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
-		public Interop.SparseImageMemoryBind* m;
+		public Interop.SparseImageMemoryBind* _handle;
 
 		public SparseImageMemoryBind ()
 		{
-			m = (Interop.SparseImageMemoryBind*) Interop.Structure.Allocate (typeof (Interop.SparseImageMemoryBind));
+			_handle = (Interop.SparseImageMemoryBind*) Interop.Structure.Allocate (typeof (Interop.SparseImageMemoryBind));
 			Initialize ();
 		}
 
 		public SparseImageMemoryBind (Interop.SparseImageMemoryBind* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -1705,25 +1705,25 @@ namespace VulkanSharp
 		Buffer lBuffer;
 		public Buffer Buffer {
 			get { return lBuffer; }
-			set { lBuffer = value; m->Buffer = (ulong)value.m; }
+			set { lBuffer = value; _handle->Buffer = (ulong)value._handle; }
 		}
 
 		public uint BindCount {
-			get { return m->BindCount; }
-			set { m->BindCount = value; }
+			get { return _handle->BindCount; }
+			set { _handle->BindCount = value; }
 		}
 
 		public SparseMemoryBind[] Binds {
 			get {
-				if (m->BindCount == 0)
+				if (_handle->BindCount == 0)
 					return null;
-				var values = new SparseMemoryBind [m->BindCount];
+				var values = new SparseMemoryBind [_handle->BindCount];
 				unsafe
 				{
-					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					var ptr = (Interop.SparseMemoryBind*)_handle->Binds;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseMemoryBind ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -1731,31 +1731,31 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->BindCount = 0;
-					m->Binds = IntPtr.Zero;
+					_handle->BindCount = 0;
+					_handle->Binds = IntPtr.Zero;
 					return;
 				}
-				m->BindCount = (uint)value.Length;
-				m->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseMemoryBind)*value.Length));
+				_handle->BindCount = (uint)value.Length;
+				_handle->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseMemoryBind)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					var ptr = (Interop.SparseMemoryBind*)_handle->Binds;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
-		public Interop.SparseBufferMemoryBindInfo* m;
+		public Interop.SparseBufferMemoryBindInfo* _handle;
 
 		public SparseBufferMemoryBindInfo ()
 		{
-			m = (Interop.SparseBufferMemoryBindInfo*) Interop.Structure.Allocate (typeof (Interop.SparseBufferMemoryBindInfo));
+			_handle = (Interop.SparseBufferMemoryBindInfo*) Interop.Structure.Allocate (typeof (Interop.SparseBufferMemoryBindInfo));
 			Initialize ();
 		}
 
 		public SparseBufferMemoryBindInfo (Interop.SparseBufferMemoryBindInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -1771,25 +1771,25 @@ namespace VulkanSharp
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (ulong)value.m; }
+			set { lImage = value; _handle->Image = (ulong)value._handle; }
 		}
 
 		public uint BindCount {
-			get { return m->BindCount; }
-			set { m->BindCount = value; }
+			get { return _handle->BindCount; }
+			set { _handle->BindCount = value; }
 		}
 
 		public SparseMemoryBind[] Binds {
 			get {
-				if (m->BindCount == 0)
+				if (_handle->BindCount == 0)
 					return null;
-				var values = new SparseMemoryBind [m->BindCount];
+				var values = new SparseMemoryBind [_handle->BindCount];
 				unsafe
 				{
-					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					var ptr = (Interop.SparseMemoryBind*)_handle->Binds;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseMemoryBind ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -1797,31 +1797,31 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->BindCount = 0;
-					m->Binds = IntPtr.Zero;
+					_handle->BindCount = 0;
+					_handle->Binds = IntPtr.Zero;
 					return;
 				}
-				m->BindCount = (uint)value.Length;
-				m->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseMemoryBind)*value.Length));
+				_handle->BindCount = (uint)value.Length;
+				_handle->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseMemoryBind)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.SparseMemoryBind*)m->Binds;
+					var ptr = (Interop.SparseMemoryBind*)_handle->Binds;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
-		public Interop.SparseImageOpaqueMemoryBindInfo* m;
+		public Interop.SparseImageOpaqueMemoryBindInfo* _handle;
 
 		public SparseImageOpaqueMemoryBindInfo ()
 		{
-			m = (Interop.SparseImageOpaqueMemoryBindInfo*) Interop.Structure.Allocate (typeof (Interop.SparseImageOpaqueMemoryBindInfo));
+			_handle = (Interop.SparseImageOpaqueMemoryBindInfo*) Interop.Structure.Allocate (typeof (Interop.SparseImageOpaqueMemoryBindInfo));
 			Initialize ();
 		}
 
 		public SparseImageOpaqueMemoryBindInfo (Interop.SparseImageOpaqueMemoryBindInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -1837,25 +1837,25 @@ namespace VulkanSharp
 		Image lImage;
 		public Image Image {
 			get { return lImage; }
-			set { lImage = value; m->Image = (ulong)value.m; }
+			set { lImage = value; _handle->Image = (ulong)value._handle; }
 		}
 
 		public uint BindCount {
-			get { return m->BindCount; }
-			set { m->BindCount = value; }
+			get { return _handle->BindCount; }
+			set { _handle->BindCount = value; }
 		}
 
 		public SparseImageMemoryBind[] Binds {
 			get {
-				if (m->BindCount == 0)
+				if (_handle->BindCount == 0)
 					return null;
-				var values = new SparseImageMemoryBind [m->BindCount];
+				var values = new SparseImageMemoryBind [_handle->BindCount];
 				unsafe
 				{
-					var ptr = (Interop.SparseImageMemoryBind*)m->Binds;
+					var ptr = (Interop.SparseImageMemoryBind*)_handle->Binds;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseImageMemoryBind ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -1863,31 +1863,31 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->BindCount = 0;
-					m->Binds = IntPtr.Zero;
+					_handle->BindCount = 0;
+					_handle->Binds = IntPtr.Zero;
 					return;
 				}
-				m->BindCount = (uint)value.Length;
-				m->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageMemoryBind)*value.Length));
+				_handle->BindCount = (uint)value.Length;
+				_handle->Binds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageMemoryBind)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.SparseImageMemoryBind*)m->Binds;
+					var ptr = (Interop.SparseImageMemoryBind*)_handle->Binds;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
-		public Interop.SparseImageMemoryBindInfo* m;
+		public Interop.SparseImageMemoryBindInfo* _handle;
 
 		public SparseImageMemoryBindInfo ()
 		{
-			m = (Interop.SparseImageMemoryBindInfo*) Interop.Structure.Allocate (typeof (Interop.SparseImageMemoryBindInfo));
+			_handle = (Interop.SparseImageMemoryBindInfo*) Interop.Structure.Allocate (typeof (Interop.SparseImageMemoryBindInfo));
 			Initialize ();
 		}
 
 		public SparseImageMemoryBindInfo (Interop.SparseImageMemoryBindInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -1901,21 +1901,21 @@ namespace VulkanSharp
 	public unsafe class BindSparseInfo
 	{
 		public uint WaitSemaphoreCount {
-			get { return m->WaitSemaphoreCount; }
-			set { m->WaitSemaphoreCount = value; }
+			get { return _handle->WaitSemaphoreCount; }
+			set { _handle->WaitSemaphoreCount = value; }
 		}
 
 		public Semaphore[] WaitSemaphores {
 			get {
-				if (m->WaitSemaphoreCount == 0)
+				if (_handle->WaitSemaphoreCount == 0)
 					return null;
-				var values = new Semaphore [m->WaitSemaphoreCount];
+				var values = new Semaphore [_handle->WaitSemaphoreCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->WaitSemaphores;
+					var ptr = (ulong*)_handle->WaitSemaphores;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -1923,37 +1923,37 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->WaitSemaphoreCount = 0;
-					m->WaitSemaphores = IntPtr.Zero;
+					_handle->WaitSemaphoreCount = 0;
+					_handle->WaitSemaphores = IntPtr.Zero;
 					return;
 				}
-				m->WaitSemaphoreCount = (uint)value.Length;
-				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->WaitSemaphoreCount = (uint)value.Length;
+				_handle->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->WaitSemaphores;
+					var ptr = (ulong*)_handle->WaitSemaphores;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
 
 		public uint BufferBindCount {
-			get { return m->BufferBindCount; }
-			set { m->BufferBindCount = value; }
+			get { return _handle->BufferBindCount; }
+			set { _handle->BufferBindCount = value; }
 		}
 
 		public SparseBufferMemoryBindInfo[] BufferBinds {
 			get {
-				if (m->BufferBindCount == 0)
+				if (_handle->BufferBindCount == 0)
 					return null;
-				var values = new SparseBufferMemoryBindInfo [m->BufferBindCount];
+				var values = new SparseBufferMemoryBindInfo [_handle->BufferBindCount];
 				unsafe
 				{
-					var ptr = (Interop.SparseBufferMemoryBindInfo*)m->BufferBinds;
+					var ptr = (Interop.SparseBufferMemoryBindInfo*)_handle->BufferBinds;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseBufferMemoryBindInfo ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -1961,37 +1961,37 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->BufferBindCount = 0;
-					m->BufferBinds = IntPtr.Zero;
+					_handle->BufferBindCount = 0;
+					_handle->BufferBinds = IntPtr.Zero;
 					return;
 				}
-				m->BufferBindCount = (uint)value.Length;
-				m->BufferBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseBufferMemoryBindInfo)*value.Length));
+				_handle->BufferBindCount = (uint)value.Length;
+				_handle->BufferBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseBufferMemoryBindInfo)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.SparseBufferMemoryBindInfo*)m->BufferBinds;
+					var ptr = (Interop.SparseBufferMemoryBindInfo*)_handle->BufferBinds;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
 
 		public uint ImageOpaqueBindCount {
-			get { return m->ImageOpaqueBindCount; }
-			set { m->ImageOpaqueBindCount = value; }
+			get { return _handle->ImageOpaqueBindCount; }
+			set { _handle->ImageOpaqueBindCount = value; }
 		}
 
 		public SparseImageOpaqueMemoryBindInfo[] ImageOpaqueBinds {
 			get {
-				if (m->ImageOpaqueBindCount == 0)
+				if (_handle->ImageOpaqueBindCount == 0)
 					return null;
-				var values = new SparseImageOpaqueMemoryBindInfo [m->ImageOpaqueBindCount];
+				var values = new SparseImageOpaqueMemoryBindInfo [_handle->ImageOpaqueBindCount];
 				unsafe
 				{
-					var ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)m->ImageOpaqueBinds;
+					var ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)_handle->ImageOpaqueBinds;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseImageOpaqueMemoryBindInfo ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -1999,37 +1999,37 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->ImageOpaqueBindCount = 0;
-					m->ImageOpaqueBinds = IntPtr.Zero;
+					_handle->ImageOpaqueBindCount = 0;
+					_handle->ImageOpaqueBinds = IntPtr.Zero;
 					return;
 				}
-				m->ImageOpaqueBindCount = (uint)value.Length;
-				m->ImageOpaqueBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageOpaqueMemoryBindInfo)*value.Length));
+				_handle->ImageOpaqueBindCount = (uint)value.Length;
+				_handle->ImageOpaqueBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageOpaqueMemoryBindInfo)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)m->ImageOpaqueBinds;
+					var ptr = (Interop.SparseImageOpaqueMemoryBindInfo*)_handle->ImageOpaqueBinds;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
 
 		public uint ImageBindCount {
-			get { return m->ImageBindCount; }
-			set { m->ImageBindCount = value; }
+			get { return _handle->ImageBindCount; }
+			set { _handle->ImageBindCount = value; }
 		}
 
 		public SparseImageMemoryBindInfo[] ImageBinds {
 			get {
-				if (m->ImageBindCount == 0)
+				if (_handle->ImageBindCount == 0)
 					return null;
-				var values = new SparseImageMemoryBindInfo [m->ImageBindCount];
+				var values = new SparseImageMemoryBindInfo [_handle->ImageBindCount];
 				unsafe
 				{
-					var ptr = (Interop.SparseImageMemoryBindInfo*)m->ImageBinds;
+					var ptr = (Interop.SparseImageMemoryBindInfo*)_handle->ImageBinds;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SparseImageMemoryBindInfo ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -2037,37 +2037,37 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->ImageBindCount = 0;
-					m->ImageBinds = IntPtr.Zero;
+					_handle->ImageBindCount = 0;
+					_handle->ImageBinds = IntPtr.Zero;
 					return;
 				}
-				m->ImageBindCount = (uint)value.Length;
-				m->ImageBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageMemoryBindInfo)*value.Length));
+				_handle->ImageBindCount = (uint)value.Length;
+				_handle->ImageBinds = Marshal.AllocHGlobal ((int)(sizeof(Interop.SparseImageMemoryBindInfo)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.SparseImageMemoryBindInfo*)m->ImageBinds;
+					var ptr = (Interop.SparseImageMemoryBindInfo*)_handle->ImageBinds;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
 
 		public uint SignalSemaphoreCount {
-			get { return m->SignalSemaphoreCount; }
-			set { m->SignalSemaphoreCount = value; }
+			get { return _handle->SignalSemaphoreCount; }
+			set { _handle->SignalSemaphoreCount = value; }
 		}
 
 		public Semaphore[] SignalSemaphores {
 			get {
-				if (m->SignalSemaphoreCount == 0)
+				if (_handle->SignalSemaphoreCount == 0)
 					return null;
-				var values = new Semaphore [m->SignalSemaphoreCount];
+				var values = new Semaphore [_handle->SignalSemaphoreCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->SignalSemaphores;
+					var ptr = (ulong*)_handle->SignalSemaphores;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -2075,38 +2075,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->SignalSemaphoreCount = 0;
-					m->SignalSemaphores = IntPtr.Zero;
+					_handle->SignalSemaphoreCount = 0;
+					_handle->SignalSemaphores = IntPtr.Zero;
 					return;
 				}
-				m->SignalSemaphoreCount = (uint)value.Length;
-				m->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->SignalSemaphoreCount = (uint)value.Length;
+				_handle->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->SignalSemaphores;
+					var ptr = (ulong*)_handle->SignalSemaphores;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
-		public Interop.BindSparseInfo* m;
+		public Interop.BindSparseInfo* _handle;
 
 		public BindSparseInfo ()
 		{
-			m = (Interop.BindSparseInfo*) Interop.Structure.Allocate (typeof (Interop.BindSparseInfo));
+			_handle = (Interop.BindSparseInfo*) Interop.Structure.Allocate (typeof (Interop.BindSparseInfo));
 			Initialize ();
 		}
 
 		public BindSparseInfo (Interop.BindSparseInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.BindSparseInfo;
+			_handle->SType = StructureType.BindSparseInfo;
 		}
 
 	}
@@ -2123,8 +2123,8 @@ namespace VulkanSharp
 	public unsafe class ImageBlit
 	{
 		public ImageSubresourceLayers SrcSubresource {
-			get { return m->SrcSubresource; }
-			set { m->SrcSubresource = value; }
+			get { return _handle->SrcSubresource; }
+			set { _handle->SrcSubresource = value; }
 		}
 
 		public Offset3D[] SrcOffsets {
@@ -2133,7 +2133,7 @@ namespace VulkanSharp
 				for (var i = 0; i < 2; i++)
 					unsafe
 					{
-						arr [i] = (&m->SrcOffsets0) [i];
+						arr [i] = (&_handle->SrcOffsets0) [i];
 					}
 				return arr;
 			}
@@ -2144,14 +2144,14 @@ namespace VulkanSharp
 				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
-						(&m->SrcOffsets0) [i] = value [i];
+						(&_handle->SrcOffsets0) [i] = value [i];
 					}
 			}
 		}
 
 		public ImageSubresourceLayers DstSubresource {
-			get { return m->DstSubresource; }
-			set { m->DstSubresource = value; }
+			get { return _handle->DstSubresource; }
+			set { _handle->DstSubresource = value; }
 		}
 
 		public Offset3D[] DstOffsets {
@@ -2160,7 +2160,7 @@ namespace VulkanSharp
 				for (var i = 0; i < 2; i++)
 					unsafe
 					{
-						arr [i] = (&m->DstOffsets0) [i];
+						arr [i] = (&_handle->DstOffsets0) [i];
 					}
 				return arr;
 			}
@@ -2171,20 +2171,20 @@ namespace VulkanSharp
 				for (var i = 0; i < value.Length; i++)
 					unsafe
 					{
-						(&m->DstOffsets0) [i] = value [i];
+						(&_handle->DstOffsets0) [i] = value [i];
 					}
 			}
 		}
-		public Interop.ImageBlit* m;
+		public Interop.ImageBlit* _handle;
 
 		public ImageBlit ()
 		{
-			m = (Interop.ImageBlit*) Interop.Structure.Allocate (typeof (Interop.ImageBlit));
+			_handle = (Interop.ImageBlit*) Interop.Structure.Allocate (typeof (Interop.ImageBlit));
 		}
 
 		public ImageBlit (Interop.ImageBlit* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -2211,23 +2211,23 @@ namespace VulkanSharp
 	public unsafe partial class ShaderModuleCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public UIntPtr CodeSize {
-			get { return m->CodeSize; }
-			set { m->CodeSize = value; }
+			get { return _handle->CodeSize; }
+			set { _handle->CodeSize = value; }
 		}
 
 		public uint[] Code {
 			get {
-				if (m->CodeSize == UIntPtr.Zero)
+				if (_handle->CodeSize == UIntPtr.Zero)
 					return null;
-				var values = new uint [((uint)m->CodeSize >> 2)];
+				var values = new uint [((uint)_handle->CodeSize >> 2)];
 				unsafe
 				{
-					var ptr = (uint*)m->Code;
+					var ptr = (uint*)_handle->Code;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -2236,38 +2236,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->CodeSize = UIntPtr.Zero;
-					m->Code = IntPtr.Zero;
+					_handle->CodeSize = UIntPtr.Zero;
+					_handle->Code = IntPtr.Zero;
 					return;
 				}
-				m->CodeSize = (UIntPtr)(value.Length << 2);
-				m->Code = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
+				_handle->CodeSize = (UIntPtr)(value.Length << 2);
+				_handle->Code = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					var ptr = (uint*)m->Code;
+					var ptr = (uint*)_handle->Code;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.ShaderModuleCreateInfo* m;
+		public Interop.ShaderModuleCreateInfo* _handle;
 
 		public ShaderModuleCreateInfo ()
 		{
-			m = (Interop.ShaderModuleCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ShaderModuleCreateInfo));
+			_handle = (Interop.ShaderModuleCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ShaderModuleCreateInfo));
 			Initialize ();
 		}
 
 		public ShaderModuleCreateInfo (Interop.ShaderModuleCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.ShaderModuleCreateInfo;
+			_handle->SType = StructureType.ShaderModuleCreateInfo;
 		}
 
 	}
@@ -2275,36 +2275,36 @@ namespace VulkanSharp
 	public unsafe class DescriptorSetLayoutBinding
 	{
 		public uint Binding {
-			get { return m->Binding; }
-			set { m->Binding = value; }
+			get { return _handle->Binding; }
+			set { _handle->Binding = value; }
 		}
 
 		public DescriptorType DescriptorType {
-			get { return m->DescriptorType; }
-			set { m->DescriptorType = value; }
+			get { return _handle->DescriptorType; }
+			set { _handle->DescriptorType = value; }
 		}
 
 		public uint DescriptorCount {
-			get { return m->DescriptorCount; }
-			set { m->DescriptorCount = value; }
+			get { return _handle->DescriptorCount; }
+			set { _handle->DescriptorCount = value; }
 		}
 
 		public ShaderStageFlags StageFlags {
-			get { return m->StageFlags; }
-			set { m->StageFlags = value; }
+			get { return _handle->StageFlags; }
+			set { _handle->StageFlags = value; }
 		}
 
 		public Sampler[] ImmutableSamplers {
 			get {
-				if (m->DescriptorCount == 0)
+				if (_handle->DescriptorCount == 0)
 					return null;
-				var values = new Sampler [m->DescriptorCount];
+				var values = new Sampler [_handle->DescriptorCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->ImmutableSamplers;
+					var ptr = (ulong*)_handle->ImmutableSamplers;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Sampler ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -2312,30 +2312,30 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->DescriptorCount = 0;
-					m->ImmutableSamplers = IntPtr.Zero;
+					_handle->DescriptorCount = 0;
+					_handle->ImmutableSamplers = IntPtr.Zero;
 					return;
 				}
-				m->DescriptorCount = (uint)value.Length;
-				m->ImmutableSamplers = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->DescriptorCount = (uint)value.Length;
+				_handle->ImmutableSamplers = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->ImmutableSamplers;
+					var ptr = (ulong*)_handle->ImmutableSamplers;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
-		public Interop.DescriptorSetLayoutBinding* m;
+		public Interop.DescriptorSetLayoutBinding* _handle;
 
 		public DescriptorSetLayoutBinding ()
 		{
-			m = (Interop.DescriptorSetLayoutBinding*) Interop.Structure.Allocate (typeof (Interop.DescriptorSetLayoutBinding));
+			_handle = (Interop.DescriptorSetLayoutBinding*) Interop.Structure.Allocate (typeof (Interop.DescriptorSetLayoutBinding));
 		}
 
 		public DescriptorSetLayoutBinding (Interop.DescriptorSetLayoutBinding* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -2343,26 +2343,26 @@ namespace VulkanSharp
 	public unsafe class DescriptorSetLayoutCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint BindingCount {
-			get { return m->BindingCount; }
-			set { m->BindingCount = value; }
+			get { return _handle->BindingCount; }
+			set { _handle->BindingCount = value; }
 		}
 
 		public DescriptorSetLayoutBinding[] Bindings {
 			get {
-				if (m->BindingCount == 0)
+				if (_handle->BindingCount == 0)
 					return null;
-				var values = new DescriptorSetLayoutBinding [m->BindingCount];
+				var values = new DescriptorSetLayoutBinding [_handle->BindingCount];
 				unsafe
 				{
-					var ptr = (Interop.DescriptorSetLayoutBinding*)m->Bindings;
+					var ptr = (Interop.DescriptorSetLayoutBinding*)_handle->Bindings;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorSetLayoutBinding ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -2370,38 +2370,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->BindingCount = 0;
-					m->Bindings = IntPtr.Zero;
+					_handle->BindingCount = 0;
+					_handle->Bindings = IntPtr.Zero;
 					return;
 				}
-				m->BindingCount = (uint)value.Length;
-				m->Bindings = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorSetLayoutBinding)*value.Length));
+				_handle->BindingCount = (uint)value.Length;
+				_handle->Bindings = Marshal.AllocHGlobal ((int)(sizeof(Interop.DescriptorSetLayoutBinding)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.DescriptorSetLayoutBinding*)m->Bindings;
+					var ptr = (Interop.DescriptorSetLayoutBinding*)_handle->Bindings;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
-		public Interop.DescriptorSetLayoutCreateInfo* m;
+		public Interop.DescriptorSetLayoutCreateInfo* _handle;
 
 		public DescriptorSetLayoutCreateInfo ()
 		{
-			m = (Interop.DescriptorSetLayoutCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorSetLayoutCreateInfo));
+			_handle = (Interop.DescriptorSetLayoutCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorSetLayoutCreateInfo));
 			Initialize ();
 		}
 
 		public DescriptorSetLayoutCreateInfo (Interop.DescriptorSetLayoutCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DescriptorSetLayoutCreateInfo;
+			_handle->SType = StructureType.DescriptorSetLayoutCreateInfo;
 		}
 
 	}
@@ -2415,28 +2415,28 @@ namespace VulkanSharp
 	public unsafe class DescriptorPoolCreateInfo
 	{
 		public DescriptorPoolCreateFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint MaxSets {
-			get { return m->MaxSets; }
-			set { m->MaxSets = value; }
+			get { return _handle->MaxSets; }
+			set { _handle->MaxSets = value; }
 		}
 
 		public uint PoolSizeCount {
-			get { return m->PoolSizeCount; }
-			set { m->PoolSizeCount = value; }
+			get { return _handle->PoolSizeCount; }
+			set { _handle->PoolSizeCount = value; }
 		}
 
 		public DescriptorPoolSize[] PoolSizes {
 			get {
-				if (m->PoolSizeCount == 0)
+				if (_handle->PoolSizeCount == 0)
 					return null;
-				var values = new DescriptorPoolSize [m->PoolSizeCount];
+				var values = new DescriptorPoolSize [_handle->PoolSizeCount];
 				unsafe
 				{
-					var ptr = (DescriptorPoolSize*)m->PoolSizes;
+					var ptr = (DescriptorPoolSize*)_handle->PoolSizes;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -2445,38 +2445,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->PoolSizeCount = 0;
-					m->PoolSizes = IntPtr.Zero;
+					_handle->PoolSizeCount = 0;
+					_handle->PoolSizes = IntPtr.Zero;
 					return;
 				}
-				m->PoolSizeCount = (uint)value.Length;
-				m->PoolSizes = Marshal.AllocHGlobal ((int)(sizeof(DescriptorPoolSize)*value.Length));
+				_handle->PoolSizeCount = (uint)value.Length;
+				_handle->PoolSizes = Marshal.AllocHGlobal ((int)(sizeof(DescriptorPoolSize)*value.Length));
 				unsafe
 				{
-					var ptr = (DescriptorPoolSize*)m->PoolSizes;
+					var ptr = (DescriptorPoolSize*)_handle->PoolSizes;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.DescriptorPoolCreateInfo* m;
+		public Interop.DescriptorPoolCreateInfo* _handle;
 
 		public DescriptorPoolCreateInfo ()
 		{
-			m = (Interop.DescriptorPoolCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorPoolCreateInfo));
+			_handle = (Interop.DescriptorPoolCreateInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorPoolCreateInfo));
 			Initialize ();
 		}
 
 		public DescriptorPoolCreateInfo (Interop.DescriptorPoolCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DescriptorPoolCreateInfo;
+			_handle->SType = StructureType.DescriptorPoolCreateInfo;
 		}
 
 	}
@@ -2486,25 +2486,25 @@ namespace VulkanSharp
 		DescriptorPool lDescriptorPool;
 		public DescriptorPool DescriptorPool {
 			get { return lDescriptorPool; }
-			set { lDescriptorPool = value; m->DescriptorPool = (ulong)value.m; }
+			set { lDescriptorPool = value; _handle->DescriptorPool = (ulong)value._handle; }
 		}
 
 		public uint DescriptorSetCount {
-			get { return m->DescriptorSetCount; }
-			set { m->DescriptorSetCount = value; }
+			get { return _handle->DescriptorSetCount; }
+			set { _handle->DescriptorSetCount = value; }
 		}
 
 		public DescriptorSetLayout[] SetLayouts {
 			get {
-				if (m->DescriptorSetCount == 0)
+				if (_handle->DescriptorSetCount == 0)
 					return null;
-				var values = new DescriptorSetLayout [m->DescriptorSetCount];
+				var values = new DescriptorSetLayout [_handle->DescriptorSetCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->SetLayouts;
+					var ptr = (ulong*)_handle->SetLayouts;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorSetLayout ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -2512,38 +2512,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->DescriptorSetCount = 0;
-					m->SetLayouts = IntPtr.Zero;
+					_handle->DescriptorSetCount = 0;
+					_handle->SetLayouts = IntPtr.Zero;
 					return;
 				}
-				m->DescriptorSetCount = (uint)value.Length;
-				m->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->DescriptorSetCount = (uint)value.Length;
+				_handle->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->SetLayouts;
+					var ptr = (ulong*)_handle->SetLayouts;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
-		public Interop.DescriptorSetAllocateInfo* m;
+		public Interop.DescriptorSetAllocateInfo* _handle;
 
 		public DescriptorSetAllocateInfo ()
 		{
-			m = (Interop.DescriptorSetAllocateInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorSetAllocateInfo));
+			_handle = (Interop.DescriptorSetAllocateInfo*) Interop.Structure.Allocate (typeof (Interop.DescriptorSetAllocateInfo));
 			Initialize ();
 		}
 
 		public DescriptorSetAllocateInfo (Interop.DescriptorSetAllocateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DescriptorSetAllocateInfo;
+			_handle->SType = StructureType.DescriptorSetAllocateInfo;
 		}
 
 	}
@@ -2558,18 +2558,18 @@ namespace VulkanSharp
 	public unsafe class SpecializationInfo
 	{
 		public uint MapEntryCount {
-			get { return m->MapEntryCount; }
-			set { m->MapEntryCount = value; }
+			get { return _handle->MapEntryCount; }
+			set { _handle->MapEntryCount = value; }
 		}
 
 		public SpecializationMapEntry[] MapEntries {
 			get {
-				if (m->MapEntryCount == 0)
+				if (_handle->MapEntryCount == 0)
 					return null;
-				var values = new SpecializationMapEntry [m->MapEntryCount];
+				var values = new SpecializationMapEntry [_handle->MapEntryCount];
 				unsafe
 				{
-					var ptr = (SpecializationMapEntry*)m->MapEntries;
+					var ptr = (SpecializationMapEntry*)_handle->MapEntries;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -2578,15 +2578,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->MapEntryCount = 0;
-					m->MapEntries = IntPtr.Zero;
+					_handle->MapEntryCount = 0;
+					_handle->MapEntries = IntPtr.Zero;
 					return;
 				}
-				m->MapEntryCount = (uint)value.Length;
-				m->MapEntries = Marshal.AllocHGlobal ((int)(sizeof(SpecializationMapEntry)*value.Length));
+				_handle->MapEntryCount = (uint)value.Length;
+				_handle->MapEntries = Marshal.AllocHGlobal ((int)(sizeof(SpecializationMapEntry)*value.Length));
 				unsafe
 				{
-					var ptr = (SpecializationMapEntry*)m->MapEntries;
+					var ptr = (SpecializationMapEntry*)_handle->MapEntries;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -2594,24 +2594,24 @@ namespace VulkanSharp
 		}
 
 		public UIntPtr DataSize {
-			get { return m->DataSize; }
-			set { m->DataSize = value; }
+			get { return _handle->DataSize; }
+			set { _handle->DataSize = value; }
 		}
 
 		public IntPtr Data {
-			get { return m->Data; }
-			set { m->Data = value; }
+			get { return _handle->Data; }
+			set { _handle->Data = value; }
 		}
-		public Interop.SpecializationInfo* m;
+		public Interop.SpecializationInfo* _handle;
 
 		public SpecializationInfo ()
 		{
-			m = (Interop.SpecializationInfo*) Interop.Structure.Allocate (typeof (Interop.SpecializationInfo));
+			_handle = (Interop.SpecializationInfo*) Interop.Structure.Allocate (typeof (Interop.SpecializationInfo));
 		}
 
 		public SpecializationInfo (Interop.SpecializationInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -2619,49 +2619,49 @@ namespace VulkanSharp
 	public unsafe class PipelineShaderStageCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public ShaderStageFlags Stage {
-			get { return m->Stage; }
-			set { m->Stage = value; }
+			get { return _handle->Stage; }
+			set { _handle->Stage = value; }
 		}
 
 		ShaderModule lModule;
 		public ShaderModule Module {
 			get { return lModule; }
-			set { lModule = value; m->Module = (ulong)value.m; }
+			set { lModule = value; _handle->Module = (ulong)value._handle; }
 		}
 
 		public string Name {
-			get { return Marshal.PtrToStringAnsi (m->Name); }
-			set { m->Name = Marshal.StringToHGlobalAnsi (value); }
+			get { return Marshal.PtrToStringAnsi (_handle->Name); }
+			set { _handle->Name = Marshal.StringToHGlobalAnsi (value); }
 		}
 
 		SpecializationInfo lSpecializationInfo;
 		public SpecializationInfo SpecializationInfo {
 			get { return lSpecializationInfo; }
-			set { lSpecializationInfo = value; m->SpecializationInfo = (IntPtr)value.m; }
+			set { lSpecializationInfo = value; _handle->SpecializationInfo = (IntPtr)value._handle; }
 		}
-		public Interop.PipelineShaderStageCreateInfo* m;
+		public Interop.PipelineShaderStageCreateInfo* _handle;
 
 		public PipelineShaderStageCreateInfo ()
 		{
-			m = (Interop.PipelineShaderStageCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineShaderStageCreateInfo));
+			_handle = (Interop.PipelineShaderStageCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineShaderStageCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineShaderStageCreateInfo (Interop.PipelineShaderStageCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineShaderStageCreateInfo;
+			_handle->SType = StructureType.PipelineShaderStageCreateInfo;
 		}
 
 	}
@@ -2669,51 +2669,51 @@ namespace VulkanSharp
 	public unsafe class ComputePipelineCreateInfo
 	{
 		public PipelineCreateFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		PipelineShaderStageCreateInfo lStage;
 		public PipelineShaderStageCreateInfo Stage {
 			get { return lStage; }
-			set { lStage = value; m->Stage = *value.m; }
+			set { lStage = value; _handle->Stage = *value._handle; }
 		}
 
 		PipelineLayout lLayout;
 		public PipelineLayout Layout {
 			get { return lLayout; }
-			set { lLayout = value; m->Layout = (ulong)value.m; }
+			set { lLayout = value; _handle->Layout = (ulong)value._handle; }
 		}
 
 		Pipeline lBasePipelineHandle;
 		public Pipeline BasePipelineHandle {
 			get { return lBasePipelineHandle; }
-			set { lBasePipelineHandle = value; m->BasePipelineHandle = (ulong)value.m; }
+			set { lBasePipelineHandle = value; _handle->BasePipelineHandle = (ulong)value._handle; }
 		}
 
 		public int BasePipelineIndex {
-			get { return m->BasePipelineIndex; }
-			set { m->BasePipelineIndex = value; }
+			get { return _handle->BasePipelineIndex; }
+			set { _handle->BasePipelineIndex = value; }
 		}
-		public Interop.ComputePipelineCreateInfo* m;
+		public Interop.ComputePipelineCreateInfo* _handle;
 
 		public ComputePipelineCreateInfo ()
 		{
-			m = (Interop.ComputePipelineCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ComputePipelineCreateInfo));
+			_handle = (Interop.ComputePipelineCreateInfo*) Interop.Structure.Allocate (typeof (Interop.ComputePipelineCreateInfo));
 			Initialize ();
 		}
 
 		public ComputePipelineCreateInfo (Interop.ComputePipelineCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.ComputePipelineCreateInfo;
-			lStage = new PipelineShaderStageCreateInfo (&m->Stage);
+			_handle->SType = StructureType.ComputePipelineCreateInfo;
+			lStage = new PipelineShaderStageCreateInfo (&_handle->Stage);
 		}
 
 	}
@@ -2736,23 +2736,23 @@ namespace VulkanSharp
 	public unsafe class PipelineVertexInputStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint VertexBindingDescriptionCount {
-			get { return m->VertexBindingDescriptionCount; }
-			set { m->VertexBindingDescriptionCount = value; }
+			get { return _handle->VertexBindingDescriptionCount; }
+			set { _handle->VertexBindingDescriptionCount = value; }
 		}
 
 		public VertexInputBindingDescription[] VertexBindingDescriptions {
 			get {
-				if (m->VertexBindingDescriptionCount == 0)
+				if (_handle->VertexBindingDescriptionCount == 0)
 					return null;
-				var values = new VertexInputBindingDescription [m->VertexBindingDescriptionCount];
+				var values = new VertexInputBindingDescription [_handle->VertexBindingDescriptionCount];
 				unsafe
 				{
-					var ptr = (VertexInputBindingDescription*)m->VertexBindingDescriptions;
+					var ptr = (VertexInputBindingDescription*)_handle->VertexBindingDescriptions;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -2761,15 +2761,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->VertexBindingDescriptionCount = 0;
-					m->VertexBindingDescriptions = IntPtr.Zero;
+					_handle->VertexBindingDescriptionCount = 0;
+					_handle->VertexBindingDescriptions = IntPtr.Zero;
 					return;
 				}
-				m->VertexBindingDescriptionCount = (uint)value.Length;
-				m->VertexBindingDescriptions = Marshal.AllocHGlobal ((int)(sizeof(VertexInputBindingDescription)*value.Length));
+				_handle->VertexBindingDescriptionCount = (uint)value.Length;
+				_handle->VertexBindingDescriptions = Marshal.AllocHGlobal ((int)(sizeof(VertexInputBindingDescription)*value.Length));
 				unsafe
 				{
-					var ptr = (VertexInputBindingDescription*)m->VertexBindingDescriptions;
+					var ptr = (VertexInputBindingDescription*)_handle->VertexBindingDescriptions;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -2777,18 +2777,18 @@ namespace VulkanSharp
 		}
 
 		public uint VertexAttributeDescriptionCount {
-			get { return m->VertexAttributeDescriptionCount; }
-			set { m->VertexAttributeDescriptionCount = value; }
+			get { return _handle->VertexAttributeDescriptionCount; }
+			set { _handle->VertexAttributeDescriptionCount = value; }
 		}
 
 		public VertexInputAttributeDescription[] VertexAttributeDescriptions {
 			get {
-				if (m->VertexAttributeDescriptionCount == 0)
+				if (_handle->VertexAttributeDescriptionCount == 0)
 					return null;
-				var values = new VertexInputAttributeDescription [m->VertexAttributeDescriptionCount];
+				var values = new VertexInputAttributeDescription [_handle->VertexAttributeDescriptionCount];
 				unsafe
 				{
-					var ptr = (VertexInputAttributeDescription*)m->VertexAttributeDescriptions;
+					var ptr = (VertexInputAttributeDescription*)_handle->VertexAttributeDescriptions;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -2797,38 +2797,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->VertexAttributeDescriptionCount = 0;
-					m->VertexAttributeDescriptions = IntPtr.Zero;
+					_handle->VertexAttributeDescriptionCount = 0;
+					_handle->VertexAttributeDescriptions = IntPtr.Zero;
 					return;
 				}
-				m->VertexAttributeDescriptionCount = (uint)value.Length;
-				m->VertexAttributeDescriptions = Marshal.AllocHGlobal ((int)(sizeof(VertexInputAttributeDescription)*value.Length));
+				_handle->VertexAttributeDescriptionCount = (uint)value.Length;
+				_handle->VertexAttributeDescriptions = Marshal.AllocHGlobal ((int)(sizeof(VertexInputAttributeDescription)*value.Length));
 				unsafe
 				{
-					var ptr = (VertexInputAttributeDescription*)m->VertexAttributeDescriptions;
+					var ptr = (VertexInputAttributeDescription*)_handle->VertexAttributeDescriptions;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.PipelineVertexInputStateCreateInfo* m;
+		public Interop.PipelineVertexInputStateCreateInfo* _handle;
 
 		public PipelineVertexInputStateCreateInfo ()
 		{
-			m = (Interop.PipelineVertexInputStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineVertexInputStateCreateInfo));
+			_handle = (Interop.PipelineVertexInputStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineVertexInputStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineVertexInputStateCreateInfo (Interop.PipelineVertexInputStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineVertexInputStateCreateInfo;
+			_handle->SType = StructureType.PipelineVertexInputStateCreateInfo;
 		}
 
 	}
@@ -2836,37 +2836,37 @@ namespace VulkanSharp
 	public unsafe class PipelineInputAssemblyStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public PrimitiveTopology Topology {
-			get { return m->Topology; }
-			set { m->Topology = value; }
+			get { return _handle->Topology; }
+			set { _handle->Topology = value; }
 		}
 
 		public bool PrimitiveRestartEnable {
-			get { return m->PrimitiveRestartEnable; }
-			set { m->PrimitiveRestartEnable = value; }
+			get { return _handle->PrimitiveRestartEnable; }
+			set { _handle->PrimitiveRestartEnable = value; }
 		}
-		public Interop.PipelineInputAssemblyStateCreateInfo* m;
+		public Interop.PipelineInputAssemblyStateCreateInfo* _handle;
 
 		public PipelineInputAssemblyStateCreateInfo ()
 		{
-			m = (Interop.PipelineInputAssemblyStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineInputAssemblyStateCreateInfo));
+			_handle = (Interop.PipelineInputAssemblyStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineInputAssemblyStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineInputAssemblyStateCreateInfo (Interop.PipelineInputAssemblyStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineInputAssemblyStateCreateInfo;
+			_handle->SType = StructureType.PipelineInputAssemblyStateCreateInfo;
 		}
 
 	}
@@ -2874,32 +2874,32 @@ namespace VulkanSharp
 	public unsafe class PipelineTessellationStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint PatchControlPoints {
-			get { return m->PatchControlPoints; }
-			set { m->PatchControlPoints = value; }
+			get { return _handle->PatchControlPoints; }
+			set { _handle->PatchControlPoints = value; }
 		}
-		public Interop.PipelineTessellationStateCreateInfo* m;
+		public Interop.PipelineTessellationStateCreateInfo* _handle;
 
 		public PipelineTessellationStateCreateInfo ()
 		{
-			m = (Interop.PipelineTessellationStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineTessellationStateCreateInfo));
+			_handle = (Interop.PipelineTessellationStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineTessellationStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineTessellationStateCreateInfo (Interop.PipelineTessellationStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineTessellationStateCreateInfo;
+			_handle->SType = StructureType.PipelineTessellationStateCreateInfo;
 		}
 
 	}
@@ -2907,23 +2907,23 @@ namespace VulkanSharp
 	public unsafe class PipelineViewportStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint ViewportCount {
-			get { return m->ViewportCount; }
-			set { m->ViewportCount = value; }
+			get { return _handle->ViewportCount; }
+			set { _handle->ViewportCount = value; }
 		}
 
 		public Viewport[] Viewports {
 			get {
-				if (m->ViewportCount == 0)
+				if (_handle->ViewportCount == 0)
 					return null;
-				var values = new Viewport [m->ViewportCount];
+				var values = new Viewport [_handle->ViewportCount];
 				unsafe
 				{
-					var ptr = (Viewport*)m->Viewports;
+					var ptr = (Viewport*)_handle->Viewports;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -2932,15 +2932,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->ViewportCount = 0;
-					m->Viewports = IntPtr.Zero;
+					_handle->ViewportCount = 0;
+					_handle->Viewports = IntPtr.Zero;
 					return;
 				}
-				m->ViewportCount = (uint)value.Length;
-				m->Viewports = Marshal.AllocHGlobal ((int)(sizeof(Viewport)*value.Length));
+				_handle->ViewportCount = (uint)value.Length;
+				_handle->Viewports = Marshal.AllocHGlobal ((int)(sizeof(Viewport)*value.Length));
 				unsafe
 				{
-					var ptr = (Viewport*)m->Viewports;
+					var ptr = (Viewport*)_handle->Viewports;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -2948,18 +2948,18 @@ namespace VulkanSharp
 		}
 
 		public uint ScissorCount {
-			get { return m->ScissorCount; }
-			set { m->ScissorCount = value; }
+			get { return _handle->ScissorCount; }
+			set { _handle->ScissorCount = value; }
 		}
 
 		public Rect2D[] Scissors {
 			get {
-				if (m->ScissorCount == 0)
+				if (_handle->ScissorCount == 0)
 					return null;
-				var values = new Rect2D [m->ScissorCount];
+				var values = new Rect2D [_handle->ScissorCount];
 				unsafe
 				{
-					var ptr = (Rect2D*)m->Scissors;
+					var ptr = (Rect2D*)_handle->Scissors;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -2968,38 +2968,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->ScissorCount = 0;
-					m->Scissors = IntPtr.Zero;
+					_handle->ScissorCount = 0;
+					_handle->Scissors = IntPtr.Zero;
 					return;
 				}
-				m->ScissorCount = (uint)value.Length;
-				m->Scissors = Marshal.AllocHGlobal ((int)(sizeof(Rect2D)*value.Length));
+				_handle->ScissorCount = (uint)value.Length;
+				_handle->Scissors = Marshal.AllocHGlobal ((int)(sizeof(Rect2D)*value.Length));
 				unsafe
 				{
-					var ptr = (Rect2D*)m->Scissors;
+					var ptr = (Rect2D*)_handle->Scissors;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.PipelineViewportStateCreateInfo* m;
+		public Interop.PipelineViewportStateCreateInfo* _handle;
 
 		public PipelineViewportStateCreateInfo ()
 		{
-			m = (Interop.PipelineViewportStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineViewportStateCreateInfo));
+			_handle = (Interop.PipelineViewportStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineViewportStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineViewportStateCreateInfo (Interop.PipelineViewportStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineViewportStateCreateInfo;
+			_handle->SType = StructureType.PipelineViewportStateCreateInfo;
 		}
 
 	}
@@ -3007,77 +3007,77 @@ namespace VulkanSharp
 	public unsafe class PipelineRasterizationStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public bool DepthClampEnable {
-			get { return m->DepthClampEnable; }
-			set { m->DepthClampEnable = value; }
+			get { return _handle->DepthClampEnable; }
+			set { _handle->DepthClampEnable = value; }
 		}
 
 		public bool RasterizerDiscardEnable {
-			get { return m->RasterizerDiscardEnable; }
-			set { m->RasterizerDiscardEnable = value; }
+			get { return _handle->RasterizerDiscardEnable; }
+			set { _handle->RasterizerDiscardEnable = value; }
 		}
 
 		public PolygonMode PolygonMode {
-			get { return m->PolygonMode; }
-			set { m->PolygonMode = value; }
+			get { return _handle->PolygonMode; }
+			set { _handle->PolygonMode = value; }
 		}
 
 		public CullModeFlags CullMode {
-			get { return m->CullMode; }
-			set { m->CullMode = value; }
+			get { return _handle->CullMode; }
+			set { _handle->CullMode = value; }
 		}
 
 		public FrontFace FrontFace {
-			get { return m->FrontFace; }
-			set { m->FrontFace = value; }
+			get { return _handle->FrontFace; }
+			set { _handle->FrontFace = value; }
 		}
 
 		public bool DepthBiasEnable {
-			get { return m->DepthBiasEnable; }
-			set { m->DepthBiasEnable = value; }
+			get { return _handle->DepthBiasEnable; }
+			set { _handle->DepthBiasEnable = value; }
 		}
 
 		public float DepthBiasConstantFactor {
-			get { return m->DepthBiasConstantFactor; }
-			set { m->DepthBiasConstantFactor = value; }
+			get { return _handle->DepthBiasConstantFactor; }
+			set { _handle->DepthBiasConstantFactor = value; }
 		}
 
 		public float DepthBiasClamp {
-			get { return m->DepthBiasClamp; }
-			set { m->DepthBiasClamp = value; }
+			get { return _handle->DepthBiasClamp; }
+			set { _handle->DepthBiasClamp = value; }
 		}
 
 		public float DepthBiasSlopeFactor {
-			get { return m->DepthBiasSlopeFactor; }
-			set { m->DepthBiasSlopeFactor = value; }
+			get { return _handle->DepthBiasSlopeFactor; }
+			set { _handle->DepthBiasSlopeFactor = value; }
 		}
 
 		public float LineWidth {
-			get { return m->LineWidth; }
-			set { m->LineWidth = value; }
+			get { return _handle->LineWidth; }
+			set { _handle->LineWidth = value; }
 		}
-		public Interop.PipelineRasterizationStateCreateInfo* m;
+		public Interop.PipelineRasterizationStateCreateInfo* _handle;
 
 		public PipelineRasterizationStateCreateInfo ()
 		{
-			m = (Interop.PipelineRasterizationStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineRasterizationStateCreateInfo));
+			_handle = (Interop.PipelineRasterizationStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineRasterizationStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineRasterizationStateCreateInfo (Interop.PipelineRasterizationStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineRasterizationStateCreateInfo;
+			_handle->SType = StructureType.PipelineRasterizationStateCreateInfo;
 		}
 
 	}
@@ -3085,33 +3085,33 @@ namespace VulkanSharp
 	public unsafe class PipelineMultisampleStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public SampleCountFlags RasterizationSamples {
-			get { return m->RasterizationSamples; }
-			set { m->RasterizationSamples = value; }
+			get { return _handle->RasterizationSamples; }
+			set { _handle->RasterizationSamples = value; }
 		}
 
 		public bool SampleShadingEnable {
-			get { return m->SampleShadingEnable; }
-			set { m->SampleShadingEnable = value; }
+			get { return _handle->SampleShadingEnable; }
+			set { _handle->SampleShadingEnable = value; }
 		}
 
 		public float MinSampleShading {
-			get { return m->MinSampleShading; }
-			set { m->MinSampleShading = value; }
+			get { return _handle->MinSampleShading; }
+			set { _handle->MinSampleShading = value; }
 		}
 
 		public uint[] SampleMask {
 			get {
-				if (m->RasterizationSamples == 0)
+				if (_handle->RasterizationSamples == 0)
 					return null;
-				var values = new uint [((uint)m->RasterizationSamples >> 5)];
+				var values = new uint [((uint)_handle->RasterizationSamples >> 5)];
 				unsafe
 				{
-					var ptr = (uint*)m->SampleMask;
+					var ptr = (uint*)_handle->SampleMask;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -3120,15 +3120,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->RasterizationSamples = 0;
-					m->SampleMask = IntPtr.Zero;
+					_handle->RasterizationSamples = 0;
+					_handle->SampleMask = IntPtr.Zero;
 					return;
 				}
-				m->RasterizationSamples = (SampleCountFlags)(value.Length << 5);
-				m->SampleMask = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
+				_handle->RasterizationSamples = (SampleCountFlags)(value.Length << 5);
+				_handle->SampleMask = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					var ptr = (uint*)m->SampleMask;
+					var ptr = (uint*)_handle->SampleMask;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -3136,32 +3136,32 @@ namespace VulkanSharp
 		}
 
 		public bool AlphaToCoverageEnable {
-			get { return m->AlphaToCoverageEnable; }
-			set { m->AlphaToCoverageEnable = value; }
+			get { return _handle->AlphaToCoverageEnable; }
+			set { _handle->AlphaToCoverageEnable = value; }
 		}
 
 		public bool AlphaToOneEnable {
-			get { return m->AlphaToOneEnable; }
-			set { m->AlphaToOneEnable = value; }
+			get { return _handle->AlphaToOneEnable; }
+			set { _handle->AlphaToOneEnable = value; }
 		}
-		public Interop.PipelineMultisampleStateCreateInfo* m;
+		public Interop.PipelineMultisampleStateCreateInfo* _handle;
 
 		public PipelineMultisampleStateCreateInfo ()
 		{
-			m = (Interop.PipelineMultisampleStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineMultisampleStateCreateInfo));
+			_handle = (Interop.PipelineMultisampleStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineMultisampleStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineMultisampleStateCreateInfo (Interop.PipelineMultisampleStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineMultisampleStateCreateInfo;
+			_handle->SType = StructureType.PipelineMultisampleStateCreateInfo;
 		}
 
 	}
@@ -3181,33 +3181,33 @@ namespace VulkanSharp
 	public unsafe class PipelineColorBlendStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public bool LogicOpEnable {
-			get { return m->LogicOpEnable; }
-			set { m->LogicOpEnable = value; }
+			get { return _handle->LogicOpEnable; }
+			set { _handle->LogicOpEnable = value; }
 		}
 
 		public LogicOp LogicOp {
-			get { return m->LogicOp; }
-			set { m->LogicOp = value; }
+			get { return _handle->LogicOp; }
+			set { _handle->LogicOp = value; }
 		}
 
 		public uint AttachmentCount {
-			get { return m->AttachmentCount; }
-			set { m->AttachmentCount = value; }
+			get { return _handle->AttachmentCount; }
+			set { _handle->AttachmentCount = value; }
 		}
 
 		public PipelineColorBlendAttachmentState[] Attachments {
 			get {
-				if (m->AttachmentCount == 0)
+				if (_handle->AttachmentCount == 0)
 					return null;
-				var values = new PipelineColorBlendAttachmentState [m->AttachmentCount];
+				var values = new PipelineColorBlendAttachmentState [_handle->AttachmentCount];
 				unsafe
 				{
-					var ptr = (PipelineColorBlendAttachmentState*)m->Attachments;
+					var ptr = (PipelineColorBlendAttachmentState*)_handle->Attachments;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -3216,15 +3216,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->AttachmentCount = 0;
-					m->Attachments = IntPtr.Zero;
+					_handle->AttachmentCount = 0;
+					_handle->Attachments = IntPtr.Zero;
 					return;
 				}
-				m->AttachmentCount = (uint)value.Length;
-				m->Attachments = Marshal.AllocHGlobal ((int)(sizeof(PipelineColorBlendAttachmentState)*value.Length));
+				_handle->AttachmentCount = (uint)value.Length;
+				_handle->Attachments = Marshal.AllocHGlobal ((int)(sizeof(PipelineColorBlendAttachmentState)*value.Length));
 				unsafe
 				{
-					var ptr = (PipelineColorBlendAttachmentState*)m->Attachments;
+					var ptr = (PipelineColorBlendAttachmentState*)_handle->Attachments;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -3235,7 +3235,7 @@ namespace VulkanSharp
 			get {
 				var arr = new float [4];
 				for (var i = 0; i < 4; i++)
-					arr [i] = m->BlendConstants [i];
+					arr [i] = _handle->BlendConstants [i];
 				return arr;
 			}
 
@@ -3243,29 +3243,29 @@ namespace VulkanSharp
 				if (value.Length > 4)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->BlendConstants [i] = value [i];
+					_handle->BlendConstants [i] = value [i];
 				for (var i = value.Length; i < 4; i++)
-					m->BlendConstants [i] = 0;
+					_handle->BlendConstants [i] = 0;
 			}
 		}
-		public Interop.PipelineColorBlendStateCreateInfo* m;
+		public Interop.PipelineColorBlendStateCreateInfo* _handle;
 
 		public PipelineColorBlendStateCreateInfo ()
 		{
-			m = (Interop.PipelineColorBlendStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineColorBlendStateCreateInfo));
+			_handle = (Interop.PipelineColorBlendStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineColorBlendStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineColorBlendStateCreateInfo (Interop.PipelineColorBlendStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineColorBlendStateCreateInfo;
+			_handle->SType = StructureType.PipelineColorBlendStateCreateInfo;
 		}
 
 	}
@@ -3273,23 +3273,23 @@ namespace VulkanSharp
 	public unsafe class PipelineDynamicStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint DynamicStateCount {
-			get { return m->DynamicStateCount; }
-			set { m->DynamicStateCount = value; }
+			get { return _handle->DynamicStateCount; }
+			set { _handle->DynamicStateCount = value; }
 		}
 
 		public DynamicState[] DynamicStates {
 			get {
-				if (m->DynamicStateCount == 0)
+				if (_handle->DynamicStateCount == 0)
 					return null;
-				var values = new DynamicState [m->DynamicStateCount];
+				var values = new DynamicState [_handle->DynamicStateCount];
 				unsafe
 				{
-					var ptr = (DynamicState*)m->DynamicStates;
+					var ptr = (DynamicState*)_handle->DynamicStates;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -3298,38 +3298,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->DynamicStateCount = 0;
-					m->DynamicStates = IntPtr.Zero;
+					_handle->DynamicStateCount = 0;
+					_handle->DynamicStates = IntPtr.Zero;
 					return;
 				}
-				m->DynamicStateCount = (uint)value.Length;
-				m->DynamicStates = Marshal.AllocHGlobal ((int)(sizeof(DynamicState)*value.Length));
+				_handle->DynamicStateCount = (uint)value.Length;
+				_handle->DynamicStates = Marshal.AllocHGlobal ((int)(sizeof(DynamicState)*value.Length));
 				unsafe
 				{
-					var ptr = (DynamicState*)m->DynamicStates;
+					var ptr = (DynamicState*)_handle->DynamicStates;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.PipelineDynamicStateCreateInfo* m;
+		public Interop.PipelineDynamicStateCreateInfo* _handle;
 
 		public PipelineDynamicStateCreateInfo ()
 		{
-			m = (Interop.PipelineDynamicStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineDynamicStateCreateInfo));
+			_handle = (Interop.PipelineDynamicStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineDynamicStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineDynamicStateCreateInfo (Interop.PipelineDynamicStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineDynamicStateCreateInfo;
+			_handle->SType = StructureType.PipelineDynamicStateCreateInfo;
 		}
 
 	}
@@ -3348,72 +3348,72 @@ namespace VulkanSharp
 	public unsafe class PipelineDepthStencilStateCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public bool DepthTestEnable {
-			get { return m->DepthTestEnable; }
-			set { m->DepthTestEnable = value; }
+			get { return _handle->DepthTestEnable; }
+			set { _handle->DepthTestEnable = value; }
 		}
 
 		public bool DepthWriteEnable {
-			get { return m->DepthWriteEnable; }
-			set { m->DepthWriteEnable = value; }
+			get { return _handle->DepthWriteEnable; }
+			set { _handle->DepthWriteEnable = value; }
 		}
 
 		public CompareOp DepthCompareOp {
-			get { return m->DepthCompareOp; }
-			set { m->DepthCompareOp = value; }
+			get { return _handle->DepthCompareOp; }
+			set { _handle->DepthCompareOp = value; }
 		}
 
 		public bool DepthBoundsTestEnable {
-			get { return m->DepthBoundsTestEnable; }
-			set { m->DepthBoundsTestEnable = value; }
+			get { return _handle->DepthBoundsTestEnable; }
+			set { _handle->DepthBoundsTestEnable = value; }
 		}
 
 		public bool StencilTestEnable {
-			get { return m->StencilTestEnable; }
-			set { m->StencilTestEnable = value; }
+			get { return _handle->StencilTestEnable; }
+			set { _handle->StencilTestEnable = value; }
 		}
 
 		public StencilOpState Front {
-			get { return m->Front; }
-			set { m->Front = value; }
+			get { return _handle->Front; }
+			set { _handle->Front = value; }
 		}
 
 		public StencilOpState Back {
-			get { return m->Back; }
-			set { m->Back = value; }
+			get { return _handle->Back; }
+			set { _handle->Back = value; }
 		}
 
 		public float MinDepthBounds {
-			get { return m->MinDepthBounds; }
-			set { m->MinDepthBounds = value; }
+			get { return _handle->MinDepthBounds; }
+			set { _handle->MinDepthBounds = value; }
 		}
 
 		public float MaxDepthBounds {
-			get { return m->MaxDepthBounds; }
-			set { m->MaxDepthBounds = value; }
+			get { return _handle->MaxDepthBounds; }
+			set { _handle->MaxDepthBounds = value; }
 		}
-		public Interop.PipelineDepthStencilStateCreateInfo* m;
+		public Interop.PipelineDepthStencilStateCreateInfo* _handle;
 
 		public PipelineDepthStencilStateCreateInfo ()
 		{
-			m = (Interop.PipelineDepthStencilStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineDepthStencilStateCreateInfo));
+			_handle = (Interop.PipelineDepthStencilStateCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineDepthStencilStateCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineDepthStencilStateCreateInfo (Interop.PipelineDepthStencilStateCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineDepthStencilStateCreateInfo;
+			_handle->SType = StructureType.PipelineDepthStencilStateCreateInfo;
 		}
 
 	}
@@ -3421,26 +3421,26 @@ namespace VulkanSharp
 	public unsafe class GraphicsPipelineCreateInfo
 	{
 		public PipelineCreateFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint StageCount {
-			get { return m->StageCount; }
-			set { m->StageCount = value; }
+			get { return _handle->StageCount; }
+			set { _handle->StageCount = value; }
 		}
 
 		public PipelineShaderStageCreateInfo[] Stages {
 			get {
-				if (m->StageCount == 0)
+				if (_handle->StageCount == 0)
 					return null;
-				var values = new PipelineShaderStageCreateInfo [m->StageCount];
+				var values = new PipelineShaderStageCreateInfo [_handle->StageCount];
 				unsafe
 				{
-					var ptr = (Interop.PipelineShaderStageCreateInfo*)m->Stages;
+					var ptr = (Interop.PipelineShaderStageCreateInfo*)_handle->Stages;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new PipelineShaderStageCreateInfo ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -3448,17 +3448,17 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->StageCount = 0;
-					m->Stages = IntPtr.Zero;
+					_handle->StageCount = 0;
+					_handle->Stages = IntPtr.Zero;
 					return;
 				}
-				m->StageCount = (uint)value.Length;
-				m->Stages = Marshal.AllocHGlobal ((int)(sizeof(Interop.PipelineShaderStageCreateInfo)*value.Length));
+				_handle->StageCount = (uint)value.Length;
+				_handle->Stages = Marshal.AllocHGlobal ((int)(sizeof(Interop.PipelineShaderStageCreateInfo)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.PipelineShaderStageCreateInfo*)m->Stages;
+					var ptr = (Interop.PipelineShaderStageCreateInfo*)_handle->Stages;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
@@ -3466,102 +3466,102 @@ namespace VulkanSharp
 		PipelineVertexInputStateCreateInfo lVertexInputState;
 		public PipelineVertexInputStateCreateInfo VertexInputState {
 			get { return lVertexInputState; }
-			set { lVertexInputState = value; m->VertexInputState = (IntPtr)value.m; }
+			set { lVertexInputState = value; _handle->VertexInputState = (IntPtr)value._handle; }
 		}
 
 		PipelineInputAssemblyStateCreateInfo lInputAssemblyState;
 		public PipelineInputAssemblyStateCreateInfo InputAssemblyState {
 			get { return lInputAssemblyState; }
-			set { lInputAssemblyState = value; m->InputAssemblyState = (IntPtr)value.m; }
+			set { lInputAssemblyState = value; _handle->InputAssemblyState = (IntPtr)value._handle; }
 		}
 
 		PipelineTessellationStateCreateInfo lTessellationState;
 		public PipelineTessellationStateCreateInfo TessellationState {
 			get { return lTessellationState; }
-			set { lTessellationState = value; m->TessellationState = (IntPtr)value.m; }
+			set { lTessellationState = value; _handle->TessellationState = (IntPtr)value._handle; }
 		}
 
 		PipelineViewportStateCreateInfo lViewportState;
 		public PipelineViewportStateCreateInfo ViewportState {
 			get { return lViewportState; }
-			set { lViewportState = value; m->ViewportState = (IntPtr)value.m; }
+			set { lViewportState = value; _handle->ViewportState = (IntPtr)value._handle; }
 		}
 
 		PipelineRasterizationStateCreateInfo lRasterizationState;
 		public PipelineRasterizationStateCreateInfo RasterizationState {
 			get { return lRasterizationState; }
-			set { lRasterizationState = value; m->RasterizationState = (IntPtr)value.m; }
+			set { lRasterizationState = value; _handle->RasterizationState = (IntPtr)value._handle; }
 		}
 
 		PipelineMultisampleStateCreateInfo lMultisampleState;
 		public PipelineMultisampleStateCreateInfo MultisampleState {
 			get { return lMultisampleState; }
-			set { lMultisampleState = value; m->MultisampleState = (IntPtr)value.m; }
+			set { lMultisampleState = value; _handle->MultisampleState = (IntPtr)value._handle; }
 		}
 
 		PipelineDepthStencilStateCreateInfo lDepthStencilState;
 		public PipelineDepthStencilStateCreateInfo DepthStencilState {
 			get { return lDepthStencilState; }
-			set { lDepthStencilState = value; m->DepthStencilState = (IntPtr)value.m; }
+			set { lDepthStencilState = value; _handle->DepthStencilState = (IntPtr)value._handle; }
 		}
 
 		PipelineColorBlendStateCreateInfo lColorBlendState;
 		public PipelineColorBlendStateCreateInfo ColorBlendState {
 			get { return lColorBlendState; }
-			set { lColorBlendState = value; m->ColorBlendState = (IntPtr)value.m; }
+			set { lColorBlendState = value; _handle->ColorBlendState = (IntPtr)value._handle; }
 		}
 
 		PipelineDynamicStateCreateInfo lDynamicState;
 		public PipelineDynamicStateCreateInfo DynamicState {
 			get { return lDynamicState; }
-			set { lDynamicState = value; m->DynamicState = (IntPtr)value.m; }
+			set { lDynamicState = value; _handle->DynamicState = (IntPtr)value._handle; }
 		}
 
 		PipelineLayout lLayout;
 		public PipelineLayout Layout {
 			get { return lLayout; }
-			set { lLayout = value; m->Layout = (ulong)value.m; }
+			set { lLayout = value; _handle->Layout = (ulong)value._handle; }
 		}
 
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
+			set { lRenderPass = value; _handle->RenderPass = (ulong)value._handle; }
 		}
 
 		public uint Subpass {
-			get { return m->Subpass; }
-			set { m->Subpass = value; }
+			get { return _handle->Subpass; }
+			set { _handle->Subpass = value; }
 		}
 
 		Pipeline lBasePipelineHandle;
 		public Pipeline BasePipelineHandle {
 			get { return lBasePipelineHandle; }
-			set { lBasePipelineHandle = value; m->BasePipelineHandle = (ulong)value.m; }
+			set { lBasePipelineHandle = value; _handle->BasePipelineHandle = (ulong)value._handle; }
 		}
 
 		public int BasePipelineIndex {
-			get { return m->BasePipelineIndex; }
-			set { m->BasePipelineIndex = value; }
+			get { return _handle->BasePipelineIndex; }
+			set { _handle->BasePipelineIndex = value; }
 		}
-		public Interop.GraphicsPipelineCreateInfo* m;
+		public Interop.GraphicsPipelineCreateInfo* _handle;
 
 		public GraphicsPipelineCreateInfo ()
 		{
-			m = (Interop.GraphicsPipelineCreateInfo*) Interop.Structure.Allocate (typeof (Interop.GraphicsPipelineCreateInfo));
+			_handle = (Interop.GraphicsPipelineCreateInfo*) Interop.Structure.Allocate (typeof (Interop.GraphicsPipelineCreateInfo));
 			Initialize ();
 		}
 
 		public GraphicsPipelineCreateInfo (Interop.GraphicsPipelineCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.GraphicsPipelineCreateInfo;
+			_handle->SType = StructureType.GraphicsPipelineCreateInfo;
 		}
 
 	}
@@ -3569,37 +3569,37 @@ namespace VulkanSharp
 	public unsafe class PipelineCacheCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public UIntPtr InitialDataSize {
-			get { return m->InitialDataSize; }
-			set { m->InitialDataSize = value; }
+			get { return _handle->InitialDataSize; }
+			set { _handle->InitialDataSize = value; }
 		}
 
 		public IntPtr InitialData {
-			get { return m->InitialData; }
-			set { m->InitialData = value; }
+			get { return _handle->InitialData; }
+			set { _handle->InitialData = value; }
 		}
-		public Interop.PipelineCacheCreateInfo* m;
+		public Interop.PipelineCacheCreateInfo* _handle;
 
 		public PipelineCacheCreateInfo ()
 		{
-			m = (Interop.PipelineCacheCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineCacheCreateInfo));
+			_handle = (Interop.PipelineCacheCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineCacheCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineCacheCreateInfo (Interop.PipelineCacheCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineCacheCreateInfo;
+			_handle->SType = StructureType.PipelineCacheCreateInfo;
 		}
 
 	}
@@ -3614,26 +3614,26 @@ namespace VulkanSharp
 	public unsafe class PipelineLayoutCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint SetLayoutCount {
-			get { return m->SetLayoutCount; }
-			set { m->SetLayoutCount = value; }
+			get { return _handle->SetLayoutCount; }
+			set { _handle->SetLayoutCount = value; }
 		}
 
 		public DescriptorSetLayout[] SetLayouts {
 			get {
-				if (m->SetLayoutCount == 0)
+				if (_handle->SetLayoutCount == 0)
 					return null;
-				var values = new DescriptorSetLayout [m->SetLayoutCount];
+				var values = new DescriptorSetLayout [_handle->SetLayoutCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->SetLayouts;
+					var ptr = (ulong*)_handle->SetLayouts;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new DescriptorSetLayout ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -3641,34 +3641,34 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->SetLayoutCount = 0;
-					m->SetLayouts = IntPtr.Zero;
+					_handle->SetLayoutCount = 0;
+					_handle->SetLayouts = IntPtr.Zero;
 					return;
 				}
-				m->SetLayoutCount = (uint)value.Length;
-				m->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->SetLayoutCount = (uint)value.Length;
+				_handle->SetLayouts = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->SetLayouts;
+					var ptr = (ulong*)_handle->SetLayouts;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
 
 		public uint PushConstantRangeCount {
-			get { return m->PushConstantRangeCount; }
-			set { m->PushConstantRangeCount = value; }
+			get { return _handle->PushConstantRangeCount; }
+			set { _handle->PushConstantRangeCount = value; }
 		}
 
 		public PushConstantRange[] PushConstantRanges {
 			get {
-				if (m->PushConstantRangeCount == 0)
+				if (_handle->PushConstantRangeCount == 0)
 					return null;
-				var values = new PushConstantRange [m->PushConstantRangeCount];
+				var values = new PushConstantRange [_handle->PushConstantRangeCount];
 				unsafe
 				{
-					var ptr = (PushConstantRange*)m->PushConstantRanges;
+					var ptr = (PushConstantRange*)_handle->PushConstantRanges;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -3677,38 +3677,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->PushConstantRangeCount = 0;
-					m->PushConstantRanges = IntPtr.Zero;
+					_handle->PushConstantRangeCount = 0;
+					_handle->PushConstantRanges = IntPtr.Zero;
 					return;
 				}
-				m->PushConstantRangeCount = (uint)value.Length;
-				m->PushConstantRanges = Marshal.AllocHGlobal ((int)(sizeof(PushConstantRange)*value.Length));
+				_handle->PushConstantRangeCount = (uint)value.Length;
+				_handle->PushConstantRanges = Marshal.AllocHGlobal ((int)(sizeof(PushConstantRange)*value.Length));
 				unsafe
 				{
-					var ptr = (PushConstantRange*)m->PushConstantRanges;
+					var ptr = (PushConstantRange*)_handle->PushConstantRanges;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.PipelineLayoutCreateInfo* m;
+		public Interop.PipelineLayoutCreateInfo* _handle;
 
 		public PipelineLayoutCreateInfo ()
 		{
-			m = (Interop.PipelineLayoutCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineLayoutCreateInfo));
+			_handle = (Interop.PipelineLayoutCreateInfo*) Interop.Structure.Allocate (typeof (Interop.PipelineLayoutCreateInfo));
 			Initialize ();
 		}
 
 		public PipelineLayoutCreateInfo (Interop.PipelineLayoutCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineLayoutCreateInfo;
+			_handle->SType = StructureType.PipelineLayoutCreateInfo;
 		}
 
 	}
@@ -3716,102 +3716,102 @@ namespace VulkanSharp
 	public unsafe class SamplerCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public Filter MagFilter {
-			get { return m->MagFilter; }
-			set { m->MagFilter = value; }
+			get { return _handle->MagFilter; }
+			set { _handle->MagFilter = value; }
 		}
 
 		public Filter MinFilter {
-			get { return m->MinFilter; }
-			set { m->MinFilter = value; }
+			get { return _handle->MinFilter; }
+			set { _handle->MinFilter = value; }
 		}
 
 		public SamplerMipmapMode MipmapMode {
-			get { return m->MipmapMode; }
-			set { m->MipmapMode = value; }
+			get { return _handle->MipmapMode; }
+			set { _handle->MipmapMode = value; }
 		}
 
 		public SamplerAddressMode AddressModeU {
-			get { return m->AddressModeU; }
-			set { m->AddressModeU = value; }
+			get { return _handle->AddressModeU; }
+			set { _handle->AddressModeU = value; }
 		}
 
 		public SamplerAddressMode AddressModeV {
-			get { return m->AddressModeV; }
-			set { m->AddressModeV = value; }
+			get { return _handle->AddressModeV; }
+			set { _handle->AddressModeV = value; }
 		}
 
 		public SamplerAddressMode AddressModeW {
-			get { return m->AddressModeW; }
-			set { m->AddressModeW = value; }
+			get { return _handle->AddressModeW; }
+			set { _handle->AddressModeW = value; }
 		}
 
 		public float MipLodBias {
-			get { return m->MipLodBias; }
-			set { m->MipLodBias = value; }
+			get { return _handle->MipLodBias; }
+			set { _handle->MipLodBias = value; }
 		}
 
 		public bool AnisotropyEnable {
-			get { return m->AnisotropyEnable; }
-			set { m->AnisotropyEnable = value; }
+			get { return _handle->AnisotropyEnable; }
+			set { _handle->AnisotropyEnable = value; }
 		}
 
 		public float MaxAnisotropy {
-			get { return m->MaxAnisotropy; }
-			set { m->MaxAnisotropy = value; }
+			get { return _handle->MaxAnisotropy; }
+			set { _handle->MaxAnisotropy = value; }
 		}
 
 		public bool CompareEnable {
-			get { return m->CompareEnable; }
-			set { m->CompareEnable = value; }
+			get { return _handle->CompareEnable; }
+			set { _handle->CompareEnable = value; }
 		}
 
 		public CompareOp CompareOp {
-			get { return m->CompareOp; }
-			set { m->CompareOp = value; }
+			get { return _handle->CompareOp; }
+			set { _handle->CompareOp = value; }
 		}
 
 		public float MinLod {
-			get { return m->MinLod; }
-			set { m->MinLod = value; }
+			get { return _handle->MinLod; }
+			set { _handle->MinLod = value; }
 		}
 
 		public float MaxLod {
-			get { return m->MaxLod; }
-			set { m->MaxLod = value; }
+			get { return _handle->MaxLod; }
+			set { _handle->MaxLod = value; }
 		}
 
 		public BorderColor BorderColor {
-			get { return m->BorderColor; }
-			set { m->BorderColor = value; }
+			get { return _handle->BorderColor; }
+			set { _handle->BorderColor = value; }
 		}
 
 		public bool UnnormalizedCoordinates {
-			get { return m->UnnormalizedCoordinates; }
-			set { m->UnnormalizedCoordinates = value; }
+			get { return _handle->UnnormalizedCoordinates; }
+			set { _handle->UnnormalizedCoordinates = value; }
 		}
-		public Interop.SamplerCreateInfo* m;
+		public Interop.SamplerCreateInfo* _handle;
 
 		public SamplerCreateInfo ()
 		{
-			m = (Interop.SamplerCreateInfo*) Interop.Structure.Allocate (typeof (Interop.SamplerCreateInfo));
+			_handle = (Interop.SamplerCreateInfo*) Interop.Structure.Allocate (typeof (Interop.SamplerCreateInfo));
 			Initialize ();
 		}
 
 		public SamplerCreateInfo (Interop.SamplerCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.SamplerCreateInfo;
+			_handle->SType = StructureType.SamplerCreateInfo;
 		}
 
 	}
@@ -3819,32 +3819,32 @@ namespace VulkanSharp
 	public unsafe class CommandPoolCreateInfo
 	{
 		public CommandPoolCreateFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint QueueFamilyIndex {
-			get { return m->QueueFamilyIndex; }
-			set { m->QueueFamilyIndex = value; }
+			get { return _handle->QueueFamilyIndex; }
+			set { _handle->QueueFamilyIndex = value; }
 		}
-		public Interop.CommandPoolCreateInfo* m;
+		public Interop.CommandPoolCreateInfo* _handle;
 
 		public CommandPoolCreateInfo ()
 		{
-			m = (Interop.CommandPoolCreateInfo*) Interop.Structure.Allocate (typeof (Interop.CommandPoolCreateInfo));
+			_handle = (Interop.CommandPoolCreateInfo*) Interop.Structure.Allocate (typeof (Interop.CommandPoolCreateInfo));
 			Initialize ();
 		}
 
 		public CommandPoolCreateInfo (Interop.CommandPoolCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.CommandPoolCreateInfo;
+			_handle->SType = StructureType.CommandPoolCreateInfo;
 		}
 
 	}
@@ -3854,36 +3854,36 @@ namespace VulkanSharp
 		CommandPool lCommandPool;
 		public CommandPool CommandPool {
 			get { return lCommandPool; }
-			set { lCommandPool = value; m->CommandPool = (ulong)value.m; }
+			set { lCommandPool = value; _handle->CommandPool = (ulong)value._handle; }
 		}
 
 		public CommandBufferLevel Level {
-			get { return m->Level; }
-			set { m->Level = value; }
+			get { return _handle->Level; }
+			set { _handle->Level = value; }
 		}
 
 		public uint CommandBufferCount {
-			get { return m->CommandBufferCount; }
-			set { m->CommandBufferCount = value; }
+			get { return _handle->CommandBufferCount; }
+			set { _handle->CommandBufferCount = value; }
 		}
-		public Interop.CommandBufferAllocateInfo* m;
+		public Interop.CommandBufferAllocateInfo* _handle;
 
 		public CommandBufferAllocateInfo ()
 		{
-			m = (Interop.CommandBufferAllocateInfo*) Interop.Structure.Allocate (typeof (Interop.CommandBufferAllocateInfo));
+			_handle = (Interop.CommandBufferAllocateInfo*) Interop.Structure.Allocate (typeof (Interop.CommandBufferAllocateInfo));
 			Initialize ();
 		}
 
 		public CommandBufferAllocateInfo (Interop.CommandBufferAllocateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.CommandBufferAllocateInfo;
+			_handle->SType = StructureType.CommandBufferAllocateInfo;
 		}
 
 	}
@@ -3893,52 +3893,52 @@ namespace VulkanSharp
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
+			set { lRenderPass = value; _handle->RenderPass = (ulong)value._handle; }
 		}
 
 		public uint Subpass {
-			get { return m->Subpass; }
-			set { m->Subpass = value; }
+			get { return _handle->Subpass; }
+			set { _handle->Subpass = value; }
 		}
 
 		Framebuffer lFramebuffer;
 		public Framebuffer Framebuffer {
 			get { return lFramebuffer; }
-			set { lFramebuffer = value; m->Framebuffer = (ulong)value.m; }
+			set { lFramebuffer = value; _handle->Framebuffer = (ulong)value._handle; }
 		}
 
 		public bool OcclusionQueryEnable {
-			get { return m->OcclusionQueryEnable; }
-			set { m->OcclusionQueryEnable = value; }
+			get { return _handle->OcclusionQueryEnable; }
+			set { _handle->OcclusionQueryEnable = value; }
 		}
 
 		public QueryControlFlags QueryFlags {
-			get { return m->QueryFlags; }
-			set { m->QueryFlags = value; }
+			get { return _handle->QueryFlags; }
+			set { _handle->QueryFlags = value; }
 		}
 
 		public QueryPipelineStatisticFlags PipelineStatistics {
-			get { return m->PipelineStatistics; }
-			set { m->PipelineStatistics = value; }
+			get { return _handle->PipelineStatistics; }
+			set { _handle->PipelineStatistics = value; }
 		}
-		public Interop.CommandBufferInheritanceInfo* m;
+		public Interop.CommandBufferInheritanceInfo* _handle;
 
 		public CommandBufferInheritanceInfo ()
 		{
-			m = (Interop.CommandBufferInheritanceInfo*) Interop.Structure.Allocate (typeof (Interop.CommandBufferInheritanceInfo));
+			_handle = (Interop.CommandBufferInheritanceInfo*) Interop.Structure.Allocate (typeof (Interop.CommandBufferInheritanceInfo));
 			Initialize ();
 		}
 
 		public CommandBufferInheritanceInfo (Interop.CommandBufferInheritanceInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.CommandBufferInheritanceInfo;
+			_handle->SType = StructureType.CommandBufferInheritanceInfo;
 		}
 
 	}
@@ -3946,33 +3946,33 @@ namespace VulkanSharp
 	public unsafe class CommandBufferBeginInfo
 	{
 		public CommandBufferUsageFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		CommandBufferInheritanceInfo lInheritanceInfo;
 		public CommandBufferInheritanceInfo InheritanceInfo {
 			get { return lInheritanceInfo; }
-			set { lInheritanceInfo = value; m->InheritanceInfo = (IntPtr)value.m; }
+			set { lInheritanceInfo = value; _handle->InheritanceInfo = (IntPtr)value._handle; }
 		}
-		public Interop.CommandBufferBeginInfo* m;
+		public Interop.CommandBufferBeginInfo* _handle;
 
 		public CommandBufferBeginInfo ()
 		{
-			m = (Interop.CommandBufferBeginInfo*) Interop.Structure.Allocate (typeof (Interop.CommandBufferBeginInfo));
+			_handle = (Interop.CommandBufferBeginInfo*) Interop.Structure.Allocate (typeof (Interop.CommandBufferBeginInfo));
 			Initialize ();
 		}
 
 		public CommandBufferBeginInfo (Interop.CommandBufferBeginInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.CommandBufferBeginInfo;
+			_handle->SType = StructureType.CommandBufferBeginInfo;
 		}
 
 	}
@@ -3982,36 +3982,36 @@ namespace VulkanSharp
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
+			set { lRenderPass = value; _handle->RenderPass = (ulong)value._handle; }
 		}
 
 		Framebuffer lFramebuffer;
 		public Framebuffer Framebuffer {
 			get { return lFramebuffer; }
-			set { lFramebuffer = value; m->Framebuffer = (ulong)value.m; }
+			set { lFramebuffer = value; _handle->Framebuffer = (ulong)value._handle; }
 		}
 
 		public Rect2D RenderArea {
-			get { return m->RenderArea; }
-			set { m->RenderArea = value; }
+			get { return _handle->RenderArea; }
+			set { _handle->RenderArea = value; }
 		}
 
 		public uint ClearValueCount {
-			get { return m->ClearValueCount; }
-			set { m->ClearValueCount = value; }
+			get { return _handle->ClearValueCount; }
+			set { _handle->ClearValueCount = value; }
 		}
 
 		public ClearValue[] ClearValues {
 			get {
-				if (m->ClearValueCount == 0)
+				if (_handle->ClearValueCount == 0)
 					return null;
-				var values = new ClearValue [m->ClearValueCount];
+				var values = new ClearValue [_handle->ClearValueCount];
 				unsafe
 				{
-					var ptr = (Interop.ClearValue*)m->ClearValues;
+					var ptr = (Interop.ClearValue*)_handle->ClearValues;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new ClearValue ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -4019,38 +4019,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->ClearValueCount = 0;
-					m->ClearValues = IntPtr.Zero;
+					_handle->ClearValueCount = 0;
+					_handle->ClearValues = IntPtr.Zero;
 					return;
 				}
-				m->ClearValueCount = (uint)value.Length;
-				m->ClearValues = Marshal.AllocHGlobal ((int)(sizeof(Interop.ClearValue)*value.Length));
+				_handle->ClearValueCount = (uint)value.Length;
+				_handle->ClearValues = Marshal.AllocHGlobal ((int)(sizeof(Interop.ClearValue)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.ClearValue*)m->ClearValues;
+					var ptr = (Interop.ClearValue*)_handle->ClearValues;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
-		public Interop.RenderPassBeginInfo* m;
+		public Interop.RenderPassBeginInfo* _handle;
 
 		public RenderPassBeginInfo ()
 		{
-			m = (Interop.RenderPassBeginInfo*) Interop.Structure.Allocate (typeof (Interop.RenderPassBeginInfo));
+			_handle = (Interop.RenderPassBeginInfo*) Interop.Structure.Allocate (typeof (Interop.RenderPassBeginInfo));
 			Initialize ();
 		}
 
 		public RenderPassBeginInfo (Interop.RenderPassBeginInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.RenderPassBeginInfo;
+			_handle->SType = StructureType.RenderPassBeginInfo;
 		}
 
 	}
@@ -4090,28 +4090,28 @@ namespace VulkanSharp
 	public unsafe class SubpassDescription
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public PipelineBindPoint PipelineBindPoint {
-			get { return m->PipelineBindPoint; }
-			set { m->PipelineBindPoint = value; }
+			get { return _handle->PipelineBindPoint; }
+			set { _handle->PipelineBindPoint = value; }
 		}
 
 		public uint InputAttachmentCount {
-			get { return m->InputAttachmentCount; }
-			set { m->InputAttachmentCount = value; }
+			get { return _handle->InputAttachmentCount; }
+			set { _handle->InputAttachmentCount = value; }
 		}
 
 		public AttachmentReference[] InputAttachments {
 			get {
-				if (m->InputAttachmentCount == 0)
+				if (_handle->InputAttachmentCount == 0)
 					return null;
-				var values = new AttachmentReference [m->InputAttachmentCount];
+				var values = new AttachmentReference [_handle->InputAttachmentCount];
 				unsafe
 				{
-					var ptr = (AttachmentReference*)m->InputAttachments;
+					var ptr = (AttachmentReference*)_handle->InputAttachments;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -4120,15 +4120,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->InputAttachmentCount = 0;
-					m->InputAttachments = IntPtr.Zero;
+					_handle->InputAttachmentCount = 0;
+					_handle->InputAttachments = IntPtr.Zero;
 					return;
 				}
-				m->InputAttachmentCount = (uint)value.Length;
-				m->InputAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
+				_handle->InputAttachmentCount = (uint)value.Length;
+				_handle->InputAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
 				unsafe
 				{
-					var ptr = (AttachmentReference*)m->InputAttachments;
+					var ptr = (AttachmentReference*)_handle->InputAttachments;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -4136,18 +4136,18 @@ namespace VulkanSharp
 		}
 
 		public uint ColorAttachmentCount {
-			get { return m->ColorAttachmentCount; }
-			set { m->ColorAttachmentCount = value; }
+			get { return _handle->ColorAttachmentCount; }
+			set { _handle->ColorAttachmentCount = value; }
 		}
 
 		public AttachmentReference[] ColorAttachments {
 			get {
-				if (m->ColorAttachmentCount == 0)
+				if (_handle->ColorAttachmentCount == 0)
 					return null;
-				var values = new AttachmentReference [m->ColorAttachmentCount];
+				var values = new AttachmentReference [_handle->ColorAttachmentCount];
 				unsafe
 				{
-					var ptr = (AttachmentReference*)m->ColorAttachments;
+					var ptr = (AttachmentReference*)_handle->ColorAttachments;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -4156,15 +4156,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->ColorAttachmentCount = 0;
-					m->ColorAttachments = IntPtr.Zero;
+					_handle->ColorAttachmentCount = 0;
+					_handle->ColorAttachments = IntPtr.Zero;
 					return;
 				}
-				m->ColorAttachmentCount = (uint)value.Length;
-				m->ColorAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
+				_handle->ColorAttachmentCount = (uint)value.Length;
+				_handle->ColorAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
 				unsafe
 				{
-					var ptr = (AttachmentReference*)m->ColorAttachments;
+					var ptr = (AttachmentReference*)_handle->ColorAttachments;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -4173,12 +4173,12 @@ namespace VulkanSharp
 
 		public AttachmentReference[] ResolveAttachments {
 			get {
-				if (m->ColorAttachmentCount == 0)
+				if (_handle->ColorAttachmentCount == 0)
 					return null;
-				var values = new AttachmentReference [m->ColorAttachmentCount];
+				var values = new AttachmentReference [_handle->ColorAttachmentCount];
 				unsafe
 				{
-					var ptr = (AttachmentReference*)m->ResolveAttachments;
+					var ptr = (AttachmentReference*)_handle->ResolveAttachments;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -4187,15 +4187,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->ColorAttachmentCount = 0;
-					m->ResolveAttachments = IntPtr.Zero;
+					_handle->ColorAttachmentCount = 0;
+					_handle->ResolveAttachments = IntPtr.Zero;
 					return;
 				}
-				m->ColorAttachmentCount = (uint)value.Length;
-				m->ResolveAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
+				_handle->ColorAttachmentCount = (uint)value.Length;
+				_handle->ResolveAttachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentReference)*value.Length));
 				unsafe
 				{
-					var ptr = (AttachmentReference*)m->ResolveAttachments;
+					var ptr = (AttachmentReference*)_handle->ResolveAttachments;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -4203,23 +4203,23 @@ namespace VulkanSharp
 		}
 
 		public AttachmentReference DepthStencilAttachment {
-			get { return (AttachmentReference)Interop.Structure.MarshalPointerToObject (m->DepthStencilAttachment, typeof (AttachmentReference)); }
-			set { m->DepthStencilAttachment = Interop.Structure.MarshalObjectToPointer (m->DepthStencilAttachment, value); }
+			get { return (AttachmentReference)Interop.Structure.MarshalPointerToObject (_handle->DepthStencilAttachment, typeof (AttachmentReference)); }
+			set { _handle->DepthStencilAttachment = Interop.Structure.MarshalObjectToPointer (_handle->DepthStencilAttachment, value); }
 		}
 
 		public uint PreserveAttachmentCount {
-			get { return m->PreserveAttachmentCount; }
-			set { m->PreserveAttachmentCount = value; }
+			get { return _handle->PreserveAttachmentCount; }
+			set { _handle->PreserveAttachmentCount = value; }
 		}
 
 		public uint[] PreserveAttachments {
 			get {
-				if (m->PreserveAttachmentCount == 0)
+				if (_handle->PreserveAttachmentCount == 0)
 					return null;
-				var values = new uint [m->PreserveAttachmentCount];
+				var values = new uint [_handle->PreserveAttachmentCount];
 				unsafe
 				{
-					var ptr = (uint*)m->PreserveAttachments;
+					var ptr = (uint*)_handle->PreserveAttachments;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -4228,30 +4228,30 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->PreserveAttachmentCount = 0;
-					m->PreserveAttachments = IntPtr.Zero;
+					_handle->PreserveAttachmentCount = 0;
+					_handle->PreserveAttachments = IntPtr.Zero;
 					return;
 				}
-				m->PreserveAttachmentCount = (uint)value.Length;
-				m->PreserveAttachments = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
+				_handle->PreserveAttachmentCount = (uint)value.Length;
+				_handle->PreserveAttachments = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					var ptr = (uint*)m->PreserveAttachments;
+					var ptr = (uint*)_handle->PreserveAttachments;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.SubpassDescription* m;
+		public Interop.SubpassDescription* _handle;
 
 		public SubpassDescription ()
 		{
-			m = (Interop.SubpassDescription*) Interop.Structure.Allocate (typeof (Interop.SubpassDescription));
+			_handle = (Interop.SubpassDescription*) Interop.Structure.Allocate (typeof (Interop.SubpassDescription));
 		}
 
 		public SubpassDescription (Interop.SubpassDescription* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -4270,23 +4270,23 @@ namespace VulkanSharp
 	public unsafe class RenderPassCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public uint AttachmentCount {
-			get { return m->AttachmentCount; }
-			set { m->AttachmentCount = value; }
+			get { return _handle->AttachmentCount; }
+			set { _handle->AttachmentCount = value; }
 		}
 
 		public AttachmentDescription[] Attachments {
 			get {
-				if (m->AttachmentCount == 0)
+				if (_handle->AttachmentCount == 0)
 					return null;
-				var values = new AttachmentDescription [m->AttachmentCount];
+				var values = new AttachmentDescription [_handle->AttachmentCount];
 				unsafe
 				{
-					var ptr = (AttachmentDescription*)m->Attachments;
+					var ptr = (AttachmentDescription*)_handle->Attachments;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -4295,15 +4295,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->AttachmentCount = 0;
-					m->Attachments = IntPtr.Zero;
+					_handle->AttachmentCount = 0;
+					_handle->Attachments = IntPtr.Zero;
 					return;
 				}
-				m->AttachmentCount = (uint)value.Length;
-				m->Attachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentDescription)*value.Length));
+				_handle->AttachmentCount = (uint)value.Length;
+				_handle->Attachments = Marshal.AllocHGlobal ((int)(sizeof(AttachmentDescription)*value.Length));
 				unsafe
 				{
-					var ptr = (AttachmentDescription*)m->Attachments;
+					var ptr = (AttachmentDescription*)_handle->Attachments;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -4311,21 +4311,21 @@ namespace VulkanSharp
 		}
 
 		public uint SubpassCount {
-			get { return m->SubpassCount; }
-			set { m->SubpassCount = value; }
+			get { return _handle->SubpassCount; }
+			set { _handle->SubpassCount = value; }
 		}
 
 		public SubpassDescription[] Subpasses {
 			get {
-				if (m->SubpassCount == 0)
+				if (_handle->SubpassCount == 0)
 					return null;
-				var values = new SubpassDescription [m->SubpassCount];
+				var values = new SubpassDescription [_handle->SubpassCount];
 				unsafe
 				{
-					var ptr = (Interop.SubpassDescription*)m->Subpasses;
+					var ptr = (Interop.SubpassDescription*)_handle->Subpasses;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SubpassDescription ();
-						*values [i].m = ptr [i];
+						*values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -4333,34 +4333,34 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->SubpassCount = 0;
-					m->Subpasses = IntPtr.Zero;
+					_handle->SubpassCount = 0;
+					_handle->Subpasses = IntPtr.Zero;
 					return;
 				}
-				m->SubpassCount = (uint)value.Length;
-				m->Subpasses = Marshal.AllocHGlobal ((int)(sizeof(Interop.SubpassDescription)*value.Length));
+				_handle->SubpassCount = (uint)value.Length;
+				_handle->Subpasses = Marshal.AllocHGlobal ((int)(sizeof(Interop.SubpassDescription)*value.Length));
 				unsafe
 				{
-					var ptr = (Interop.SubpassDescription*)m->Subpasses;
+					var ptr = (Interop.SubpassDescription*)_handle->Subpasses;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = *value [i].m;
+						ptr [i] = *value [i]._handle;
 				}
 			}
 		}
 
 		public uint DependencyCount {
-			get { return m->DependencyCount; }
-			set { m->DependencyCount = value; }
+			get { return _handle->DependencyCount; }
+			set { _handle->DependencyCount = value; }
 		}
 
 		public SubpassDependency[] Dependencies {
 			get {
-				if (m->DependencyCount == 0)
+				if (_handle->DependencyCount == 0)
 					return null;
-				var values = new SubpassDependency [m->DependencyCount];
+				var values = new SubpassDependency [_handle->DependencyCount];
 				unsafe
 				{
-					var ptr = (SubpassDependency*)m->Dependencies;
+					var ptr = (SubpassDependency*)_handle->Dependencies;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -4369,38 +4369,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->DependencyCount = 0;
-					m->Dependencies = IntPtr.Zero;
+					_handle->DependencyCount = 0;
+					_handle->Dependencies = IntPtr.Zero;
 					return;
 				}
-				m->DependencyCount = (uint)value.Length;
-				m->Dependencies = Marshal.AllocHGlobal ((int)(sizeof(SubpassDependency)*value.Length));
+				_handle->DependencyCount = (uint)value.Length;
+				_handle->Dependencies = Marshal.AllocHGlobal ((int)(sizeof(SubpassDependency)*value.Length));
 				unsafe
 				{
-					var ptr = (SubpassDependency*)m->Dependencies;
+					var ptr = (SubpassDependency*)_handle->Dependencies;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.RenderPassCreateInfo* m;
+		public Interop.RenderPassCreateInfo* _handle;
 
 		public RenderPassCreateInfo ()
 		{
-			m = (Interop.RenderPassCreateInfo*) Interop.Structure.Allocate (typeof (Interop.RenderPassCreateInfo));
+			_handle = (Interop.RenderPassCreateInfo*) Interop.Structure.Allocate (typeof (Interop.RenderPassCreateInfo));
 			Initialize ();
 		}
 
 		public RenderPassCreateInfo (Interop.RenderPassCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.RenderPassCreateInfo;
+			_handle->SType = StructureType.RenderPassCreateInfo;
 		}
 
 	}
@@ -4408,27 +4408,27 @@ namespace VulkanSharp
 	public unsafe class EventCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
-		public Interop.EventCreateInfo* m;
+		public Interop.EventCreateInfo* _handle;
 
 		public EventCreateInfo ()
 		{
-			m = (Interop.EventCreateInfo*) Interop.Structure.Allocate (typeof (Interop.EventCreateInfo));
+			_handle = (Interop.EventCreateInfo*) Interop.Structure.Allocate (typeof (Interop.EventCreateInfo));
 			Initialize ();
 		}
 
 		public EventCreateInfo (Interop.EventCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.EventCreateInfo;
+			_handle->SType = StructureType.EventCreateInfo;
 		}
 
 	}
@@ -4436,27 +4436,27 @@ namespace VulkanSharp
 	public unsafe class FenceCreateInfo
 	{
 		public FenceCreateFlags Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
-		public Interop.FenceCreateInfo* m;
+		public Interop.FenceCreateInfo* _handle;
 
 		public FenceCreateInfo ()
 		{
-			m = (Interop.FenceCreateInfo*) Interop.Structure.Allocate (typeof (Interop.FenceCreateInfo));
+			_handle = (Interop.FenceCreateInfo*) Interop.Structure.Allocate (typeof (Interop.FenceCreateInfo));
 			Initialize ();
 		}
 
 		public FenceCreateInfo (Interop.FenceCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.FenceCreateInfo;
+			_handle->SType = StructureType.FenceCreateInfo;
 		}
 
 	}
@@ -4532,270 +4532,270 @@ namespace VulkanSharp
 	public unsafe class PhysicalDeviceLimits
 	{
 		public uint MaxImageDimension1D {
-			get { return m->MaxImageDimension1D; }
-			set { m->MaxImageDimension1D = value; }
+			get { return _handle->MaxImageDimension1D; }
+			set { _handle->MaxImageDimension1D = value; }
 		}
 
 		public uint MaxImageDimension2D {
-			get { return m->MaxImageDimension2D; }
-			set { m->MaxImageDimension2D = value; }
+			get { return _handle->MaxImageDimension2D; }
+			set { _handle->MaxImageDimension2D = value; }
 		}
 
 		public uint MaxImageDimension3D {
-			get { return m->MaxImageDimension3D; }
-			set { m->MaxImageDimension3D = value; }
+			get { return _handle->MaxImageDimension3D; }
+			set { _handle->MaxImageDimension3D = value; }
 		}
 
 		public uint MaxImageDimensionCube {
-			get { return m->MaxImageDimensionCube; }
-			set { m->MaxImageDimensionCube = value; }
+			get { return _handle->MaxImageDimensionCube; }
+			set { _handle->MaxImageDimensionCube = value; }
 		}
 
 		public uint MaxImageArrayLayers {
-			get { return m->MaxImageArrayLayers; }
-			set { m->MaxImageArrayLayers = value; }
+			get { return _handle->MaxImageArrayLayers; }
+			set { _handle->MaxImageArrayLayers = value; }
 		}
 
 		public uint MaxTexelBufferElements {
-			get { return m->MaxTexelBufferElements; }
-			set { m->MaxTexelBufferElements = value; }
+			get { return _handle->MaxTexelBufferElements; }
+			set { _handle->MaxTexelBufferElements = value; }
 		}
 
 		public uint MaxUniformBufferRange {
-			get { return m->MaxUniformBufferRange; }
-			set { m->MaxUniformBufferRange = value; }
+			get { return _handle->MaxUniformBufferRange; }
+			set { _handle->MaxUniformBufferRange = value; }
 		}
 
 		public uint MaxStorageBufferRange {
-			get { return m->MaxStorageBufferRange; }
-			set { m->MaxStorageBufferRange = value; }
+			get { return _handle->MaxStorageBufferRange; }
+			set { _handle->MaxStorageBufferRange = value; }
 		}
 
 		public uint MaxPushConstantsSize {
-			get { return m->MaxPushConstantsSize; }
-			set { m->MaxPushConstantsSize = value; }
+			get { return _handle->MaxPushConstantsSize; }
+			set { _handle->MaxPushConstantsSize = value; }
 		}
 
 		public uint MaxMemoryAllocationCount {
-			get { return m->MaxMemoryAllocationCount; }
-			set { m->MaxMemoryAllocationCount = value; }
+			get { return _handle->MaxMemoryAllocationCount; }
+			set { _handle->MaxMemoryAllocationCount = value; }
 		}
 
 		public uint MaxSamplerAllocationCount {
-			get { return m->MaxSamplerAllocationCount; }
-			set { m->MaxSamplerAllocationCount = value; }
+			get { return _handle->MaxSamplerAllocationCount; }
+			set { _handle->MaxSamplerAllocationCount = value; }
 		}
 
 		public DeviceSize BufferImageGranularity {
-			get { return m->BufferImageGranularity; }
-			set { m->BufferImageGranularity = value; }
+			get { return _handle->BufferImageGranularity; }
+			set { _handle->BufferImageGranularity = value; }
 		}
 
 		public DeviceSize SparseAddressSpaceSize {
-			get { return m->SparseAddressSpaceSize; }
-			set { m->SparseAddressSpaceSize = value; }
+			get { return _handle->SparseAddressSpaceSize; }
+			set { _handle->SparseAddressSpaceSize = value; }
 		}
 
 		public uint MaxBoundDescriptorSets {
-			get { return m->MaxBoundDescriptorSets; }
-			set { m->MaxBoundDescriptorSets = value; }
+			get { return _handle->MaxBoundDescriptorSets; }
+			set { _handle->MaxBoundDescriptorSets = value; }
 		}
 
 		public uint MaxPerStageDescriptorSamplers {
-			get { return m->MaxPerStageDescriptorSamplers; }
-			set { m->MaxPerStageDescriptorSamplers = value; }
+			get { return _handle->MaxPerStageDescriptorSamplers; }
+			set { _handle->MaxPerStageDescriptorSamplers = value; }
 		}
 
 		public uint MaxPerStageDescriptorUniformBuffers {
-			get { return m->MaxPerStageDescriptorUniformBuffers; }
-			set { m->MaxPerStageDescriptorUniformBuffers = value; }
+			get { return _handle->MaxPerStageDescriptorUniformBuffers; }
+			set { _handle->MaxPerStageDescriptorUniformBuffers = value; }
 		}
 
 		public uint MaxPerStageDescriptorStorageBuffers {
-			get { return m->MaxPerStageDescriptorStorageBuffers; }
-			set { m->MaxPerStageDescriptorStorageBuffers = value; }
+			get { return _handle->MaxPerStageDescriptorStorageBuffers; }
+			set { _handle->MaxPerStageDescriptorStorageBuffers = value; }
 		}
 
 		public uint MaxPerStageDescriptorSampledImages {
-			get { return m->MaxPerStageDescriptorSampledImages; }
-			set { m->MaxPerStageDescriptorSampledImages = value; }
+			get { return _handle->MaxPerStageDescriptorSampledImages; }
+			set { _handle->MaxPerStageDescriptorSampledImages = value; }
 		}
 
 		public uint MaxPerStageDescriptorStorageImages {
-			get { return m->MaxPerStageDescriptorStorageImages; }
-			set { m->MaxPerStageDescriptorStorageImages = value; }
+			get { return _handle->MaxPerStageDescriptorStorageImages; }
+			set { _handle->MaxPerStageDescriptorStorageImages = value; }
 		}
 
 		public uint MaxPerStageDescriptorInputAttachments {
-			get { return m->MaxPerStageDescriptorInputAttachments; }
-			set { m->MaxPerStageDescriptorInputAttachments = value; }
+			get { return _handle->MaxPerStageDescriptorInputAttachments; }
+			set { _handle->MaxPerStageDescriptorInputAttachments = value; }
 		}
 
 		public uint MaxPerStageResources {
-			get { return m->MaxPerStageResources; }
-			set { m->MaxPerStageResources = value; }
+			get { return _handle->MaxPerStageResources; }
+			set { _handle->MaxPerStageResources = value; }
 		}
 
 		public uint MaxDescriptorSetSamplers {
-			get { return m->MaxDescriptorSetSamplers; }
-			set { m->MaxDescriptorSetSamplers = value; }
+			get { return _handle->MaxDescriptorSetSamplers; }
+			set { _handle->MaxDescriptorSetSamplers = value; }
 		}
 
 		public uint MaxDescriptorSetUniformBuffers {
-			get { return m->MaxDescriptorSetUniformBuffers; }
-			set { m->MaxDescriptorSetUniformBuffers = value; }
+			get { return _handle->MaxDescriptorSetUniformBuffers; }
+			set { _handle->MaxDescriptorSetUniformBuffers = value; }
 		}
 
 		public uint MaxDescriptorSetUniformBuffersDynamic {
-			get { return m->MaxDescriptorSetUniformBuffersDynamic; }
-			set { m->MaxDescriptorSetUniformBuffersDynamic = value; }
+			get { return _handle->MaxDescriptorSetUniformBuffersDynamic; }
+			set { _handle->MaxDescriptorSetUniformBuffersDynamic = value; }
 		}
 
 		public uint MaxDescriptorSetStorageBuffers {
-			get { return m->MaxDescriptorSetStorageBuffers; }
-			set { m->MaxDescriptorSetStorageBuffers = value; }
+			get { return _handle->MaxDescriptorSetStorageBuffers; }
+			set { _handle->MaxDescriptorSetStorageBuffers = value; }
 		}
 
 		public uint MaxDescriptorSetStorageBuffersDynamic {
-			get { return m->MaxDescriptorSetStorageBuffersDynamic; }
-			set { m->MaxDescriptorSetStorageBuffersDynamic = value; }
+			get { return _handle->MaxDescriptorSetStorageBuffersDynamic; }
+			set { _handle->MaxDescriptorSetStorageBuffersDynamic = value; }
 		}
 
 		public uint MaxDescriptorSetSampledImages {
-			get { return m->MaxDescriptorSetSampledImages; }
-			set { m->MaxDescriptorSetSampledImages = value; }
+			get { return _handle->MaxDescriptorSetSampledImages; }
+			set { _handle->MaxDescriptorSetSampledImages = value; }
 		}
 
 		public uint MaxDescriptorSetStorageImages {
-			get { return m->MaxDescriptorSetStorageImages; }
-			set { m->MaxDescriptorSetStorageImages = value; }
+			get { return _handle->MaxDescriptorSetStorageImages; }
+			set { _handle->MaxDescriptorSetStorageImages = value; }
 		}
 
 		public uint MaxDescriptorSetInputAttachments {
-			get { return m->MaxDescriptorSetInputAttachments; }
-			set { m->MaxDescriptorSetInputAttachments = value; }
+			get { return _handle->MaxDescriptorSetInputAttachments; }
+			set { _handle->MaxDescriptorSetInputAttachments = value; }
 		}
 
 		public uint MaxVertexInputAttributes {
-			get { return m->MaxVertexInputAttributes; }
-			set { m->MaxVertexInputAttributes = value; }
+			get { return _handle->MaxVertexInputAttributes; }
+			set { _handle->MaxVertexInputAttributes = value; }
 		}
 
 		public uint MaxVertexInputBindings {
-			get { return m->MaxVertexInputBindings; }
-			set { m->MaxVertexInputBindings = value; }
+			get { return _handle->MaxVertexInputBindings; }
+			set { _handle->MaxVertexInputBindings = value; }
 		}
 
 		public uint MaxVertexInputAttributeOffset {
-			get { return m->MaxVertexInputAttributeOffset; }
-			set { m->MaxVertexInputAttributeOffset = value; }
+			get { return _handle->MaxVertexInputAttributeOffset; }
+			set { _handle->MaxVertexInputAttributeOffset = value; }
 		}
 
 		public uint MaxVertexInputBindingStride {
-			get { return m->MaxVertexInputBindingStride; }
-			set { m->MaxVertexInputBindingStride = value; }
+			get { return _handle->MaxVertexInputBindingStride; }
+			set { _handle->MaxVertexInputBindingStride = value; }
 		}
 
 		public uint MaxVertexOutputComponents {
-			get { return m->MaxVertexOutputComponents; }
-			set { m->MaxVertexOutputComponents = value; }
+			get { return _handle->MaxVertexOutputComponents; }
+			set { _handle->MaxVertexOutputComponents = value; }
 		}
 
 		public uint MaxTessellationGenerationLevel {
-			get { return m->MaxTessellationGenerationLevel; }
-			set { m->MaxTessellationGenerationLevel = value; }
+			get { return _handle->MaxTessellationGenerationLevel; }
+			set { _handle->MaxTessellationGenerationLevel = value; }
 		}
 
 		public uint MaxTessellationPatchSize {
-			get { return m->MaxTessellationPatchSize; }
-			set { m->MaxTessellationPatchSize = value; }
+			get { return _handle->MaxTessellationPatchSize; }
+			set { _handle->MaxTessellationPatchSize = value; }
 		}
 
 		public uint MaxTessellationControlPerVertexInputComponents {
-			get { return m->MaxTessellationControlPerVertexInputComponents; }
-			set { m->MaxTessellationControlPerVertexInputComponents = value; }
+			get { return _handle->MaxTessellationControlPerVertexInputComponents; }
+			set { _handle->MaxTessellationControlPerVertexInputComponents = value; }
 		}
 
 		public uint MaxTessellationControlPerVertexOutputComponents {
-			get { return m->MaxTessellationControlPerVertexOutputComponents; }
-			set { m->MaxTessellationControlPerVertexOutputComponents = value; }
+			get { return _handle->MaxTessellationControlPerVertexOutputComponents; }
+			set { _handle->MaxTessellationControlPerVertexOutputComponents = value; }
 		}
 
 		public uint MaxTessellationControlPerPatchOutputComponents {
-			get { return m->MaxTessellationControlPerPatchOutputComponents; }
-			set { m->MaxTessellationControlPerPatchOutputComponents = value; }
+			get { return _handle->MaxTessellationControlPerPatchOutputComponents; }
+			set { _handle->MaxTessellationControlPerPatchOutputComponents = value; }
 		}
 
 		public uint MaxTessellationControlTotalOutputComponents {
-			get { return m->MaxTessellationControlTotalOutputComponents; }
-			set { m->MaxTessellationControlTotalOutputComponents = value; }
+			get { return _handle->MaxTessellationControlTotalOutputComponents; }
+			set { _handle->MaxTessellationControlTotalOutputComponents = value; }
 		}
 
 		public uint MaxTessellationEvaluationInputComponents {
-			get { return m->MaxTessellationEvaluationInputComponents; }
-			set { m->MaxTessellationEvaluationInputComponents = value; }
+			get { return _handle->MaxTessellationEvaluationInputComponents; }
+			set { _handle->MaxTessellationEvaluationInputComponents = value; }
 		}
 
 		public uint MaxTessellationEvaluationOutputComponents {
-			get { return m->MaxTessellationEvaluationOutputComponents; }
-			set { m->MaxTessellationEvaluationOutputComponents = value; }
+			get { return _handle->MaxTessellationEvaluationOutputComponents; }
+			set { _handle->MaxTessellationEvaluationOutputComponents = value; }
 		}
 
 		public uint MaxGeometryShaderInvocations {
-			get { return m->MaxGeometryShaderInvocations; }
-			set { m->MaxGeometryShaderInvocations = value; }
+			get { return _handle->MaxGeometryShaderInvocations; }
+			set { _handle->MaxGeometryShaderInvocations = value; }
 		}
 
 		public uint MaxGeometryInputComponents {
-			get { return m->MaxGeometryInputComponents; }
-			set { m->MaxGeometryInputComponents = value; }
+			get { return _handle->MaxGeometryInputComponents; }
+			set { _handle->MaxGeometryInputComponents = value; }
 		}
 
 		public uint MaxGeometryOutputComponents {
-			get { return m->MaxGeometryOutputComponents; }
-			set { m->MaxGeometryOutputComponents = value; }
+			get { return _handle->MaxGeometryOutputComponents; }
+			set { _handle->MaxGeometryOutputComponents = value; }
 		}
 
 		public uint MaxGeometryOutputVertices {
-			get { return m->MaxGeometryOutputVertices; }
-			set { m->MaxGeometryOutputVertices = value; }
+			get { return _handle->MaxGeometryOutputVertices; }
+			set { _handle->MaxGeometryOutputVertices = value; }
 		}
 
 		public uint MaxGeometryTotalOutputComponents {
-			get { return m->MaxGeometryTotalOutputComponents; }
-			set { m->MaxGeometryTotalOutputComponents = value; }
+			get { return _handle->MaxGeometryTotalOutputComponents; }
+			set { _handle->MaxGeometryTotalOutputComponents = value; }
 		}
 
 		public uint MaxFragmentInputComponents {
-			get { return m->MaxFragmentInputComponents; }
-			set { m->MaxFragmentInputComponents = value; }
+			get { return _handle->MaxFragmentInputComponents; }
+			set { _handle->MaxFragmentInputComponents = value; }
 		}
 
 		public uint MaxFragmentOutputAttachments {
-			get { return m->MaxFragmentOutputAttachments; }
-			set { m->MaxFragmentOutputAttachments = value; }
+			get { return _handle->MaxFragmentOutputAttachments; }
+			set { _handle->MaxFragmentOutputAttachments = value; }
 		}
 
 		public uint MaxFragmentDualSrcAttachments {
-			get { return m->MaxFragmentDualSrcAttachments; }
-			set { m->MaxFragmentDualSrcAttachments = value; }
+			get { return _handle->MaxFragmentDualSrcAttachments; }
+			set { _handle->MaxFragmentDualSrcAttachments = value; }
 		}
 
 		public uint MaxFragmentCombinedOutputResources {
-			get { return m->MaxFragmentCombinedOutputResources; }
-			set { m->MaxFragmentCombinedOutputResources = value; }
+			get { return _handle->MaxFragmentCombinedOutputResources; }
+			set { _handle->MaxFragmentCombinedOutputResources = value; }
 		}
 
 		public uint MaxComputeSharedMemorySize {
-			get { return m->MaxComputeSharedMemorySize; }
-			set { m->MaxComputeSharedMemorySize = value; }
+			get { return _handle->MaxComputeSharedMemorySize; }
+			set { _handle->MaxComputeSharedMemorySize = value; }
 		}
 
 		public uint[] MaxComputeWorkGroupCount {
 			get {
 				var arr = new uint [3];
 				for (var i = 0; i < 3; i++)
-					arr [i] = m->MaxComputeWorkGroupCount [i];
+					arr [i] = _handle->MaxComputeWorkGroupCount [i];
 				return arr;
 			}
 
@@ -4803,22 +4803,22 @@ namespace VulkanSharp
 				if (value.Length > 3)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->MaxComputeWorkGroupCount [i] = value [i];
+					_handle->MaxComputeWorkGroupCount [i] = value [i];
 				for (var i = value.Length; i < 3; i++)
-					m->MaxComputeWorkGroupCount [i] = 0;
+					_handle->MaxComputeWorkGroupCount [i] = 0;
 			}
 		}
 
 		public uint MaxComputeWorkGroupInvocations {
-			get { return m->MaxComputeWorkGroupInvocations; }
-			set { m->MaxComputeWorkGroupInvocations = value; }
+			get { return _handle->MaxComputeWorkGroupInvocations; }
+			set { _handle->MaxComputeWorkGroupInvocations = value; }
 		}
 
 		public uint[] MaxComputeWorkGroupSize {
 			get {
 				var arr = new uint [3];
 				for (var i = 0; i < 3; i++)
-					arr [i] = m->MaxComputeWorkGroupSize [i];
+					arr [i] = _handle->MaxComputeWorkGroupSize [i];
 				return arr;
 			}
 
@@ -4826,57 +4826,57 @@ namespace VulkanSharp
 				if (value.Length > 3)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->MaxComputeWorkGroupSize [i] = value [i];
+					_handle->MaxComputeWorkGroupSize [i] = value [i];
 				for (var i = value.Length; i < 3; i++)
-					m->MaxComputeWorkGroupSize [i] = 0;
+					_handle->MaxComputeWorkGroupSize [i] = 0;
 			}
 		}
 
 		public uint SubPixelPrecisionBits {
-			get { return m->SubPixelPrecisionBits; }
-			set { m->SubPixelPrecisionBits = value; }
+			get { return _handle->SubPixelPrecisionBits; }
+			set { _handle->SubPixelPrecisionBits = value; }
 		}
 
 		public uint SubTexelPrecisionBits {
-			get { return m->SubTexelPrecisionBits; }
-			set { m->SubTexelPrecisionBits = value; }
+			get { return _handle->SubTexelPrecisionBits; }
+			set { _handle->SubTexelPrecisionBits = value; }
 		}
 
 		public uint MipmapPrecisionBits {
-			get { return m->MipmapPrecisionBits; }
-			set { m->MipmapPrecisionBits = value; }
+			get { return _handle->MipmapPrecisionBits; }
+			set { _handle->MipmapPrecisionBits = value; }
 		}
 
 		public uint MaxDrawIndexedIndexValue {
-			get { return m->MaxDrawIndexedIndexValue; }
-			set { m->MaxDrawIndexedIndexValue = value; }
+			get { return _handle->MaxDrawIndexedIndexValue; }
+			set { _handle->MaxDrawIndexedIndexValue = value; }
 		}
 
 		public uint MaxDrawIndirectCount {
-			get { return m->MaxDrawIndirectCount; }
-			set { m->MaxDrawIndirectCount = value; }
+			get { return _handle->MaxDrawIndirectCount; }
+			set { _handle->MaxDrawIndirectCount = value; }
 		}
 
 		public float MaxSamplerLodBias {
-			get { return m->MaxSamplerLodBias; }
-			set { m->MaxSamplerLodBias = value; }
+			get { return _handle->MaxSamplerLodBias; }
+			set { _handle->MaxSamplerLodBias = value; }
 		}
 
 		public float MaxSamplerAnisotropy {
-			get { return m->MaxSamplerAnisotropy; }
-			set { m->MaxSamplerAnisotropy = value; }
+			get { return _handle->MaxSamplerAnisotropy; }
+			set { _handle->MaxSamplerAnisotropy = value; }
 		}
 
 		public uint MaxViewports {
-			get { return m->MaxViewports; }
-			set { m->MaxViewports = value; }
+			get { return _handle->MaxViewports; }
+			set { _handle->MaxViewports = value; }
 		}
 
 		public uint[] MaxViewportDimensions {
 			get {
 				var arr = new uint [2];
 				for (var i = 0; i < 2; i++)
-					arr [i] = m->MaxViewportDimensions [i];
+					arr [i] = _handle->MaxViewportDimensions [i];
 				return arr;
 			}
 
@@ -4884,9 +4884,9 @@ namespace VulkanSharp
 				if (value.Length > 2)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->MaxViewportDimensions [i] = value [i];
+					_handle->MaxViewportDimensions [i] = value [i];
 				for (var i = value.Length; i < 2; i++)
-					m->MaxViewportDimensions [i] = 0;
+					_handle->MaxViewportDimensions [i] = 0;
 			}
 		}
 
@@ -4894,7 +4894,7 @@ namespace VulkanSharp
 			get {
 				var arr = new float [2];
 				for (var i = 0; i < 2; i++)
-					arr [i] = m->ViewportBoundsRange [i];
+					arr [i] = _handle->ViewportBoundsRange [i];
 				return arr;
 			}
 
@@ -4902,177 +4902,177 @@ namespace VulkanSharp
 				if (value.Length > 2)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->ViewportBoundsRange [i] = value [i];
+					_handle->ViewportBoundsRange [i] = value [i];
 				for (var i = value.Length; i < 2; i++)
-					m->ViewportBoundsRange [i] = 0;
+					_handle->ViewportBoundsRange [i] = 0;
 			}
 		}
 
 		public uint ViewportSubPixelBits {
-			get { return m->ViewportSubPixelBits; }
-			set { m->ViewportSubPixelBits = value; }
+			get { return _handle->ViewportSubPixelBits; }
+			set { _handle->ViewportSubPixelBits = value; }
 		}
 
 		public UIntPtr MinMemoryMapAlignment {
-			get { return m->MinMemoryMapAlignment; }
-			set { m->MinMemoryMapAlignment = value; }
+			get { return _handle->MinMemoryMapAlignment; }
+			set { _handle->MinMemoryMapAlignment = value; }
 		}
 
 		public DeviceSize MinTexelBufferOffsetAlignment {
-			get { return m->MinTexelBufferOffsetAlignment; }
-			set { m->MinTexelBufferOffsetAlignment = value; }
+			get { return _handle->MinTexelBufferOffsetAlignment; }
+			set { _handle->MinTexelBufferOffsetAlignment = value; }
 		}
 
 		public DeviceSize MinUniformBufferOffsetAlignment {
-			get { return m->MinUniformBufferOffsetAlignment; }
-			set { m->MinUniformBufferOffsetAlignment = value; }
+			get { return _handle->MinUniformBufferOffsetAlignment; }
+			set { _handle->MinUniformBufferOffsetAlignment = value; }
 		}
 
 		public DeviceSize MinStorageBufferOffsetAlignment {
-			get { return m->MinStorageBufferOffsetAlignment; }
-			set { m->MinStorageBufferOffsetAlignment = value; }
+			get { return _handle->MinStorageBufferOffsetAlignment; }
+			set { _handle->MinStorageBufferOffsetAlignment = value; }
 		}
 
 		public int MinTexelOffset {
-			get { return m->MinTexelOffset; }
-			set { m->MinTexelOffset = value; }
+			get { return _handle->MinTexelOffset; }
+			set { _handle->MinTexelOffset = value; }
 		}
 
 		public uint MaxTexelOffset {
-			get { return m->MaxTexelOffset; }
-			set { m->MaxTexelOffset = value; }
+			get { return _handle->MaxTexelOffset; }
+			set { _handle->MaxTexelOffset = value; }
 		}
 
 		public int MinTexelGatherOffset {
-			get { return m->MinTexelGatherOffset; }
-			set { m->MinTexelGatherOffset = value; }
+			get { return _handle->MinTexelGatherOffset; }
+			set { _handle->MinTexelGatherOffset = value; }
 		}
 
 		public uint MaxTexelGatherOffset {
-			get { return m->MaxTexelGatherOffset; }
-			set { m->MaxTexelGatherOffset = value; }
+			get { return _handle->MaxTexelGatherOffset; }
+			set { _handle->MaxTexelGatherOffset = value; }
 		}
 
 		public float MinInterpolationOffset {
-			get { return m->MinInterpolationOffset; }
-			set { m->MinInterpolationOffset = value; }
+			get { return _handle->MinInterpolationOffset; }
+			set { _handle->MinInterpolationOffset = value; }
 		}
 
 		public float MaxInterpolationOffset {
-			get { return m->MaxInterpolationOffset; }
-			set { m->MaxInterpolationOffset = value; }
+			get { return _handle->MaxInterpolationOffset; }
+			set { _handle->MaxInterpolationOffset = value; }
 		}
 
 		public uint SubPixelInterpolationOffsetBits {
-			get { return m->SubPixelInterpolationOffsetBits; }
-			set { m->SubPixelInterpolationOffsetBits = value; }
+			get { return _handle->SubPixelInterpolationOffsetBits; }
+			set { _handle->SubPixelInterpolationOffsetBits = value; }
 		}
 
 		public uint MaxFramebufferWidth {
-			get { return m->MaxFramebufferWidth; }
-			set { m->MaxFramebufferWidth = value; }
+			get { return _handle->MaxFramebufferWidth; }
+			set { _handle->MaxFramebufferWidth = value; }
 		}
 
 		public uint MaxFramebufferHeight {
-			get { return m->MaxFramebufferHeight; }
-			set { m->MaxFramebufferHeight = value; }
+			get { return _handle->MaxFramebufferHeight; }
+			set { _handle->MaxFramebufferHeight = value; }
 		}
 
 		public uint MaxFramebufferLayers {
-			get { return m->MaxFramebufferLayers; }
-			set { m->MaxFramebufferLayers = value; }
+			get { return _handle->MaxFramebufferLayers; }
+			set { _handle->MaxFramebufferLayers = value; }
 		}
 
 		public SampleCountFlags FramebufferColorSampleCounts {
-			get { return m->FramebufferColorSampleCounts; }
-			set { m->FramebufferColorSampleCounts = value; }
+			get { return _handle->FramebufferColorSampleCounts; }
+			set { _handle->FramebufferColorSampleCounts = value; }
 		}
 
 		public SampleCountFlags FramebufferDepthSampleCounts {
-			get { return m->FramebufferDepthSampleCounts; }
-			set { m->FramebufferDepthSampleCounts = value; }
+			get { return _handle->FramebufferDepthSampleCounts; }
+			set { _handle->FramebufferDepthSampleCounts = value; }
 		}
 
 		public SampleCountFlags FramebufferStencilSampleCounts {
-			get { return m->FramebufferStencilSampleCounts; }
-			set { m->FramebufferStencilSampleCounts = value; }
+			get { return _handle->FramebufferStencilSampleCounts; }
+			set { _handle->FramebufferStencilSampleCounts = value; }
 		}
 
 		public SampleCountFlags FramebufferNoAttachmentsSampleCounts {
-			get { return m->FramebufferNoAttachmentsSampleCounts; }
-			set { m->FramebufferNoAttachmentsSampleCounts = value; }
+			get { return _handle->FramebufferNoAttachmentsSampleCounts; }
+			set { _handle->FramebufferNoAttachmentsSampleCounts = value; }
 		}
 
 		public uint MaxColorAttachments {
-			get { return m->MaxColorAttachments; }
-			set { m->MaxColorAttachments = value; }
+			get { return _handle->MaxColorAttachments; }
+			set { _handle->MaxColorAttachments = value; }
 		}
 
 		public SampleCountFlags SampledImageColorSampleCounts {
-			get { return m->SampledImageColorSampleCounts; }
-			set { m->SampledImageColorSampleCounts = value; }
+			get { return _handle->SampledImageColorSampleCounts; }
+			set { _handle->SampledImageColorSampleCounts = value; }
 		}
 
 		public SampleCountFlags SampledImageIntegerSampleCounts {
-			get { return m->SampledImageIntegerSampleCounts; }
-			set { m->SampledImageIntegerSampleCounts = value; }
+			get { return _handle->SampledImageIntegerSampleCounts; }
+			set { _handle->SampledImageIntegerSampleCounts = value; }
 		}
 
 		public SampleCountFlags SampledImageDepthSampleCounts {
-			get { return m->SampledImageDepthSampleCounts; }
-			set { m->SampledImageDepthSampleCounts = value; }
+			get { return _handle->SampledImageDepthSampleCounts; }
+			set { _handle->SampledImageDepthSampleCounts = value; }
 		}
 
 		public SampleCountFlags SampledImageStencilSampleCounts {
-			get { return m->SampledImageStencilSampleCounts; }
-			set { m->SampledImageStencilSampleCounts = value; }
+			get { return _handle->SampledImageStencilSampleCounts; }
+			set { _handle->SampledImageStencilSampleCounts = value; }
 		}
 
 		public SampleCountFlags StorageImageSampleCounts {
-			get { return m->StorageImageSampleCounts; }
-			set { m->StorageImageSampleCounts = value; }
+			get { return _handle->StorageImageSampleCounts; }
+			set { _handle->StorageImageSampleCounts = value; }
 		}
 
 		public uint MaxSampleMaskWords {
-			get { return m->MaxSampleMaskWords; }
-			set { m->MaxSampleMaskWords = value; }
+			get { return _handle->MaxSampleMaskWords; }
+			set { _handle->MaxSampleMaskWords = value; }
 		}
 
 		public bool TimestampComputeAndGraphics {
-			get { return m->TimestampComputeAndGraphics; }
-			set { m->TimestampComputeAndGraphics = value; }
+			get { return _handle->TimestampComputeAndGraphics; }
+			set { _handle->TimestampComputeAndGraphics = value; }
 		}
 
 		public float TimestampPeriod {
-			get { return m->TimestampPeriod; }
-			set { m->TimestampPeriod = value; }
+			get { return _handle->TimestampPeriod; }
+			set { _handle->TimestampPeriod = value; }
 		}
 
 		public uint MaxClipDistances {
-			get { return m->MaxClipDistances; }
-			set { m->MaxClipDistances = value; }
+			get { return _handle->MaxClipDistances; }
+			set { _handle->MaxClipDistances = value; }
 		}
 
 		public uint MaxCullDistances {
-			get { return m->MaxCullDistances; }
-			set { m->MaxCullDistances = value; }
+			get { return _handle->MaxCullDistances; }
+			set { _handle->MaxCullDistances = value; }
 		}
 
 		public uint MaxCombinedClipAndCullDistances {
-			get { return m->MaxCombinedClipAndCullDistances; }
-			set { m->MaxCombinedClipAndCullDistances = value; }
+			get { return _handle->MaxCombinedClipAndCullDistances; }
+			set { _handle->MaxCombinedClipAndCullDistances = value; }
 		}
 
 		public uint DiscreteQueuePriorities {
-			get { return m->DiscreteQueuePriorities; }
-			set { m->DiscreteQueuePriorities = value; }
+			get { return _handle->DiscreteQueuePriorities; }
+			set { _handle->DiscreteQueuePriorities = value; }
 		}
 
 		public float[] PointSizeRange {
 			get {
 				var arr = new float [2];
 				for (var i = 0; i < 2; i++)
-					arr [i] = m->PointSizeRange [i];
+					arr [i] = _handle->PointSizeRange [i];
 				return arr;
 			}
 
@@ -5080,9 +5080,9 @@ namespace VulkanSharp
 				if (value.Length > 2)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->PointSizeRange [i] = value [i];
+					_handle->PointSizeRange [i] = value [i];
 				for (var i = value.Length; i < 2; i++)
-					m->PointSizeRange [i] = 0;
+					_handle->PointSizeRange [i] = 0;
 			}
 		}
 
@@ -5090,7 +5090,7 @@ namespace VulkanSharp
 			get {
 				var arr = new float [2];
 				for (var i = 0; i < 2; i++)
-					arr [i] = m->LineWidthRange [i];
+					arr [i] = _handle->LineWidthRange [i];
 				return arr;
 			}
 
@@ -5098,56 +5098,56 @@ namespace VulkanSharp
 				if (value.Length > 2)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->LineWidthRange [i] = value [i];
+					_handle->LineWidthRange [i] = value [i];
 				for (var i = value.Length; i < 2; i++)
-					m->LineWidthRange [i] = 0;
+					_handle->LineWidthRange [i] = 0;
 			}
 		}
 
 		public float PointSizeGranularity {
-			get { return m->PointSizeGranularity; }
-			set { m->PointSizeGranularity = value; }
+			get { return _handle->PointSizeGranularity; }
+			set { _handle->PointSizeGranularity = value; }
 		}
 
 		public float LineWidthGranularity {
-			get { return m->LineWidthGranularity; }
-			set { m->LineWidthGranularity = value; }
+			get { return _handle->LineWidthGranularity; }
+			set { _handle->LineWidthGranularity = value; }
 		}
 
 		public bool StrictLines {
-			get { return m->StrictLines; }
-			set { m->StrictLines = value; }
+			get { return _handle->StrictLines; }
+			set { _handle->StrictLines = value; }
 		}
 
 		public bool StandardSampleLocations {
-			get { return m->StandardSampleLocations; }
-			set { m->StandardSampleLocations = value; }
+			get { return _handle->StandardSampleLocations; }
+			set { _handle->StandardSampleLocations = value; }
 		}
 
 		public DeviceSize OptimalBufferCopyOffsetAlignment {
-			get { return m->OptimalBufferCopyOffsetAlignment; }
-			set { m->OptimalBufferCopyOffsetAlignment = value; }
+			get { return _handle->OptimalBufferCopyOffsetAlignment; }
+			set { _handle->OptimalBufferCopyOffsetAlignment = value; }
 		}
 
 		public DeviceSize OptimalBufferCopyRowPitchAlignment {
-			get { return m->OptimalBufferCopyRowPitchAlignment; }
-			set { m->OptimalBufferCopyRowPitchAlignment = value; }
+			get { return _handle->OptimalBufferCopyRowPitchAlignment; }
+			set { _handle->OptimalBufferCopyRowPitchAlignment = value; }
 		}
 
 		public DeviceSize NonCoherentAtomSize {
-			get { return m->NonCoherentAtomSize; }
-			set { m->NonCoherentAtomSize = value; }
+			get { return _handle->NonCoherentAtomSize; }
+			set { _handle->NonCoherentAtomSize = value; }
 		}
-		public Interop.PhysicalDeviceLimits* m;
+		public Interop.PhysicalDeviceLimits* _handle;
 
 		public PhysicalDeviceLimits ()
 		{
-			m = (Interop.PhysicalDeviceLimits*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceLimits));
+			_handle = (Interop.PhysicalDeviceLimits*) Interop.Structure.Allocate (typeof (Interop.PhysicalDeviceLimits));
 		}
 
 		public PhysicalDeviceLimits (Interop.PhysicalDeviceLimits* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -5155,27 +5155,27 @@ namespace VulkanSharp
 	public unsafe class SemaphoreCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
-		public Interop.SemaphoreCreateInfo* m;
+		public Interop.SemaphoreCreateInfo* _handle;
 
 		public SemaphoreCreateInfo ()
 		{
-			m = (Interop.SemaphoreCreateInfo*) Interop.Structure.Allocate (typeof (Interop.SemaphoreCreateInfo));
+			_handle = (Interop.SemaphoreCreateInfo*) Interop.Structure.Allocate (typeof (Interop.SemaphoreCreateInfo));
 			Initialize ();
 		}
 
 		public SemaphoreCreateInfo (Interop.SemaphoreCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.SemaphoreCreateInfo;
+			_handle->SType = StructureType.SemaphoreCreateInfo;
 		}
 
 	}
@@ -5183,42 +5183,42 @@ namespace VulkanSharp
 	public unsafe class QueryPoolCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public QueryType QueryType {
-			get { return m->QueryType; }
-			set { m->QueryType = value; }
+			get { return _handle->QueryType; }
+			set { _handle->QueryType = value; }
 		}
 
 		public uint QueryCount {
-			get { return m->QueryCount; }
-			set { m->QueryCount = value; }
+			get { return _handle->QueryCount; }
+			set { _handle->QueryCount = value; }
 		}
 
 		public QueryPipelineStatisticFlags PipelineStatistics {
-			get { return m->PipelineStatistics; }
-			set { m->PipelineStatistics = value; }
+			get { return _handle->PipelineStatistics; }
+			set { _handle->PipelineStatistics = value; }
 		}
-		public Interop.QueryPoolCreateInfo* m;
+		public Interop.QueryPoolCreateInfo* _handle;
 
 		public QueryPoolCreateInfo ()
 		{
-			m = (Interop.QueryPoolCreateInfo*) Interop.Structure.Allocate (typeof (Interop.QueryPoolCreateInfo));
+			_handle = (Interop.QueryPoolCreateInfo*) Interop.Structure.Allocate (typeof (Interop.QueryPoolCreateInfo));
 			Initialize ();
 		}
 
 		public QueryPoolCreateInfo (Interop.QueryPoolCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.QueryPoolCreateInfo;
+			_handle->SType = StructureType.QueryPoolCreateInfo;
 		}
 
 	}
@@ -5226,32 +5226,32 @@ namespace VulkanSharp
 	public unsafe class FramebufferCreateInfo
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		RenderPass lRenderPass;
 		public RenderPass RenderPass {
 			get { return lRenderPass; }
-			set { lRenderPass = value; m->RenderPass = (ulong)value.m; }
+			set { lRenderPass = value; _handle->RenderPass = (ulong)value._handle; }
 		}
 
 		public uint AttachmentCount {
-			get { return m->AttachmentCount; }
-			set { m->AttachmentCount = value; }
+			get { return _handle->AttachmentCount; }
+			set { _handle->AttachmentCount = value; }
 		}
 
 		public ImageView[] Attachments {
 			get {
-				if (m->AttachmentCount == 0)
+				if (_handle->AttachmentCount == 0)
 					return null;
-				var values = new ImageView [m->AttachmentCount];
+				var values = new ImageView [_handle->AttachmentCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->Attachments;
+					var ptr = (ulong*)_handle->Attachments;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new ImageView ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -5259,53 +5259,53 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->AttachmentCount = 0;
-					m->Attachments = IntPtr.Zero;
+					_handle->AttachmentCount = 0;
+					_handle->Attachments = IntPtr.Zero;
 					return;
 				}
-				m->AttachmentCount = (uint)value.Length;
-				m->Attachments = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->AttachmentCount = (uint)value.Length;
+				_handle->Attachments = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->Attachments;
+					var ptr = (ulong*)_handle->Attachments;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
 
 		public uint Width {
-			get { return m->Width; }
-			set { m->Width = value; }
+			get { return _handle->Width; }
+			set { _handle->Width = value; }
 		}
 
 		public uint Height {
-			get { return m->Height; }
-			set { m->Height = value; }
+			get { return _handle->Height; }
+			set { _handle->Height = value; }
 		}
 
 		public uint Layers {
-			get { return m->Layers; }
-			set { m->Layers = value; }
+			get { return _handle->Layers; }
+			set { _handle->Layers = value; }
 		}
-		public Interop.FramebufferCreateInfo* m;
+		public Interop.FramebufferCreateInfo* _handle;
 
 		public FramebufferCreateInfo ()
 		{
-			m = (Interop.FramebufferCreateInfo*) Interop.Structure.Allocate (typeof (Interop.FramebufferCreateInfo));
+			_handle = (Interop.FramebufferCreateInfo*) Interop.Structure.Allocate (typeof (Interop.FramebufferCreateInfo));
 			Initialize ();
 		}
 
 		public FramebufferCreateInfo (Interop.FramebufferCreateInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.FramebufferCreateInfo;
+			_handle->SType = StructureType.FramebufferCreateInfo;
 		}
 
 	}
@@ -5337,21 +5337,21 @@ namespace VulkanSharp
 	public unsafe class SubmitInfo
 	{
 		public uint WaitSemaphoreCount {
-			get { return m->WaitSemaphoreCount; }
-			set { m->WaitSemaphoreCount = value; }
+			get { return _handle->WaitSemaphoreCount; }
+			set { _handle->WaitSemaphoreCount = value; }
 		}
 
 		public Semaphore[] WaitSemaphores {
 			get {
-				if (m->WaitSemaphoreCount == 0)
+				if (_handle->WaitSemaphoreCount == 0)
 					return null;
-				var values = new Semaphore [m->WaitSemaphoreCount];
+				var values = new Semaphore [_handle->WaitSemaphoreCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->WaitSemaphores;
+					var ptr = (ulong*)_handle->WaitSemaphores;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -5359,29 +5359,29 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->WaitSemaphoreCount = 0;
-					m->WaitSemaphores = IntPtr.Zero;
+					_handle->WaitSemaphoreCount = 0;
+					_handle->WaitSemaphores = IntPtr.Zero;
 					return;
 				}
-				m->WaitSemaphoreCount = (uint)value.Length;
-				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->WaitSemaphoreCount = (uint)value.Length;
+				_handle->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->WaitSemaphores;
+					var ptr = (ulong*)_handle->WaitSemaphores;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
 
 		public PipelineStageFlags[] WaitDstStageMask {
 			get {
-				if (m->WaitSemaphoreCount == 0)
+				if (_handle->WaitSemaphoreCount == 0)
 					return null;
-				var values = new PipelineStageFlags [m->WaitSemaphoreCount];
+				var values = new PipelineStageFlags [_handle->WaitSemaphoreCount];
 				unsafe
 				{
-					var ptr = (PipelineStageFlags*)m->WaitDstStageMask;
+					var ptr = (PipelineStageFlags*)_handle->WaitDstStageMask;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -5390,15 +5390,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->WaitSemaphoreCount = 0;
-					m->WaitDstStageMask = IntPtr.Zero;
+					_handle->WaitSemaphoreCount = 0;
+					_handle->WaitDstStageMask = IntPtr.Zero;
 					return;
 				}
-				m->WaitSemaphoreCount = (uint)value.Length;
-				m->WaitDstStageMask = Marshal.AllocHGlobal ((int)(sizeof(PipelineStageFlags)*value.Length));
+				_handle->WaitSemaphoreCount = (uint)value.Length;
+				_handle->WaitDstStageMask = Marshal.AllocHGlobal ((int)(sizeof(PipelineStageFlags)*value.Length));
 				unsafe
 				{
-					var ptr = (PipelineStageFlags*)m->WaitDstStageMask;
+					var ptr = (PipelineStageFlags*)_handle->WaitDstStageMask;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -5406,21 +5406,21 @@ namespace VulkanSharp
 		}
 
 		public uint CommandBufferCount {
-			get { return m->CommandBufferCount; }
-			set { m->CommandBufferCount = value; }
+			get { return _handle->CommandBufferCount; }
+			set { _handle->CommandBufferCount = value; }
 		}
 
 		public CommandBuffer[] CommandBuffers {
 			get {
-				if (m->CommandBufferCount == 0)
+				if (_handle->CommandBufferCount == 0)
 					return null;
-				var values = new CommandBuffer [m->CommandBufferCount];
+				var values = new CommandBuffer [_handle->CommandBufferCount];
 				unsafe
 				{
-					var ptr = (IntPtr*)m->CommandBuffers;
+					var ptr = (IntPtr*)_handle->CommandBuffers;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new CommandBuffer ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -5428,37 +5428,37 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->CommandBufferCount = 0;
-					m->CommandBuffers = IntPtr.Zero;
+					_handle->CommandBufferCount = 0;
+					_handle->CommandBuffers = IntPtr.Zero;
 					return;
 				}
-				m->CommandBufferCount = (uint)value.Length;
-				m->CommandBuffers = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*value.Length));
+				_handle->CommandBufferCount = (uint)value.Length;
+				_handle->CommandBuffers = Marshal.AllocHGlobal ((int)(sizeof(IntPtr)*value.Length));
 				unsafe
 				{
-					var ptr = (IntPtr*)m->CommandBuffers;
+					var ptr = (IntPtr*)_handle->CommandBuffers;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
 
 		public uint SignalSemaphoreCount {
-			get { return m->SignalSemaphoreCount; }
-			set { m->SignalSemaphoreCount = value; }
+			get { return _handle->SignalSemaphoreCount; }
+			set { _handle->SignalSemaphoreCount = value; }
 		}
 
 		public Semaphore[] SignalSemaphores {
 			get {
-				if (m->SignalSemaphoreCount == 0)
+				if (_handle->SignalSemaphoreCount == 0)
 					return null;
-				var values = new Semaphore [m->SignalSemaphoreCount];
+				var values = new Semaphore [_handle->SignalSemaphoreCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->SignalSemaphores;
+					var ptr = (ulong*)_handle->SignalSemaphores;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -5466,38 +5466,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->SignalSemaphoreCount = 0;
-					m->SignalSemaphores = IntPtr.Zero;
+					_handle->SignalSemaphoreCount = 0;
+					_handle->SignalSemaphores = IntPtr.Zero;
 					return;
 				}
-				m->SignalSemaphoreCount = (uint)value.Length;
-				m->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->SignalSemaphoreCount = (uint)value.Length;
+				_handle->SignalSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->SignalSemaphores;
+					var ptr = (ulong*)_handle->SignalSemaphores;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
-		public Interop.SubmitInfo* m;
+		public Interop.SubmitInfo* _handle;
 
 		public SubmitInfo ()
 		{
-			m = (Interop.SubmitInfo*) Interop.Structure.Allocate (typeof (Interop.SubmitInfo));
+			_handle = (Interop.SubmitInfo*) Interop.Structure.Allocate (typeof (Interop.SubmitInfo));
 			Initialize ();
 		}
 
 		public SubmitInfo (Interop.SubmitInfo* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.SubmitInfo;
+			_handle->SType = StructureType.SubmitInfo;
 		}
 
 	}
@@ -5507,49 +5507,49 @@ namespace VulkanSharp
 		DisplayKhr lDisplay;
 		public DisplayKhr Display {
 			get { return lDisplay; }
-			set { lDisplay = value; m->Display = (ulong)value.m; }
+			set { lDisplay = value; _handle->Display = (ulong)value._handle; }
 		}
 
 		public string DisplayName {
-			get { return Marshal.PtrToStringAnsi (m->DisplayName); }
-			set { m->DisplayName = Marshal.StringToHGlobalAnsi (value); }
+			get { return Marshal.PtrToStringAnsi (_handle->DisplayName); }
+			set { _handle->DisplayName = Marshal.StringToHGlobalAnsi (value); }
 		}
 
 		public Extent2D PhysicalDimensions {
-			get { return m->PhysicalDimensions; }
-			set { m->PhysicalDimensions = value; }
+			get { return _handle->PhysicalDimensions; }
+			set { _handle->PhysicalDimensions = value; }
 		}
 
 		public Extent2D PhysicalResolution {
-			get { return m->PhysicalResolution; }
-			set { m->PhysicalResolution = value; }
+			get { return _handle->PhysicalResolution; }
+			set { _handle->PhysicalResolution = value; }
 		}
 
 		public SurfaceTransformFlagsKhr SupportedTransforms {
-			get { return m->SupportedTransforms; }
-			set { m->SupportedTransforms = value; }
+			get { return _handle->SupportedTransforms; }
+			set { _handle->SupportedTransforms = value; }
 		}
 
 		public bool PlaneReorderPossible {
-			get { return m->PlaneReorderPossible; }
-			set { m->PlaneReorderPossible = value; }
+			get { return _handle->PlaneReorderPossible; }
+			set { _handle->PlaneReorderPossible = value; }
 		}
 
 		public bool PersistentContent {
-			get { return m->PersistentContent; }
-			set { m->PersistentContent = value; }
+			get { return _handle->PersistentContent; }
+			set { _handle->PersistentContent = value; }
 		}
-		public Interop.DisplayPropertiesKhr* m;
+		public Interop.DisplayPropertiesKhr* _handle;
 
 		public DisplayPropertiesKhr ()
 		{
-			m = (Interop.DisplayPropertiesKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayPropertiesKhr));
+			_handle = (Interop.DisplayPropertiesKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayPropertiesKhr));
 			Initialize ();
 		}
 
 		public DisplayPropertiesKhr (Interop.DisplayPropertiesKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -5565,24 +5565,24 @@ namespace VulkanSharp
 		DisplayKhr lCurrentDisplay;
 		public DisplayKhr CurrentDisplay {
 			get { return lCurrentDisplay; }
-			set { lCurrentDisplay = value; m->CurrentDisplay = (ulong)value.m; }
+			set { lCurrentDisplay = value; _handle->CurrentDisplay = (ulong)value._handle; }
 		}
 
 		public uint CurrentStackIndex {
-			get { return m->CurrentStackIndex; }
-			set { m->CurrentStackIndex = value; }
+			get { return _handle->CurrentStackIndex; }
+			set { _handle->CurrentStackIndex = value; }
 		}
-		public Interop.DisplayPlanePropertiesKhr* m;
+		public Interop.DisplayPlanePropertiesKhr* _handle;
 
 		public DisplayPlanePropertiesKhr ()
 		{
-			m = (Interop.DisplayPlanePropertiesKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayPlanePropertiesKhr));
+			_handle = (Interop.DisplayPlanePropertiesKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayPlanePropertiesKhr));
 			Initialize ();
 		}
 
 		public DisplayPlanePropertiesKhr (Interop.DisplayPlanePropertiesKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -5604,24 +5604,24 @@ namespace VulkanSharp
 		DisplayModeKhr lDisplayMode;
 		public DisplayModeKhr DisplayMode {
 			get { return lDisplayMode; }
-			set { lDisplayMode = value; m->DisplayMode = (ulong)value.m; }
+			set { lDisplayMode = value; _handle->DisplayMode = (ulong)value._handle; }
 		}
 
 		public DisplayModeParametersKhr Parameters {
-			get { return m->Parameters; }
-			set { m->Parameters = value; }
+			get { return _handle->Parameters; }
+			set { _handle->Parameters = value; }
 		}
-		public Interop.DisplayModePropertiesKhr* m;
+		public Interop.DisplayModePropertiesKhr* _handle;
 
 		public DisplayModePropertiesKhr ()
 		{
-			m = (Interop.DisplayModePropertiesKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayModePropertiesKhr));
+			_handle = (Interop.DisplayModePropertiesKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayModePropertiesKhr));
 			Initialize ();
 		}
 
 		public DisplayModePropertiesKhr (Interop.DisplayModePropertiesKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
@@ -5635,32 +5635,32 @@ namespace VulkanSharp
 	public unsafe class DisplayModeCreateInfoKhr
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public DisplayModeParametersKhr Parameters {
-			get { return m->Parameters; }
-			set { m->Parameters = value; }
+			get { return _handle->Parameters; }
+			set { _handle->Parameters = value; }
 		}
-		public Interop.DisplayModeCreateInfoKhr* m;
+		public Interop.DisplayModeCreateInfoKhr* _handle;
 
 		public DisplayModeCreateInfoKhr ()
 		{
-			m = (Interop.DisplayModeCreateInfoKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayModeCreateInfoKhr));
+			_handle = (Interop.DisplayModeCreateInfoKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayModeCreateInfoKhr));
 			Initialize ();
 		}
 
 		public DisplayModeCreateInfoKhr (Interop.DisplayModeCreateInfoKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DisplayModeCreateInfoKhr;
+			_handle->SType = StructureType.DisplayModeCreateInfoKhr;
 		}
 
 	}
@@ -5681,63 +5681,63 @@ namespace VulkanSharp
 	public unsafe class DisplaySurfaceCreateInfoKhr
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		DisplayModeKhr lDisplayMode;
 		public DisplayModeKhr DisplayMode {
 			get { return lDisplayMode; }
-			set { lDisplayMode = value; m->DisplayMode = (ulong)value.m; }
+			set { lDisplayMode = value; _handle->DisplayMode = (ulong)value._handle; }
 		}
 
 		public uint PlaneIndex {
-			get { return m->PlaneIndex; }
-			set { m->PlaneIndex = value; }
+			get { return _handle->PlaneIndex; }
+			set { _handle->PlaneIndex = value; }
 		}
 
 		public uint PlaneStackIndex {
-			get { return m->PlaneStackIndex; }
-			set { m->PlaneStackIndex = value; }
+			get { return _handle->PlaneStackIndex; }
+			set { _handle->PlaneStackIndex = value; }
 		}
 
 		public SurfaceTransformFlagsKhr Transform {
-			get { return m->Transform; }
-			set { m->Transform = value; }
+			get { return _handle->Transform; }
+			set { _handle->Transform = value; }
 		}
 
 		public float GlobalAlpha {
-			get { return m->GlobalAlpha; }
-			set { m->GlobalAlpha = value; }
+			get { return _handle->GlobalAlpha; }
+			set { _handle->GlobalAlpha = value; }
 		}
 
 		public DisplayPlaneAlphaFlagsKhr AlphaMode {
-			get { return m->AlphaMode; }
-			set { m->AlphaMode = value; }
+			get { return _handle->AlphaMode; }
+			set { _handle->AlphaMode = value; }
 		}
 
 		public Extent2D ImageExtent {
-			get { return m->ImageExtent; }
-			set { m->ImageExtent = value; }
+			get { return _handle->ImageExtent; }
+			set { _handle->ImageExtent = value; }
 		}
-		public Interop.DisplaySurfaceCreateInfoKhr* m;
+		public Interop.DisplaySurfaceCreateInfoKhr* _handle;
 
 		public DisplaySurfaceCreateInfoKhr ()
 		{
-			m = (Interop.DisplaySurfaceCreateInfoKhr*) Interop.Structure.Allocate (typeof (Interop.DisplaySurfaceCreateInfoKhr));
+			_handle = (Interop.DisplaySurfaceCreateInfoKhr*) Interop.Structure.Allocate (typeof (Interop.DisplaySurfaceCreateInfoKhr));
 			Initialize ();
 		}
 
 		public DisplaySurfaceCreateInfoKhr (Interop.DisplaySurfaceCreateInfoKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DisplaySurfaceCreateInfoKhr;
+			_handle->SType = StructureType.DisplaySurfaceCreateInfoKhr;
 		}
 
 	}
@@ -5745,37 +5745,37 @@ namespace VulkanSharp
 	public unsafe class DisplayPresentInfoKhr
 	{
 		public Rect2D SrcRect {
-			get { return m->SrcRect; }
-			set { m->SrcRect = value; }
+			get { return _handle->SrcRect; }
+			set { _handle->SrcRect = value; }
 		}
 
 		public Rect2D DstRect {
-			get { return m->DstRect; }
-			set { m->DstRect = value; }
+			get { return _handle->DstRect; }
+			set { _handle->DstRect = value; }
 		}
 
 		public bool Persistent {
-			get { return m->Persistent; }
-			set { m->Persistent = value; }
+			get { return _handle->Persistent; }
+			set { _handle->Persistent = value; }
 		}
-		public Interop.DisplayPresentInfoKhr* m;
+		public Interop.DisplayPresentInfoKhr* _handle;
 
 		public DisplayPresentInfoKhr ()
 		{
-			m = (Interop.DisplayPresentInfoKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayPresentInfoKhr));
+			_handle = (Interop.DisplayPresentInfoKhr*) Interop.Structure.Allocate (typeof (Interop.DisplayPresentInfoKhr));
 			Initialize ();
 		}
 
 		public DisplayPresentInfoKhr (Interop.DisplayPresentInfoKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DisplayPresentInfoKhr;
+			_handle->SType = StructureType.DisplayPresentInfoKhr;
 		}
 
 	}
@@ -5803,64 +5803,64 @@ namespace VulkanSharp
 	public unsafe class SwapchainCreateInfoKhr
 	{
 		public uint Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		SurfaceKhr lSurface;
 		public SurfaceKhr Surface {
 			get { return lSurface; }
-			set { lSurface = value; m->Surface = (ulong)value.m; }
+			set { lSurface = value; _handle->Surface = (ulong)value._handle; }
 		}
 
 		public uint MinImageCount {
-			get { return m->MinImageCount; }
-			set { m->MinImageCount = value; }
+			get { return _handle->MinImageCount; }
+			set { _handle->MinImageCount = value; }
 		}
 
 		public Format ImageFormat {
-			get { return m->ImageFormat; }
-			set { m->ImageFormat = value; }
+			get { return _handle->ImageFormat; }
+			set { _handle->ImageFormat = value; }
 		}
 
 		public ColorSpaceKhr ImageColorSpace {
-			get { return m->ImageColorSpace; }
-			set { m->ImageColorSpace = value; }
+			get { return _handle->ImageColorSpace; }
+			set { _handle->ImageColorSpace = value; }
 		}
 
 		public Extent2D ImageExtent {
-			get { return m->ImageExtent; }
-			set { m->ImageExtent = value; }
+			get { return _handle->ImageExtent; }
+			set { _handle->ImageExtent = value; }
 		}
 
 		public uint ImageArrayLayers {
-			get { return m->ImageArrayLayers; }
-			set { m->ImageArrayLayers = value; }
+			get { return _handle->ImageArrayLayers; }
+			set { _handle->ImageArrayLayers = value; }
 		}
 
 		public ImageUsageFlags ImageUsage {
-			get { return m->ImageUsage; }
-			set { m->ImageUsage = value; }
+			get { return _handle->ImageUsage; }
+			set { _handle->ImageUsage = value; }
 		}
 
 		public SharingMode ImageSharingMode {
-			get { return m->ImageSharingMode; }
-			set { m->ImageSharingMode = value; }
+			get { return _handle->ImageSharingMode; }
+			set { _handle->ImageSharingMode = value; }
 		}
 
 		public uint QueueFamilyIndexCount {
-			get { return m->QueueFamilyIndexCount; }
-			set { m->QueueFamilyIndexCount = value; }
+			get { return _handle->QueueFamilyIndexCount; }
+			set { _handle->QueueFamilyIndexCount = value; }
 		}
 
 		public uint[] QueueFamilyIndices {
 			get {
-				if (m->QueueFamilyIndexCount == 0)
+				if (_handle->QueueFamilyIndexCount == 0)
 					return null;
-				var values = new uint [m->QueueFamilyIndexCount];
+				var values = new uint [_handle->QueueFamilyIndexCount];
 				unsafe
 				{
-					var ptr = (uint*)m->QueueFamilyIndices;
+					var ptr = (uint*)_handle->QueueFamilyIndices;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -5869,15 +5869,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->QueueFamilyIndexCount = 0;
-					m->QueueFamilyIndices = IntPtr.Zero;
+					_handle->QueueFamilyIndexCount = 0;
+					_handle->QueueFamilyIndices = IntPtr.Zero;
 					return;
 				}
-				m->QueueFamilyIndexCount = (uint)value.Length;
-				m->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
+				_handle->QueueFamilyIndexCount = (uint)value.Length;
+				_handle->QueueFamilyIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					var ptr = (uint*)m->QueueFamilyIndices;
+					var ptr = (uint*)_handle->QueueFamilyIndices;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -5885,48 +5885,48 @@ namespace VulkanSharp
 		}
 
 		public SurfaceTransformFlagsKhr PreTransform {
-			get { return m->PreTransform; }
-			set { m->PreTransform = value; }
+			get { return _handle->PreTransform; }
+			set { _handle->PreTransform = value; }
 		}
 
 		public CompositeAlphaFlagsKhr CompositeAlpha {
-			get { return m->CompositeAlpha; }
-			set { m->CompositeAlpha = value; }
+			get { return _handle->CompositeAlpha; }
+			set { _handle->CompositeAlpha = value; }
 		}
 
 		public PresentModeKhr PresentMode {
-			get { return m->PresentMode; }
-			set { m->PresentMode = value; }
+			get { return _handle->PresentMode; }
+			set { _handle->PresentMode = value; }
 		}
 
 		public bool Clipped {
-			get { return m->Clipped; }
-			set { m->Clipped = value; }
+			get { return _handle->Clipped; }
+			set { _handle->Clipped = value; }
 		}
 
 		SwapchainKhr lOldSwapchain;
 		public SwapchainKhr OldSwapchain {
 			get { return lOldSwapchain; }
-			set { lOldSwapchain = value; m->OldSwapchain = (ulong)value.m; }
+			set { lOldSwapchain = value; _handle->OldSwapchain = (ulong)value._handle; }
 		}
-		public Interop.SwapchainCreateInfoKhr* m;
+		public Interop.SwapchainCreateInfoKhr* _handle;
 
 		public SwapchainCreateInfoKhr ()
 		{
-			m = (Interop.SwapchainCreateInfoKhr*) Interop.Structure.Allocate (typeof (Interop.SwapchainCreateInfoKhr));
+			_handle = (Interop.SwapchainCreateInfoKhr*) Interop.Structure.Allocate (typeof (Interop.SwapchainCreateInfoKhr));
 			Initialize ();
 		}
 
 		public SwapchainCreateInfoKhr (Interop.SwapchainCreateInfoKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.SwapchainCreateInfoKhr;
+			_handle->SType = StructureType.SwapchainCreateInfoKhr;
 		}
 
 	}
@@ -5934,21 +5934,21 @@ namespace VulkanSharp
 	public unsafe class PresentInfoKhr
 	{
 		public uint WaitSemaphoreCount {
-			get { return m->WaitSemaphoreCount; }
-			set { m->WaitSemaphoreCount = value; }
+			get { return _handle->WaitSemaphoreCount; }
+			set { _handle->WaitSemaphoreCount = value; }
 		}
 
 		public Semaphore[] WaitSemaphores {
 			get {
-				if (m->WaitSemaphoreCount == 0)
+				if (_handle->WaitSemaphoreCount == 0)
 					return null;
-				var values = new Semaphore [m->WaitSemaphoreCount];
+				var values = new Semaphore [_handle->WaitSemaphoreCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->WaitSemaphores;
+					var ptr = (ulong*)_handle->WaitSemaphores;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new Semaphore ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -5956,37 +5956,37 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->WaitSemaphoreCount = 0;
-					m->WaitSemaphores = IntPtr.Zero;
+					_handle->WaitSemaphoreCount = 0;
+					_handle->WaitSemaphores = IntPtr.Zero;
 					return;
 				}
-				m->WaitSemaphoreCount = (uint)value.Length;
-				m->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->WaitSemaphoreCount = (uint)value.Length;
+				_handle->WaitSemaphores = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->WaitSemaphores;
+					var ptr = (ulong*)_handle->WaitSemaphores;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
 
 		public uint SwapchainCount {
-			get { return m->SwapchainCount; }
-			set { m->SwapchainCount = value; }
+			get { return _handle->SwapchainCount; }
+			set { _handle->SwapchainCount = value; }
 		}
 
 		public SwapchainKhr[] Swapchains {
 			get {
-				if (m->SwapchainCount == 0)
+				if (_handle->SwapchainCount == 0)
 					return null;
-				var values = new SwapchainKhr [m->SwapchainCount];
+				var values = new SwapchainKhr [_handle->SwapchainCount];
 				unsafe
 				{
-					var ptr = (ulong*)m->Swapchains;
+					var ptr = (ulong*)_handle->Swapchains;
 					for (var i = 0; i < values.Length; i++) {
 						values [i] = new SwapchainKhr ();
-						values [i].m = ptr [i];
+						values [i]._handle = ptr [i];
 					}
 				}
 				return values;
@@ -5994,29 +5994,29 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->SwapchainCount = 0;
-					m->Swapchains = IntPtr.Zero;
+					_handle->SwapchainCount = 0;
+					_handle->Swapchains = IntPtr.Zero;
 					return;
 				}
-				m->SwapchainCount = (uint)value.Length;
-				m->Swapchains = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
+				_handle->SwapchainCount = (uint)value.Length;
+				_handle->Swapchains = Marshal.AllocHGlobal ((int)(sizeof(ulong)*value.Length));
 				unsafe
 				{
-					var ptr = (ulong*)m->Swapchains;
+					var ptr = (ulong*)_handle->Swapchains;
 					for (var i = 0; i < value.Length; i++)
-						ptr [i] = value [i].m;
+						ptr [i] = value [i]._handle;
 				}
 			}
 		}
 
 		public uint[] ImageIndices {
 			get {
-				if (m->SwapchainCount == 0)
+				if (_handle->SwapchainCount == 0)
 					return null;
-				var values = new uint [m->SwapchainCount];
+				var values = new uint [_handle->SwapchainCount];
 				unsafe
 				{
-					var ptr = (uint*)m->ImageIndices;
+					var ptr = (uint*)_handle->ImageIndices;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -6025,15 +6025,15 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->SwapchainCount = 0;
-					m->ImageIndices = IntPtr.Zero;
+					_handle->SwapchainCount = 0;
+					_handle->ImageIndices = IntPtr.Zero;
 					return;
 				}
-				m->SwapchainCount = (uint)value.Length;
-				m->ImageIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
+				_handle->SwapchainCount = (uint)value.Length;
+				_handle->ImageIndices = Marshal.AllocHGlobal ((int)(sizeof(uint)*value.Length));
 				unsafe
 				{
-					var ptr = (uint*)m->ImageIndices;
+					var ptr = (uint*)_handle->ImageIndices;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
@@ -6042,12 +6042,12 @@ namespace VulkanSharp
 
 		public Result[] Results {
 			get {
-				if (m->SwapchainCount == 0)
+				if (_handle->SwapchainCount == 0)
 					return null;
-				var values = new Result [m->SwapchainCount];
+				var values = new Result [_handle->SwapchainCount];
 				unsafe
 				{
-					var ptr = (Result*)m->Results;
+					var ptr = (Result*)_handle->Results;
 					for (var i = 0; i < values.Length; i++) 
 						values [i] = ptr [i];
 				}
@@ -6056,38 +6056,38 @@ namespace VulkanSharp
 
 			set {
 				if (value == null) {
-					m->SwapchainCount = 0;
-					m->Results = IntPtr.Zero;
+					_handle->SwapchainCount = 0;
+					_handle->Results = IntPtr.Zero;
 					return;
 				}
-				m->SwapchainCount = (uint)value.Length;
-				m->Results = Marshal.AllocHGlobal ((int)(sizeof(Result)*value.Length));
+				_handle->SwapchainCount = (uint)value.Length;
+				_handle->Results = Marshal.AllocHGlobal ((int)(sizeof(Result)*value.Length));
 				unsafe
 				{
-					var ptr = (Result*)m->Results;
+					var ptr = (Result*)_handle->Results;
 					for (var i = 0; i < value.Length; i++)
 						ptr [i] = value [i];
 				}
 			}
 		}
-		public Interop.PresentInfoKhr* m;
+		public Interop.PresentInfoKhr* _handle;
 
 		public PresentInfoKhr ()
 		{
-			m = (Interop.PresentInfoKhr*) Interop.Structure.Allocate (typeof (Interop.PresentInfoKhr));
+			_handle = (Interop.PresentInfoKhr*) Interop.Structure.Allocate (typeof (Interop.PresentInfoKhr));
 			Initialize ();
 		}
 
 		public PresentInfoKhr (Interop.PresentInfoKhr* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PresentInfoKhr;
+			_handle->SType = StructureType.PresentInfoKhr;
 		}
 
 	}
@@ -6095,37 +6095,37 @@ namespace VulkanSharp
 	public unsafe class DebugReportCallbackCreateInfoExt
 	{
 		public DebugReportFlagsExt Flags {
-			get { return m->Flags; }
-			set { m->Flags = value; }
+			get { return _handle->Flags; }
+			set { _handle->Flags = value; }
 		}
 
 		public IntPtr PfnCallback {
-			get { return m->PfnCallback; }
-			set { m->PfnCallback = value; }
+			get { return _handle->PfnCallback; }
+			set { _handle->PfnCallback = value; }
 		}
 
 		public IntPtr UserData {
-			get { return m->UserData; }
-			set { m->UserData = value; }
+			get { return _handle->UserData; }
+			set { _handle->UserData = value; }
 		}
-		public Interop.DebugReportCallbackCreateInfoExt* m;
+		public Interop.DebugReportCallbackCreateInfoExt* _handle;
 
 		public DebugReportCallbackCreateInfoExt ()
 		{
-			m = (Interop.DebugReportCallbackCreateInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugReportCallbackCreateInfoExt));
+			_handle = (Interop.DebugReportCallbackCreateInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugReportCallbackCreateInfoExt));
 			Initialize ();
 		}
 
 		public DebugReportCallbackCreateInfoExt (Interop.DebugReportCallbackCreateInfoExt* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DebugReportCallbackCreateInfoExt;
+			_handle->SType = StructureType.DebugReportCallbackCreateInfoExt;
 		}
 
 	}
@@ -6133,27 +6133,27 @@ namespace VulkanSharp
 	public unsafe class PipelineRasterizationStateRasterizationOrderAmd
 	{
 		public RasterizationOrderAmd RasterizationOrder {
-			get { return m->RasterizationOrder; }
-			set { m->RasterizationOrder = value; }
+			get { return _handle->RasterizationOrder; }
+			set { _handle->RasterizationOrder = value; }
 		}
-		public Interop.PipelineRasterizationStateRasterizationOrderAmd* m;
+		public Interop.PipelineRasterizationStateRasterizationOrderAmd* _handle;
 
 		public PipelineRasterizationStateRasterizationOrderAmd ()
 		{
-			m = (Interop.PipelineRasterizationStateRasterizationOrderAmd*) Interop.Structure.Allocate (typeof (Interop.PipelineRasterizationStateRasterizationOrderAmd));
+			_handle = (Interop.PipelineRasterizationStateRasterizationOrderAmd*) Interop.Structure.Allocate (typeof (Interop.PipelineRasterizationStateRasterizationOrderAmd));
 			Initialize ();
 		}
 
 		public PipelineRasterizationStateRasterizationOrderAmd (Interop.PipelineRasterizationStateRasterizationOrderAmd* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.PipelineRasterizationStateRasterizationOrderAmd;
+			_handle->SType = StructureType.PipelineRasterizationStateRasterizationOrderAmd;
 		}
 
 	}
@@ -6161,37 +6161,37 @@ namespace VulkanSharp
 	public unsafe class DebugMarkerObjectNameInfoExt
 	{
 		public DebugReportObjectTypeExt ObjectType {
-			get { return m->ObjectType; }
-			set { m->ObjectType = value; }
+			get { return _handle->ObjectType; }
+			set { _handle->ObjectType = value; }
 		}
 
 		public ulong Object {
-			get { return m->Object; }
-			set { m->Object = value; }
+			get { return _handle->Object; }
+			set { _handle->Object = value; }
 		}
 
 		public string ObjectName {
-			get { return Marshal.PtrToStringAnsi (m->ObjectName); }
-			set { m->ObjectName = Marshal.StringToHGlobalAnsi (value); }
+			get { return Marshal.PtrToStringAnsi (_handle->ObjectName); }
+			set { _handle->ObjectName = Marshal.StringToHGlobalAnsi (value); }
 		}
-		public Interop.DebugMarkerObjectNameInfoExt* m;
+		public Interop.DebugMarkerObjectNameInfoExt* _handle;
 
 		public DebugMarkerObjectNameInfoExt ()
 		{
-			m = (Interop.DebugMarkerObjectNameInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugMarkerObjectNameInfoExt));
+			_handle = (Interop.DebugMarkerObjectNameInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugMarkerObjectNameInfoExt));
 			Initialize ();
 		}
 
 		public DebugMarkerObjectNameInfoExt (Interop.DebugMarkerObjectNameInfoExt* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DebugMarkerObjectNameInfoExt;
+			_handle->SType = StructureType.DebugMarkerObjectNameInfoExt;
 		}
 
 	}
@@ -6199,47 +6199,47 @@ namespace VulkanSharp
 	public unsafe class DebugMarkerObjectTagInfoExt
 	{
 		public DebugReportObjectTypeExt ObjectType {
-			get { return m->ObjectType; }
-			set { m->ObjectType = value; }
+			get { return _handle->ObjectType; }
+			set { _handle->ObjectType = value; }
 		}
 
 		public ulong Object {
-			get { return m->Object; }
-			set { m->Object = value; }
+			get { return _handle->Object; }
+			set { _handle->Object = value; }
 		}
 
 		public ulong TagName {
-			get { return m->TagName; }
-			set { m->TagName = value; }
+			get { return _handle->TagName; }
+			set { _handle->TagName = value; }
 		}
 
 		public UIntPtr TagSize {
-			get { return m->TagSize; }
-			set { m->TagSize = value; }
+			get { return _handle->TagSize; }
+			set { _handle->TagSize = value; }
 		}
 
 		public IntPtr Tag {
-			get { return m->Tag; }
-			set { m->Tag = value; }
+			get { return _handle->Tag; }
+			set { _handle->Tag = value; }
 		}
-		public Interop.DebugMarkerObjectTagInfoExt* m;
+		public Interop.DebugMarkerObjectTagInfoExt* _handle;
 
 		public DebugMarkerObjectTagInfoExt ()
 		{
-			m = (Interop.DebugMarkerObjectTagInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugMarkerObjectTagInfoExt));
+			_handle = (Interop.DebugMarkerObjectTagInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugMarkerObjectTagInfoExt));
 			Initialize ();
 		}
 
 		public DebugMarkerObjectTagInfoExt (Interop.DebugMarkerObjectTagInfoExt* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DebugMarkerObjectTagInfoExt;
+			_handle->SType = StructureType.DebugMarkerObjectTagInfoExt;
 		}
 
 	}
@@ -6247,15 +6247,15 @@ namespace VulkanSharp
 	public unsafe class DebugMarkerMarkerInfoExt
 	{
 		public string MarkerName {
-			get { return Marshal.PtrToStringAnsi (m->MarkerName); }
-			set { m->MarkerName = Marshal.StringToHGlobalAnsi (value); }
+			get { return Marshal.PtrToStringAnsi (_handle->MarkerName); }
+			set { _handle->MarkerName = Marshal.StringToHGlobalAnsi (value); }
 		}
 
 		public float[] Color {
 			get {
 				var arr = new float [4];
 				for (var i = 0; i < 4; i++)
-					arr [i] = m->Color [i];
+					arr [i] = _handle->Color [i];
 				return arr;
 			}
 
@@ -6263,29 +6263,29 @@ namespace VulkanSharp
 				if (value.Length > 4)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->Color [i] = value [i];
+					_handle->Color [i] = value [i];
 				for (var i = value.Length; i < 4; i++)
-					m->Color [i] = 0;
+					_handle->Color [i] = 0;
 			}
 		}
-		public Interop.DebugMarkerMarkerInfoExt* m;
+		public Interop.DebugMarkerMarkerInfoExt* _handle;
 
 		public DebugMarkerMarkerInfoExt ()
 		{
-			m = (Interop.DebugMarkerMarkerInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugMarkerMarkerInfoExt));
+			_handle = (Interop.DebugMarkerMarkerInfoExt*) Interop.Structure.Allocate (typeof (Interop.DebugMarkerMarkerInfoExt));
 			Initialize ();
 		}
 
 		public DebugMarkerMarkerInfoExt (Interop.DebugMarkerMarkerInfoExt* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			m->SType = StructureType.DebugMarkerMarkerInfoExt;
+			_handle->SType = StructureType.DebugMarkerMarkerInfoExt;
 		}
 
 	}

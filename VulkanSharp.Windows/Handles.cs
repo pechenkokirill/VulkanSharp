@@ -10,7 +10,7 @@ namespace VulkanSharp.Windows
 				var pSurface = new SurfaceKhr();
 
 				Result result;
-				fixed (ulong* ptrpSurface = &pSurface.m) result = NativeMethods.vkCreateWin32SurfaceKHR(instance.Handle, pCreateInfo._m, pAllocator != null ? pAllocator.Handle : null, ptrpSurface);
+				fixed (ulong* ptrpSurface = &pSurface._handle) result = NativeMethods.vkCreateWin32SurfaceKHR(instance.Handle, pCreateInfo._m, pAllocator != null ? pAllocator.Handle : null, ptrpSurface);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pSurface;

@@ -10,8 +10,8 @@ namespace VulkanSharp
 			Result result;
 
 			unsafe {
-				fixed (IntPtr* ptrInstance = &m) {
-					result = Interop.NativeMethods.vkCreateInstance (CreateInfo.m, Allocator != null ? Allocator.Handle : null, ptrInstance);
+				fixed (IntPtr* ptrInstance = &_handle) {
+					result = Interop.NativeMethods.vkCreateInstance (CreateInfo._handle, Allocator != null ? Allocator.Handle : null, ptrInstance);
 				}
 			}
 
@@ -30,13 +30,13 @@ namespace VulkanSharp
 			set {
 				/* todo free allocated memory when already set */
 				if (value == null) {
-					m->CodeSize = UIntPtr.Zero;
-					m->Code = IntPtr.Zero;
+					_handle->CodeSize = UIntPtr.Zero;
+					_handle->Code = IntPtr.Zero;
 					return;
 				}
-				m->CodeSize = (UIntPtr)value.Length;
-				m->Code = Marshal.AllocHGlobal (value.Length);
-				Marshal.Copy (value, 0, m->Code, value.Length);
+				_handle->CodeSize = (UIntPtr)value.Length;
+				_handle->Code = Marshal.AllocHGlobal (value.Length);
+				Marshal.Copy (value, 0, _handle->Code, value.Length);
 			}
 		}
 	}

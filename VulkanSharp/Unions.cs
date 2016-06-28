@@ -8,7 +8,7 @@ namespace VulkanSharp
 			get {
 				var arr = new float [4];
 				for (var i = 0; i < 4; i++)
-					arr [i] = m->Float32 [i];
+					arr [i] = _handle->Float32 [i];
 				return arr;
 			}
 
@@ -16,9 +16,9 @@ namespace VulkanSharp
 				if (value.Length > 4)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->Float32 [i] = value [i];
+					_handle->Float32 [i] = value [i];
 				for (var i = value.Length; i < 4; i++)
-					m->Float32 [i] = 0;
+					_handle->Float32 [i] = 0;
 			}
 		}
 
@@ -26,7 +26,7 @@ namespace VulkanSharp
 			get {
 				var arr = new int [4];
 				for (var i = 0; i < 4; i++)
-					arr [i] = m->Int32 [i];
+					arr [i] = _handle->Int32 [i];
 				return arr;
 			}
 
@@ -34,9 +34,9 @@ namespace VulkanSharp
 				if (value.Length > 4)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->Int32 [i] = value [i];
+					_handle->Int32 [i] = value [i];
 				for (var i = value.Length; i < 4; i++)
-					m->Int32 [i] = 0;
+					_handle->Int32 [i] = 0;
 			}
 		}
 
@@ -44,7 +44,7 @@ namespace VulkanSharp
 			get {
 				var arr = new uint [4];
 				for (var i = 0; i < 4; i++)
-					arr [i] = m->Uint32 [i];
+					arr [i] = _handle->Uint32 [i];
 				return arr;
 			}
 
@@ -52,21 +52,21 @@ namespace VulkanSharp
 				if (value.Length > 4)
 					throw new Exception ("array too long");
 				for (var i = 0; i < value.Length; i++)
-					m->Uint32 [i] = value [i];
+					_handle->Uint32 [i] = value [i];
 				for (var i = value.Length; i < 4; i++)
-					m->Uint32 [i] = 0;
+					_handle->Uint32 [i] = 0;
 			}
 		}
-		public Interop.ClearColorValue* m;
+		public Interop.ClearColorValue* _handle;
 
 		public ClearColorValue ()
 		{
-			m = (Interop.ClearColorValue*) Interop.Structure.Allocate (typeof (Interop.ClearColorValue));
+			_handle = (Interop.ClearColorValue*) Interop.Structure.Allocate (typeof (Interop.ClearColorValue));
 		}
 
 		public ClearColorValue (Interop.ClearColorValue* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 		}
 
 	}
@@ -76,31 +76,31 @@ namespace VulkanSharp
 		ClearColorValue _lColor;
 		public ClearColorValue Color {
 			get { return _lColor; }
-			set { _lColor = value; m->Color = *value.m; }
+			set { _lColor = value; _handle->Color = *value._handle; }
 		}
 
 		public ClearDepthStencilValue DepthStencil {
-			get { return m->DepthStencil; }
-			set { m->DepthStencil = value; }
+			get { return _handle->DepthStencil; }
+			set { _handle->DepthStencil = value; }
 		}
-		public Interop.ClearValue* m;
+		public Interop.ClearValue* _handle;
 
 		public ClearValue ()
 		{
-			m = (Interop.ClearValue*) Interop.Structure.Allocate (typeof (Interop.ClearValue));
+			_handle = (Interop.ClearValue*) Interop.Structure.Allocate (typeof (Interop.ClearValue));
 			Initialize ();
 		}
 
 		public ClearValue (Interop.ClearValue* ptr)
 		{
-			m = ptr;
+			_handle = ptr;
 			Initialize ();
 		}
 
 
 		public void Initialize ()
 		{
-			_lColor = new ClearColorValue (&m->Color);
+			_lColor = new ClearColorValue (&_handle->Color);
 		}
 
 	}
