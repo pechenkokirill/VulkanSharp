@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Vulkan.Interop
+namespace VulkanSharp.Interop
 {
 	public class Structure
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Vulkan
+namespace VulkanSharp
 {
 	public partial class Instance
 	{

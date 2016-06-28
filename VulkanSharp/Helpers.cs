@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vulkan
+namespace VulkanSharp
 {
 	public struct Bool32
 	{
