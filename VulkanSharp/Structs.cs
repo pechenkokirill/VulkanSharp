@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace VulkanSharp
 {
+	// ReSharper disable InconsistentNaming
 	public struct Offset2D
 	{
 		public int X;
