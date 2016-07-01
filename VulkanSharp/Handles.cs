@@ -400,7 +400,8 @@ namespace VulkanSharp
 				if (result != Result.Success) throw new ResultException(result);
 				if (pPresentModeCount <= 0) return null;
 
-				var size = Marshal.SizeOf(typeof(PresentModeKhr));
+				var size = Marshal.SizeOf(typeof(int));
+				//var size = Marshal.SizeOf(typeof(PresentModeKhr));
 				var ptrpPresentModes = Marshal.AllocHGlobal((int)(size * pPresentModeCount));
 				result = NativeMethods.vkGetPhysicalDeviceSurfacePresentModesKHR(_handle, surface._handle, &pPresentModeCount, (PresentModeKhr*)ptrpPresentModes);
 				if (result != Result.Success) throw new ResultException(result);

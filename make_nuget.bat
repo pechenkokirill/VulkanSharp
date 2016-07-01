@@ -1,1 +1,1 @@
-nuget pack VulkanSharp.Windows/VulkanSharp.Windows.csproj -IncludeReferencedProjects
+nuget pack VulkanSharp.Windows/VulkanSharp.Windows.csproj -IncludeReferencedProjects -Version 1.0.0.1
