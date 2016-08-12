@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using VulkanSharp.Interop;
 
@@ -434,12 +435,21 @@ namespace VulkanSharp
 	{
 		public IntPtr _handle;
 
-		public uint AcquireNextImageKHR(SwapchainKhr swapchain, ulong timeout, Semaphore semaphore, Fence fence) {
-			Result result;
-			uint pImageIndex;
+		public uint AcquireNextImageKHR(SwapchainKhr swapchain, TimeSpan timeout, Semaphore semaphore = null, Fence fence = null) {
+			return AcquireNextImageKHR(swapchain, (ulong)timeout.Ticks * 100, semaphore, fence);
+		}
+		
+		/// <summary>
+		/// </summary>
+		/// <param name="swapchain"></param>
+		/// <param name="timeout">In nanoseconds</param>
+		/// <param name="semaphore"></param>
+		/// <param name="fence"></param>
+		/// <returns></returns>
+		public uint AcquireNextImageKHR(SwapchainKhr swapchain, ulong timeout, Semaphore semaphore = null, Fence fence = null) {
 			unsafe {
-				pImageIndex = new uint();
-				result = NativeMethods.vkAcquireNextImageKHR(_handle, swapchain._handle, timeout, semaphore._handle, fence._handle, &pImageIndex);
+				var pImageIndex = new uint();
+				var result = NativeMethods.vkAcquireNextImageKHR(_handle, swapchain._handle, timeout, semaphore?._handle ?? 0, fence?._handle ?? 0, &pImageIndex);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pImageIndex;
@@ -1207,32 +1217,42 @@ namespace VulkanSharp
 		public IntPtr _handle;
 
 		public void BindSparse(uint bindInfoCount, BindSparseInfo pBindInfo, Fence fence) {
-			Result result;
 			unsafe {
-				result = NativeMethods.vkQueueBindSparse(_handle, bindInfoCount, pBindInfo._handle, fence._handle);
+				var result = NativeMethods.vkQueueBindSparse(_handle, bindInfoCount, pBindInfo._handle, fence._handle);
 				if (result != Result.Success) throw new ResultException(result);
 			}
 		}
 
 		public void PresentKHR(PresentInfoKhr pPresentInfo) {
-			Result result;
 			unsafe {
-				result = NativeMethods.vkQueuePresentKHR(_handle, pPresentInfo._handle);
+				var result = NativeMethods.vkQueuePresentKHR(_handle, pPresentInfo._handle);
 				if (result != Result.Success) throw new ResultException(result);
 			}
 		}
 
-		public void Submit(uint submitCount, SubmitInfo pSubmits, Fence fence) {
-			Result result;
+		public void Submit(SubmitInfo[] pSubmits, Fence fence = null) {
 			unsafe {
-				result = NativeMethods.vkQueueSubmit(_handle, submitCount, pSubmits._handle, fence._handle);
-				if (result != Result.Success) throw new ResultException(result);
+				var fenceHandle = fence?._handle ?? 0;
+				var submitCount = (uint)(pSubmits?.Length ?? 0);                                                    
+				if (submitCount == 0) {
+					var result = NativeMethods.vkQueueSubmit(_handle, submitCount, null, fenceHandle);
+					if (result != Result.Success) throw new ResultException(result);
+				}
+				else {
+					var array = new Interop.SubmitInfo[pSubmits.Length];
+					for (var i = 0; i < pSubmits.Length; i++) {
+						array[i] = *pSubmits[i]._handle;
+					}
+					fixed (Interop.SubmitInfo* first = &array[0]) {
+						var result = NativeMethods.vkQueueSubmit(_handle, submitCount, first, fenceHandle);
+						if (result != Result.Success) throw new ResultException(result);
+					}
+				}
 			}
 		}
 
 		public void WaitIdle() {
-			Result result;
-			result = NativeMethods.vkQueueWaitIdle(_handle);
+			var result = NativeMethods.vkQueueWaitIdle(_handle);
 			if (result != Result.Success) throw new ResultException(result);
 		}
 	}
@@ -1387,9 +1407,20 @@ namespace VulkanSharp
 			NativeMethods.vkCmdEndRenderPass(_handle);
 		}
 
-		public void CmdExecuteCommands(uint commandBufferCount, CommandBuffer pCommandBuffers) {
-			unsafe {
-				fixed (IntPtr* ptrpCommandBuffers = &pCommandBuffers._handle) NativeMethods.vkCmdExecuteCommands(_handle, commandBufferCount, ptrpCommandBuffers);
+		public void CmdExecuteCommands(CommandBuffer[] commandBuffers) {
+			if (commandBuffers == null || commandBuffers.Length == 0) {
+				unsafe {
+					NativeMethods.vkCmdExecuteCommands(_handle, 0, null);
+				}
+			}
+			else {
+				var array = commandBuffers.Select(c => c._handle).ToArray();
+				unsafe {
+					fixed (IntPtr* ptrCommandBuffers = &array[0])
+					{
+						NativeMethods.vkCmdExecuteCommands(_handle, (uint)commandBuffers.Length, ptrCommandBuffers);
+					}
+				}
 			}
 		}
 
