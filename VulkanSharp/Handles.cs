@@ -1230,7 +1230,11 @@ namespace VulkanSharp
 			}
 		}
 
-		public void Submit(SubmitInfo[] pSubmits, Fence fence = null) {
+	    public void Submit(params SubmitInfo[] submitInfos) {
+	        Submit(submitInfos, null);
+	    }
+
+		public void Submit(SubmitInfo[] pSubmits, Fence fence) {
 			unsafe {
 				var fenceHandle = fence?._handle ?? 0;
 				var submitCount = (uint)(pSubmits?.Length ?? 0);                                                    
@@ -1407,7 +1411,7 @@ namespace VulkanSharp
 			NativeMethods.vkCmdEndRenderPass(_handle);
 		}
 
-		public void CmdExecuteCommands(CommandBuffer[] commandBuffers) {
+		public void CmdExecuteCommands(params CommandBuffer[] commandBuffers) {
 			if (commandBuffers == null || commandBuffers.Length == 0) {
 				unsafe {
 					NativeMethods.vkCmdExecuteCommands(_handle, 0, null);
