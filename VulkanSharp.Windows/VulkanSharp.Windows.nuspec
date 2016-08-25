@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/mono/VulkanSharp/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/CloneDeath/VulkanSharp</projectUrl>
+    <iconUrl>https://www.khronos.org/assets/images/api_logos/vulkan.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A C# Vulkan implementation, based on the generated work from Mono.</description>
+    <releaseNotes>Initial public release. Some of the endpoints only take in single creation infos instead of arrays, but it's enough to at least get a triangle showing.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Vulkan Khronos SpirV Graphics Open VulkanSharp Sharp C# Bindings Windows</tags>
+  </metadata>
+</package>

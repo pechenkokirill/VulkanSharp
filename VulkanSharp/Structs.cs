@@ -3296,9 +3296,8 @@ namespace VulkanSharp
 				}
 				return values;
 			}
-
 			set {
-				if (value == null) {
+				if (value == null || value.Length == 0) {
 					_handle->DynamicStateCount = 0;
 					_handle->DynamicStates = IntPtr.Zero;
 					return;
@@ -4019,7 +4018,7 @@ namespace VulkanSharp
 			}
 
 			set {
-				if (value == null) {
+				if (value == null || value.Length == 0) {
 					_handle->ClearValueCount = 0;
 					_handle->ClearValues = IntPtr.Zero;
 					return;

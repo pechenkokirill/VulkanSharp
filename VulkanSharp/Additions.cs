@@ -5,13 +5,13 @@ namespace VulkanSharp
 {
 	public partial class Instance
 	{
-		public Instance (InstanceCreateInfo CreateInfo, AllocationCallbacks Allocator = null)
+		public Instance (InstanceCreateInfo createInfo, AllocationCallbacks allocator = null)
 		{
 			Result result;
 
 			unsafe {
 				fixed (IntPtr* ptrInstance = &_handle) {
-					result = Interop.NativeMethods.vkCreateInstance (CreateInfo._handle, Allocator != null ? Allocator.Handle : null, ptrInstance);
+					result = Interop.NativeMethods.vkCreateInstance (createInfo._handle, allocator != null ? allocator.Handle : null, ptrInstance);
 				}
 			}
 
@@ -55,17 +55,17 @@ namespace VulkanSharp
 
 	public partial class ClearColorValue
 	{
-		public ClearColorValue (float[] floatArray) : this ()
+		public ClearColorValue (params float[] floatArray) : this ()
 		{
 			Float32 = floatArray;
 		}
 
-		public ClearColorValue (int[] intArray) : this ()
+		public ClearColorValue (params int[] intArray) : this ()
 		{
 			Int32 = intArray;
 		}
 
-		public ClearColorValue (uint[] uintArray) : this ()
+		public ClearColorValue (params uint[] uintArray) : this ()
 		{
 			Uint32 = uintArray;
 		}
