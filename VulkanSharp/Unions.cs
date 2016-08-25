@@ -97,11 +97,9 @@ namespace VulkanSharp
 			Initialize ();
 		}
 
-
 		public void Initialize ()
 		{
 			_lColor = new ClearColorValue (&_handle->Color);
 		}
-
 	}
 }

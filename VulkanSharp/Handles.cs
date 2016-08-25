@@ -1218,9 +1218,12 @@ namespace VulkanSharp
 			}
 		}
 
-		public void CmdBindDescriptorSets(PipelineBindPoint pipelineBindPoint, PipelineLayout layout, uint firstSet, uint descriptorSetCount, DescriptorSet pDescriptorSets, uint dynamicOffsetCount, uint pDynamicOffsets) {
+		public void CmdBindDescriptorSets(PipelineBindPoint pipelineBindPoint, PipelineLayout layout, uint firstSet, uint descriptorSetCount, DescriptorSet[] pDescriptorSets, uint dynamicOffsetCount, uint pDynamicOffsets) {
 			unsafe {
-				fixed (ulong* ptrpDescriptorSets = &pDescriptorSets._handle) NativeMethods.vkCmdBindDescriptorSets(_handle, pipelineBindPoint, layout._handle, firstSet, descriptorSetCount, ptrpDescriptorSets, dynamicOffsetCount, &pDynamicOffsets);
+			    var handles = pDescriptorSets.Select(s => s._handle).ToArray();
+			    fixed (ulong* ptrpDescriptorSets = &handles[0]) {
+			        NativeMethods.vkCmdBindDescriptorSets(_handle, pipelineBindPoint, layout._handle, firstSet, descriptorSetCount, ptrpDescriptorSets, dynamicOffsetCount, &pDynamicOffsets);
+			    }
 			}
 		}
 
