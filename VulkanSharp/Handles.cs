@@ -1191,16 +1191,27 @@ namespace VulkanSharp
 			NativeMethods.vkUnmapMemory(_handle, memory._handle);
 		}
 
-		public void UpdateDescriptorSets(uint descriptorWriteCount, WriteDescriptorSet pDescriptorWrites, uint descriptorCopyCount, CopyDescriptorSet pDescriptorCopies) {
+		public void UpdateDescriptorSets(WriteDescriptorSet[] descriptorWrites, CopyDescriptorSet[] descriptorCopies) {
 			unsafe {
-				NativeMethods.vkUpdateDescriptorSets(_handle, descriptorWriteCount, pDescriptorWrites._handle, descriptorCopyCount, pDescriptorCopies._handle);
+			    var writeCount = (uint)(descriptorWrites?.Length ?? 0);
+                var copyCount = (uint)(descriptorCopies?.Length ?? 0);
+
+                // Can't get pointer of zero-length or null array.
+                var writeHandles = writeCount != 0 ? descriptorWrites.Select(d => *d._handle).ToArray() : new Interop.WriteDescriptorSet[1];
+                var copyHandles = copyCount != 0 ? descriptorCopies.Select(d => *d._handle).ToArray() : new Interop.CopyDescriptorSet[1];
+
+                fixed (Interop.WriteDescriptorSet* writeSet = &writeHandles[0] )
+                fixed (Interop.CopyDescriptorSet* copySet = &copyHandles[0])
+                {
+                    NativeMethods.vkUpdateDescriptorSets(_handle, writeCount, writeSet, copyCount, copySet);
+                }
 			}
 		}
 
 		public void WaitForFences(uint fenceCount, Fence pFences, Bool32 waitAll, ulong timeout) {
-			Result result;
-			unsafe {
-				fixed (ulong* ptrpFences = &pFences._handle) result = NativeMethods.vkWaitForFences(_handle, fenceCount, ptrpFences, waitAll, timeout);
+		    unsafe {
+			    Result result;
+			    fixed (ulong* ptrpFences = &pFences._handle) result = NativeMethods.vkWaitForFences(_handle, fenceCount, ptrpFences, waitAll, timeout);
 				if (result != Result.Success) throw new ResultException(result);
 			}
 		}
@@ -1237,20 +1248,11 @@ namespace VulkanSharp
 		public void Submit(SubmitInfo[] pSubmits, Fence fence) {
 			unsafe {
 				var fenceHandle = fence?._handle ?? 0;
-				var submitCount = (uint)(pSubmits?.Length ?? 0);                                                    
-				if (submitCount == 0) {
-					var result = NativeMethods.vkQueueSubmit(_handle, submitCount, null, fenceHandle);
+				var submitCount = (uint)(pSubmits?.Length ?? 0);
+                var array = submitCount != 0 ? pSubmits.Select(s => *s._handle).ToArray() : new Interop.SubmitInfo[1];
+				fixed (Interop.SubmitInfo* first = &array[0]) {
+					var result = NativeMethods.vkQueueSubmit(_handle, submitCount, first, fenceHandle);
 					if (result != Result.Success) throw new ResultException(result);
-				}
-				else {
-					var array = new Interop.SubmitInfo[pSubmits.Length];
-					for (var i = 0; i < pSubmits.Length; i++) {
-						array[i] = *pSubmits[i]._handle;
-					}
-					fixed (Interop.SubmitInfo* first = &array[0]) {
-						var result = NativeMethods.vkQueueSubmit(_handle, submitCount, first, fenceHandle);
-						if (result != Result.Success) throw new ResultException(result);
-					}
 				}
 			}
 		}
