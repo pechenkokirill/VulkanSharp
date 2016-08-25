@@ -185,11 +185,9 @@ namespace VulkanSharp
 		}
 
 		public DisplayPlaneCapabilitiesKhr GetDisplayPlaneCapabilitiesKHR(DisplayModeKhr mode, uint planeIndex) {
-			Result result;
-			DisplayPlaneCapabilitiesKhr pCapabilities;
-			unsafe {
-				pCapabilities = new DisplayPlaneCapabilitiesKhr();
-				result = NativeMethods.vkGetDisplayPlaneCapabilitiesKHR(_handle, mode._handle, planeIndex, &pCapabilities);
+		    unsafe {
+				var pCapabilities = new DisplayPlaneCapabilitiesKhr();
+				var result = NativeMethods.vkGetDisplayPlaneCapabilitiesKHR(_handle, mode._handle, planeIndex, &pCapabilities);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pCapabilities;
@@ -197,10 +195,9 @@ namespace VulkanSharp
 		}
 
 		public DisplayPlanePropertiesKhr[] GetDisplayPlanePropertiesKHR() {
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pPropertyCount;
-				result = NativeMethods.vkGetPhysicalDeviceDisplayPlanePropertiesKHR(_handle, &pPropertyCount, null);
+				var result = NativeMethods.vkGetPhysicalDeviceDisplayPlanePropertiesKHR(_handle, &pPropertyCount, null);
 				if (result != Result.Success) throw new ResultException(result);
 				if (pPropertyCount <= 0) return null;
 
@@ -220,10 +217,9 @@ namespace VulkanSharp
 		}
 
 		public DisplayKhr[] GetDisplayPlaneSupportedDisplaysKHR(uint planeIndex) {
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pDisplayCount;
-				result = NativeMethods.vkGetDisplayPlaneSupportedDisplaysKHR(_handle, planeIndex, &pDisplayCount, null);
+				var result = NativeMethods.vkGetDisplayPlaneSupportedDisplaysKHR(_handle, planeIndex, &pDisplayCount, null);
 				if (result != Result.Success) throw new ResultException(result);
 				if (pDisplayCount <= 0) return null;
 
@@ -244,10 +240,9 @@ namespace VulkanSharp
 		}
 
 		public DisplayPropertiesKhr[] GetDisplayPropertiesKHR() {
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pPropertyCount;
-				result = NativeMethods.vkGetPhysicalDeviceDisplayPropertiesKHR(_handle, &pPropertyCount, null);
+				var result = NativeMethods.vkGetPhysicalDeviceDisplayPropertiesKHR(_handle, &pPropertyCount, null);
 				if (result != Result.Success) throw new ResultException(result);
 				if (pPropertyCount <= 0) return null;
 
@@ -267,41 +262,33 @@ namespace VulkanSharp
 		}
 
 		public PhysicalDeviceFeatures GetFeatures() {
-			PhysicalDeviceFeatures pFeatures;
-			unsafe {
-				pFeatures = new PhysicalDeviceFeatures();
+		    unsafe {
+				var pFeatures = new PhysicalDeviceFeatures();
 				NativeMethods.vkGetPhysicalDeviceFeatures(_handle, &pFeatures);
-
 				return pFeatures;
 			}
 		}
 
 		public FormatProperties GetFormatProperties(Format format) {
-			FormatProperties pFormatProperties;
-			unsafe {
-				pFormatProperties = new FormatProperties();
+		    unsafe {
+				var pFormatProperties = new FormatProperties();
 				NativeMethods.vkGetPhysicalDeviceFormatProperties(_handle, format, &pFormatProperties);
-
 				return pFormatProperties;
 			}
 		}
 
 		public ImageFormatProperties GetImageFormatProperties(Format format, ImageType type, ImageTiling tiling, ImageUsageFlags usage, ImageCreateFlags flags) {
-			Result result;
-			ImageFormatProperties pImageFormatProperties;
-			unsafe {
-				pImageFormatProperties = new ImageFormatProperties();
-				result = NativeMethods.vkGetPhysicalDeviceImageFormatProperties(_handle, format, type, tiling, usage, flags, &pImageFormatProperties);
+		    unsafe {
+				var pImageFormatProperties = new ImageFormatProperties();
+				var result = NativeMethods.vkGetPhysicalDeviceImageFormatProperties(_handle, format, type, tiling, usage, flags, &pImageFormatProperties);
 				if (result != Result.Success) throw new ResultException(result);
-
 				return pImageFormatProperties;
 			}
 		}
 
 		public PhysicalDeviceMemoryProperties GetMemoryProperties() {
-			PhysicalDeviceMemoryProperties pMemoryProperties;
-			unsafe {
-				pMemoryProperties = new PhysicalDeviceMemoryProperties();
+		    unsafe {
+				var pMemoryProperties = new PhysicalDeviceMemoryProperties();
 				NativeMethods.vkGetPhysicalDeviceMemoryProperties(_handle, pMemoryProperties._handle);
 
 				return pMemoryProperties;
@@ -309,9 +296,8 @@ namespace VulkanSharp
 		}
 
 		public PhysicalDeviceProperties GetProperties() {
-			PhysicalDeviceProperties pProperties;
-			unsafe {
-				pProperties = new PhysicalDeviceProperties();
+		    unsafe {
+				var pProperties = new PhysicalDeviceProperties();
 				NativeMethods.vkGetPhysicalDeviceProperties(_handle, pProperties._handle);
 
 				return pProperties;
@@ -359,11 +345,9 @@ namespace VulkanSharp
 		}
 
 		public SurfaceCapabilitiesKhr GetSurfaceCapabilitiesKHR(SurfaceKhr surface) {
-			Result result;
-			SurfaceCapabilitiesKhr pSurfaceCapabilities;
-			unsafe {
-				pSurfaceCapabilities = new SurfaceCapabilitiesKhr();
-				result = NativeMethods.vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_handle, surface._handle, &pSurfaceCapabilities);
+		    unsafe {
+				var pSurfaceCapabilities = new SurfaceCapabilitiesKhr();
+				var result = NativeMethods.vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_handle, surface._handle, &pSurfaceCapabilities);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pSurfaceCapabilities;
@@ -371,10 +355,9 @@ namespace VulkanSharp
 		}
 
 		public SurfaceFormatKhr[] GetSurfaceFormatsKHR(SurfaceKhr surface) {
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pSurfaceFormatCount;
-				result = NativeMethods.vkGetPhysicalDeviceSurfaceFormatsKHR(_handle, surface._handle, &pSurfaceFormatCount, null);
+				var result = NativeMethods.vkGetPhysicalDeviceSurfaceFormatsKHR(_handle, surface._handle, &pSurfaceFormatCount, null);
 				if (result != Result.Success) throw new ResultException(result);
 				if (pSurfaceFormatCount <= 0) return null;
 
@@ -394,10 +377,9 @@ namespace VulkanSharp
 		}
 
 		public PresentModeKhr[] GetSurfacePresentModesKHR(SurfaceKhr surface) {
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pPresentModeCount;
-				result = NativeMethods.vkGetPhysicalDeviceSurfacePresentModesKHR(_handle, surface._handle, &pPresentModeCount, null);
+				var result = NativeMethods.vkGetPhysicalDeviceSurfacePresentModesKHR(_handle, surface._handle, &pPresentModeCount, null);
 				if (result != Result.Success) throw new ResultException(result);
 				if (pPresentModeCount <= 0) return null;
 
@@ -419,11 +401,9 @@ namespace VulkanSharp
 		}
 
 		public Bool32 GetSurfaceSupportKHR(uint queueFamilyIndex, SurfaceKhr surface) {
-			Result result;
-			Bool32 pSupported;
-			unsafe {
-				pSupported = new Bool32();
-				result = NativeMethods.vkGetPhysicalDeviceSurfaceSupportKHR(_handle, queueFamilyIndex, surface._handle, &pSupported);
+		    unsafe {
+				var pSupported = new Bool32();
+				var result = NativeMethods.vkGetPhysicalDeviceSurfaceSupportKHR(_handle, queueFamilyIndex, surface._handle, &pSupported);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pSupported;
@@ -457,13 +437,12 @@ namespace VulkanSharp
 		}
 
 		public CommandBuffer[] AllocateCommandBuffers(CommandBufferAllocateInfo pAllocateInfo) {
-			Result result;
-			unsafe {
+		    unsafe {
 				if (pAllocateInfo.CommandBufferCount <= 0) return null;
 
 				var size = Marshal.SizeOf(typeof(IntPtr));
 				var ptrpCommandBuffers = Marshal.AllocHGlobal((int)(size * pAllocateInfo.CommandBufferCount));
-				result = NativeMethods.vkAllocateCommandBuffers(_handle, pAllocateInfo._handle, (IntPtr*)ptrpCommandBuffers);
+				var result = NativeMethods.vkAllocateCommandBuffers(_handle, pAllocateInfo._handle, (IntPtr*)ptrpCommandBuffers);
 				if (result != Result.Success) throw new ResultException(result);
 
 				if (pAllocateInfo.CommandBufferCount <= 0) return null;
@@ -478,20 +457,20 @@ namespace VulkanSharp
 		}
 
 		public DescriptorSet[] AllocateDescriptorSets(DescriptorSetAllocateInfo pAllocateInfo) {
-			Result result;
-			unsafe {
+		    unsafe {
 				if (pAllocateInfo.DescriptorSetCount <= 0) return null;
 
 				var size = Marshal.SizeOf(typeof(ulong));
 				var ptrpDescriptorSets = Marshal.AllocHGlobal((int)(size * pAllocateInfo.DescriptorSetCount));
-				result = NativeMethods.vkAllocateDescriptorSets(_handle, pAllocateInfo._handle, (ulong*)ptrpDescriptorSets);
+				var result = NativeMethods.vkAllocateDescriptorSets(_handle, pAllocateInfo._handle, (ulong*)ptrpDescriptorSets);
 				if (result != Result.Success) throw new ResultException(result);
 
 				if (pAllocateInfo.DescriptorSetCount <= 0) return null;
 				var arr = new DescriptorSet[pAllocateInfo.DescriptorSetCount];
 				for (var i = 0; i < pAllocateInfo.DescriptorSetCount; i++) {
-					arr[i] = new DescriptorSet();
-					arr[i]._handle = ((ulong*)ptrpDescriptorSets)[i];
+				    arr[i] = new DescriptorSet {
+				        _handle = ((ulong*)ptrpDescriptorSets)[i]
+				    };
 				}
 
 				return arr;
@@ -533,12 +512,11 @@ namespace VulkanSharp
 		}
 
 		public BufferView CreateBufferView(BufferViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			BufferView pView;
-			unsafe {
-				pView = new BufferView();
+		    unsafe {
+				var pView = new BufferView();
 
-				fixed (ulong* ptrpView = &pView._handle) result = NativeMethods.vkCreateBufferView(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpView);
+		        Result result;
+		        fixed (ulong* ptrpView = &pView._handle) result = NativeMethods.vkCreateBufferView(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpView);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pView;
@@ -546,12 +524,11 @@ namespace VulkanSharp
 		}
 
 		public CommandPool CreateCommandPool(CommandPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			CommandPool pCommandPool;
-			unsafe {
-				pCommandPool = new CommandPool();
+		    unsafe {
+				var pCommandPool = new CommandPool();
 
-				fixed (ulong* ptrpCommandPool = &pCommandPool._handle) result = NativeMethods.vkCreateCommandPool(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpCommandPool);
+		        Result result;
+		        fixed (ulong* ptrpCommandPool = &pCommandPool._handle) result = NativeMethods.vkCreateCommandPool(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpCommandPool);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pCommandPool;
@@ -559,13 +536,12 @@ namespace VulkanSharp
 		}
 
 		public Pipeline[] CreateComputePipelines(PipelineCache pipelineCache, uint createInfoCount, ComputePipelineCreateInfo pCreateInfos, AllocationCallbacks pAllocator = null) {
-			Result result;
-			unsafe {
+		    unsafe {
 				if (createInfoCount <= 0) return null;
 
 				var size = Marshal.SizeOf(typeof(ulong));
 				var ptrpPipelines = Marshal.AllocHGlobal((int)(size * createInfoCount));
-				result = NativeMethods.vkCreateComputePipelines(_handle, pipelineCache._handle, createInfoCount, pCreateInfos._handle, pAllocator != null ? pAllocator.Handle : null, (ulong*)ptrpPipelines);
+				var result = NativeMethods.vkCreateComputePipelines(_handle, pipelineCache._handle, createInfoCount, pCreateInfos._handle, pAllocator != null ? pAllocator.Handle : null, (ulong*)ptrpPipelines);
 				if (result != Result.Success) throw new ResultException(result);
 
 				if (createInfoCount <= 0) return null;
@@ -580,12 +556,11 @@ namespace VulkanSharp
 		}
 
 		public DescriptorPool CreateDescriptorPool(DescriptorPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			DescriptorPool pDescriptorPool;
-			unsafe {
-				pDescriptorPool = new DescriptorPool();
+		    unsafe {
+				var pDescriptorPool = new DescriptorPool();
 
-				fixed (ulong* ptrpDescriptorPool = &pDescriptorPool._handle) result = NativeMethods.vkCreateDescriptorPool(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpDescriptorPool);
+		        Result result;
+		        fixed (ulong* ptrpDescriptorPool = &pDescriptorPool._handle) result = NativeMethods.vkCreateDescriptorPool(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpDescriptorPool);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pDescriptorPool;
@@ -593,12 +568,11 @@ namespace VulkanSharp
 		}
 
 		public DescriptorSetLayout CreateDescriptorSetLayout(DescriptorSetLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			DescriptorSetLayout pSetLayout;
-			unsafe {
-				pSetLayout = new DescriptorSetLayout();
+		    unsafe {
+				var pSetLayout = new DescriptorSetLayout();
 
-				fixed (ulong* ptrpSetLayout = &pSetLayout._handle) result = NativeMethods.vkCreateDescriptorSetLayout(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSetLayout);
+		        Result result;
+		        fixed (ulong* ptrpSetLayout = &pSetLayout._handle) result = NativeMethods.vkCreateDescriptorSetLayout(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSetLayout);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pSetLayout;
@@ -606,12 +580,11 @@ namespace VulkanSharp
 		}
 
 		public Event CreateEvent(EventCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			Event pEvent;
-			unsafe {
-				pEvent = new Event();
+		    unsafe {
+				var pEvent = new Event();
 
-				fixed (ulong* ptrpEvent = &pEvent._handle) result = NativeMethods.vkCreateEvent(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpEvent);
+		        Result result;
+		        fixed (ulong* ptrpEvent = &pEvent._handle) result = NativeMethods.vkCreateEvent(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpEvent);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pEvent;
@@ -619,12 +592,11 @@ namespace VulkanSharp
 		}
 
 		public Fence CreateFence(FenceCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			Fence pFence;
-			unsafe {
-				pFence = new Fence();
+		    unsafe {
+				var pFence = new Fence();
 
-				fixed (ulong* ptrpFence = &pFence._handle) result = NativeMethods.vkCreateFence(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpFence);
+		        Result result;
+		        fixed (ulong* ptrpFence = &pFence._handle) result = NativeMethods.vkCreateFence(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpFence);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pFence;
@@ -632,12 +604,11 @@ namespace VulkanSharp
 		}
 
 		public Framebuffer CreateFramebuffer(FramebufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			Framebuffer pFramebuffer;
-			unsafe {
-				pFramebuffer = new Framebuffer();
+		    unsafe {
+				var pFramebuffer = new Framebuffer();
 
-				fixed (ulong* ptrpFramebuffer = &pFramebuffer._handle) result = NativeMethods.vkCreateFramebuffer(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpFramebuffer);
+		        Result result;
+		        fixed (ulong* ptrpFramebuffer = &pFramebuffer._handle) result = NativeMethods.vkCreateFramebuffer(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpFramebuffer);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pFramebuffer;
@@ -645,20 +616,20 @@ namespace VulkanSharp
 		}
 
 		public Pipeline[] CreateGraphicsPipelines(PipelineCache pipelineCache, uint createInfoCount, GraphicsPipelineCreateInfo pCreateInfos, AllocationCallbacks pAllocator = null) {
-			Result result;
-			unsafe {
+		    unsafe {
 				if (createInfoCount <= 0) return null;
 
 				var size = Marshal.SizeOf(typeof(ulong));
 				var ptrpPipelines = Marshal.AllocHGlobal((int)(size * createInfoCount));
-				result = NativeMethods.vkCreateGraphicsPipelines(_handle, pipelineCache._handle, createInfoCount, pCreateInfos._handle, pAllocator != null ? pAllocator.Handle : null, (ulong*)ptrpPipelines);
+				var result = NativeMethods.vkCreateGraphicsPipelines(_handle, pipelineCache._handle, createInfoCount, pCreateInfos._handle, pAllocator != null ? pAllocator.Handle : null, (ulong*)ptrpPipelines);
 				if (result != Result.Success) throw new ResultException(result);
 
 				if (createInfoCount <= 0) return null;
 				var arr = new Pipeline[createInfoCount];
 				for (var i = 0; i < createInfoCount; i++) {
-					arr[i] = new Pipeline();
-					arr[i]._handle = ((ulong*)ptrpPipelines)[i];
+				    arr[i] = new Pipeline {
+				        _handle = ((ulong*)ptrpPipelines)[i]
+				    };
 				}
 
 				return arr;
@@ -666,12 +637,11 @@ namespace VulkanSharp
 		}
 
 		public Image CreateImage(ImageCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			Image pImage;
-			unsafe {
-				pImage = new Image();
+		    unsafe {
+				var pImage = new Image();
 
-				fixed (ulong* ptrpImage = &pImage._handle) result = NativeMethods.vkCreateImage(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpImage);
+		        Result result;
+		        fixed (ulong* ptrpImage = &pImage._handle) result = NativeMethods.vkCreateImage(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpImage);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pImage;
@@ -679,12 +649,11 @@ namespace VulkanSharp
 		}
 
 		public ImageView CreateImageView(ImageViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			ImageView pView;
-			unsafe {
-				pView = new ImageView();
+		    unsafe {
+				var pView = new ImageView();
 
-				fixed (ulong* ptrpView = &pView._handle) result = NativeMethods.vkCreateImageView(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpView);
+		        Result result;
+		        fixed (ulong* ptrpView = &pView._handle) result = NativeMethods.vkCreateImageView(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpView);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pView;
@@ -692,12 +661,11 @@ namespace VulkanSharp
 		}
 
 		public PipelineCache CreatePipelineCache(PipelineCacheCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			PipelineCache pPipelineCache;
-			unsafe {
-				pPipelineCache = new PipelineCache();
+		    unsafe {
+				var pPipelineCache = new PipelineCache();
 
-				fixed (ulong* ptrpPipelineCache = &pPipelineCache._handle) result = NativeMethods.vkCreatePipelineCache(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpPipelineCache);
+		        Result result;
+		        fixed (ulong* ptrpPipelineCache = &pPipelineCache._handle) result = NativeMethods.vkCreatePipelineCache(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpPipelineCache);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pPipelineCache;
@@ -705,12 +673,11 @@ namespace VulkanSharp
 		}
 
 		public PipelineLayout CreatePipelineLayout(PipelineLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			PipelineLayout pPipelineLayout;
-			unsafe {
-				pPipelineLayout = new PipelineLayout();
+		    unsafe {
+				var pPipelineLayout = new PipelineLayout();
 
-				fixed (ulong* ptrpPipelineLayout = &pPipelineLayout._handle) result = NativeMethods.vkCreatePipelineLayout(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpPipelineLayout);
+		        Result result;
+		        fixed (ulong* ptrpPipelineLayout = &pPipelineLayout._handle) result = NativeMethods.vkCreatePipelineLayout(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpPipelineLayout);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pPipelineLayout;
@@ -718,12 +685,11 @@ namespace VulkanSharp
 		}
 
 		public QueryPool CreateQueryPool(QueryPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			QueryPool pQueryPool;
-			unsafe {
-				pQueryPool = new QueryPool();
+		    unsafe {
+				var pQueryPool = new QueryPool();
 
-				fixed (ulong* ptrpQueryPool = &pQueryPool._handle) result = NativeMethods.vkCreateQueryPool(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpQueryPool);
+		        Result result;
+		        fixed (ulong* ptrpQueryPool = &pQueryPool._handle) result = NativeMethods.vkCreateQueryPool(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpQueryPool);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pQueryPool;
@@ -731,12 +697,11 @@ namespace VulkanSharp
 		}
 
 		public RenderPass CreateRenderPass(RenderPassCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			RenderPass pRenderPass;
-			unsafe {
-				pRenderPass = new RenderPass();
+		    unsafe {
+				var pRenderPass = new RenderPass();
 
-				fixed (ulong* ptrpRenderPass = &pRenderPass._handle) result = NativeMethods.vkCreateRenderPass(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpRenderPass);
+		        Result result;
+		        fixed (ulong* ptrpRenderPass = &pRenderPass._handle) result = NativeMethods.vkCreateRenderPass(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpRenderPass);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pRenderPass;
@@ -744,12 +709,11 @@ namespace VulkanSharp
 		}
 
 		public Sampler CreateSampler(SamplerCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			Sampler pSampler;
-			unsafe {
-				pSampler = new Sampler();
+		    unsafe {
+				var pSampler = new Sampler();
 
-				fixed (ulong* ptrpSampler = &pSampler._handle) result = NativeMethods.vkCreateSampler(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSampler);
+		        Result result;
+		        fixed (ulong* ptrpSampler = &pSampler._handle) result = NativeMethods.vkCreateSampler(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSampler);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pSampler;
@@ -757,12 +721,11 @@ namespace VulkanSharp
 		}
 
 		public Semaphore CreateSemaphore(SemaphoreCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			Semaphore pSemaphore;
-			unsafe {
-				pSemaphore = new Semaphore();
+		    unsafe {
+				var pSemaphore = new Semaphore();
 
-				fixed (ulong* ptrpSemaphore = &pSemaphore._handle) result = NativeMethods.vkCreateSemaphore(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSemaphore);
+		        Result result;
+		        fixed (ulong* ptrpSemaphore = &pSemaphore._handle) result = NativeMethods.vkCreateSemaphore(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSemaphore);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pSemaphore;
@@ -770,12 +733,11 @@ namespace VulkanSharp
 		}
 
 		public ShaderModule CreateShaderModule(ShaderModuleCreateInfo pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			ShaderModule pShaderModule;
-			unsafe {
-				pShaderModule = new ShaderModule();
+		    unsafe {
+				var pShaderModule = new ShaderModule();
 
-				fixed (ulong* ptrpShaderModule = &pShaderModule._handle) result = NativeMethods.vkCreateShaderModule(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpShaderModule);
+		        Result result;
+		        fixed (ulong* ptrpShaderModule = &pShaderModule._handle) result = NativeMethods.vkCreateShaderModule(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpShaderModule);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pShaderModule;
@@ -783,13 +745,12 @@ namespace VulkanSharp
 		}
 
 		public SwapchainKhr[] CreateSharedSwapchainsKHR(uint swapchainCount, SwapchainCreateInfoKhr pCreateInfos, AllocationCallbacks pAllocator = null) {
-			Result result;
-			unsafe {
+		    unsafe {
 				if (swapchainCount <= 0) return null;
 
 				var size = Marshal.SizeOf(typeof(ulong));
 				var ptrpSwapchains = Marshal.AllocHGlobal((int)(size * swapchainCount));
-				result = NativeMethods.vkCreateSharedSwapchainsKHR(_handle, swapchainCount, pCreateInfos._handle, pAllocator != null ? pAllocator.Handle : null, (ulong*)ptrpSwapchains);
+				var result = NativeMethods.vkCreateSharedSwapchainsKHR(_handle, swapchainCount, pCreateInfos._handle, pAllocator != null ? pAllocator.Handle : null, (ulong*)ptrpSwapchains);
 				if (result != Result.Success) throw new ResultException(result);
 
 				if (swapchainCount <= 0) return null;
@@ -804,36 +765,28 @@ namespace VulkanSharp
 		}
 
 		public SwapchainKhr CreateSwapchainKHR(SwapchainCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator = null) {
-			Result result;
-			SwapchainKhr pSwapchain;
-			unsafe {
-				pSwapchain = new SwapchainKhr();
-
-				fixed (ulong* ptrpSwapchain = &pSwapchain._handle) result = NativeMethods.vkCreateSwapchainKHR(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSwapchain);
+		    unsafe {
+				var pSwapchain = new SwapchainKhr();
+		        Result result;
+		        fixed (ulong* ptrpSwapchain = &pSwapchain._handle) result = NativeMethods.vkCreateSwapchainKHR(_handle, pCreateInfo._handle, pAllocator != null ? pAllocator.Handle : null, ptrpSwapchain);
 				if (result != Result.Success) throw new ResultException(result);
-
 				return pSwapchain;
 			}
 		}
 
 		public DebugMarkerObjectNameInfoExt DebugMarkerSetObjectNameEXT() {
-			Result result;
-			DebugMarkerObjectNameInfoExt pNameInfo;
-			unsafe {
-				pNameInfo = new DebugMarkerObjectNameInfoExt();
-				result = NativeMethods.vkDebugMarkerSetObjectNameEXT(_handle, pNameInfo._handle);
+		    unsafe {
+				var pNameInfo = new DebugMarkerObjectNameInfoExt();
+				var result = NativeMethods.vkDebugMarkerSetObjectNameEXT(_handle, pNameInfo._handle);
 				if (result != Result.Success) throw new ResultException(result);
-
 				return pNameInfo;
 			}
 		}
 
 		public DebugMarkerObjectTagInfoExt DebugMarkerSetObjectTagEXT() {
-			Result result;
-			DebugMarkerObjectTagInfoExt pTagInfo;
-			unsafe {
-				pTagInfo = new DebugMarkerObjectTagInfoExt();
-				result = NativeMethods.vkDebugMarkerSetObjectTagEXT(_handle, pTagInfo._handle);
+		    unsafe {
+				var pTagInfo = new DebugMarkerObjectTagInfoExt();
+				var result = NativeMethods.vkDebugMarkerSetObjectTagEXT(_handle, pTagInfo._handle);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return pTagInfo;
@@ -961,10 +914,9 @@ namespace VulkanSharp
 		}
 
 		public void FlushMappedMemoryRanges(uint memoryRangeCount, MappedMemoryRange pMemoryRanges) {
-			Result result;
-			unsafe {
-				result = NativeMethods.vkFlushMappedMemoryRanges(_handle, memoryRangeCount, pMemoryRanges._handle);
-				if (result != Result.Success) throw new ResultException(result);
+		    unsafe {
+			    var result = NativeMethods.vkFlushMappedMemoryRanges(_handle, memoryRangeCount, pMemoryRanges._handle);
+			    if (result != Result.Success) throw new ResultException(result);
 			}
 		}
 
@@ -975,9 +927,9 @@ namespace VulkanSharp
 		}
 
 		public void FreeDescriptorSets(DescriptorPool descriptorPool, uint descriptorSetCount, DescriptorSet pDescriptorSets) {
-			Result result;
-			unsafe {
-				fixed (ulong* ptrpDescriptorSets = &pDescriptorSets._handle) result = NativeMethods.vkFreeDescriptorSets(_handle, descriptorPool._handle, descriptorSetCount, ptrpDescriptorSets);
+		    unsafe {
+			    Result result;
+			    fixed (ulong* ptrpDescriptorSets = &pDescriptorSets._handle) result = NativeMethods.vkFreeDescriptorSets(_handle, descriptorPool._handle, descriptorSetCount, ptrpDescriptorSets);
 				if (result != Result.Success) throw new ResultException(result);
 			}
 		}
@@ -989,9 +941,8 @@ namespace VulkanSharp
 		}
 
 		public MemoryRequirements GetBufferMemoryRequirements(Buffer buffer) {
-			MemoryRequirements pMemoryRequirements;
-			unsafe {
-				pMemoryRequirements = new MemoryRequirements();
+		    unsafe {
+				var pMemoryRequirements = new MemoryRequirements();
 				NativeMethods.vkGetBufferMemoryRequirements(_handle, buffer._handle, &pMemoryRequirements);
 
 				return pMemoryRequirements;
@@ -999,21 +950,18 @@ namespace VulkanSharp
 		}
 
 		public void GetEventStatus(Event @event) {
-			Result result;
-			result = NativeMethods.vkGetEventStatus(_handle, @event._handle);
-			if (result != Result.Success) throw new ResultException(result);
+		    var result = NativeMethods.vkGetEventStatus(_handle, @event._handle);
+		    if (result != Result.Success) throw new ResultException(result);
 		}
 
-		public void GetFenceStatus(Fence fence) {
-			Result result;
-			result = NativeMethods.vkGetFenceStatus(_handle, fence._handle);
-			if (result != Result.Success) throw new ResultException(result);
+	    public void GetFenceStatus(Fence fence) {
+		    var result = NativeMethods.vkGetFenceStatus(_handle, fence._handle);
+		    if (result != Result.Success) throw new ResultException(result);
 		}
 
-		public MemoryRequirements GetImageMemoryRequirements(Image image) {
-			MemoryRequirements pMemoryRequirements;
-			unsafe {
-				pMemoryRequirements = new MemoryRequirements();
+	    public MemoryRequirements GetImageMemoryRequirements(Image image) {
+		    unsafe {
+				var pMemoryRequirements = new MemoryRequirements();
 				NativeMethods.vkGetImageMemoryRequirements(_handle, image._handle, &pMemoryRequirements);
 
 				return pMemoryRequirements;
@@ -1041,9 +989,8 @@ namespace VulkanSharp
 		}
 
 		public SubresourceLayout GetImageSubresourceLayout(Image image, ImageSubresource pSubresource) {
-			SubresourceLayout pLayout;
-			unsafe {
-				pLayout = new SubresourceLayout();
+		    unsafe {
+				var pLayout = new SubresourceLayout();
 				NativeMethods.vkGetImageSubresourceLayout(_handle, image._handle, &pSubresource, &pLayout);
 
 				return pLayout;
@@ -1051,9 +998,8 @@ namespace VulkanSharp
 		}
 
 		public DeviceSize GetMemoryCommitment(DeviceMemory memory) {
-			DeviceSize pCommittedMemoryInBytes;
-			unsafe {
-				pCommittedMemoryInBytes = new DeviceSize();
+		    unsafe {
+				var pCommittedMemoryInBytes = new DeviceSize();
 				NativeMethods.vkGetDeviceMemoryCommitment(_handle, memory._handle, &pCommittedMemoryInBytes);
 
 				return pCommittedMemoryInBytes;
@@ -1061,9 +1007,9 @@ namespace VulkanSharp
 		}
 
 		public void GetPipelineCacheData(PipelineCache pipelineCache, out UIntPtr pDataSize, IntPtr pData) {
-			Result result;
-			unsafe {
-				fixed (UIntPtr* ptrpDataSize = &pDataSize) result = NativeMethods.vkGetPipelineCacheData(_handle, pipelineCache._handle, ptrpDataSize, pData);
+		    unsafe {
+			    Result result;
+			    fixed (UIntPtr* ptrpDataSize = &pDataSize) result = NativeMethods.vkGetPipelineCacheData(_handle, pipelineCache._handle, ptrpDataSize, pData);
 				if (result != Result.Success) throw new ResultException(result);
 			}
 		}
@@ -1073,19 +1019,16 @@ namespace VulkanSharp
 		}
 
 		public IntPtr GetQueryPoolResults(QueryPool queryPool, uint firstQuery, uint queryCount, UIntPtr dataSize, DeviceSize stride, QueryResultFlags flags) {
-			Result result;
-			IntPtr pData;
-			pData = new IntPtr();
-			result = NativeMethods.vkGetQueryPoolResults(_handle, queryPool._handle, firstQuery, queryCount, dataSize, pData, stride, flags);
+		    var pData = new IntPtr();
+			var result = NativeMethods.vkGetQueryPoolResults(_handle, queryPool._handle, firstQuery, queryCount, dataSize, pData, stride, flags);
 			if (result != Result.Success) throw new ResultException(result);
 
 			return pData;
 		}
 
 		public Queue GetQueue(uint queueFamilyIndex, uint queueIndex) {
-			Queue pQueue;
-			unsafe {
-				pQueue = new Queue();
+		    unsafe {
+				var pQueue = new Queue();
 
 				fixed (IntPtr* ptrpQueue = &pQueue._handle) NativeMethods.vkGetDeviceQueue(_handle, queueFamilyIndex, queueIndex, ptrpQueue);
 
@@ -1094,9 +1037,8 @@ namespace VulkanSharp
 		}
 
 		public Extent2D GetRenderAreaGranularity(RenderPass renderPass) {
-			Extent2D pGranularity;
-			unsafe {
-				pGranularity = new Extent2D();
+		    unsafe {
+				var pGranularity = new Extent2D();
 				NativeMethods.vkGetRenderAreaGranularity(_handle, renderPass._handle, &pGranularity);
 
 				return pGranularity;
@@ -1104,10 +1046,9 @@ namespace VulkanSharp
 		}
 
 		public Image[] GetSwapchainImagesKHR(SwapchainKhr swapchain) {
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pSwapchainImageCount;
-				result = NativeMethods.vkGetSwapchainImagesKHR(_handle, swapchain._handle, &pSwapchainImageCount, null);
+				var result = NativeMethods.vkGetSwapchainImagesKHR(_handle, swapchain._handle, &pSwapchainImageCount, null);
 				if (result != Result.Success) throw new ResultException(result);
 				if (pSwapchainImageCount <= 0) return null;
 
@@ -1119,8 +1060,9 @@ namespace VulkanSharp
 				if (pSwapchainImageCount <= 0) return null;
 				var arr = new Image[pSwapchainImageCount];
 				for (var i = 0; i < pSwapchainImageCount; i++) {
-					arr[i] = new Image();
-					arr[i]._handle = ((ulong*)ptrpSwapchainImages)[i];
+				    arr[i] = new Image {
+				        _handle = ((ulong*)ptrpSwapchainImages)[i]
+				    };
 				}
 
 				return arr;
@@ -1128,19 +1070,16 @@ namespace VulkanSharp
 		}
 
 		public void InvalidateMappedMemoryRanges(uint memoryRangeCount, MappedMemoryRange pMemoryRanges) {
-			Result result;
-			unsafe {
-				result = NativeMethods.vkInvalidateMappedMemoryRanges(_handle, memoryRangeCount, pMemoryRanges._handle);
-				if (result != Result.Success) throw new ResultException(result);
+		    unsafe {
+			    var result = NativeMethods.vkInvalidateMappedMemoryRanges(_handle, memoryRangeCount, pMemoryRanges._handle);
+			    if (result != Result.Success) throw new ResultException(result);
 			}
 		}
 
 		public IntPtr MapMemory(DeviceMemory memory, DeviceSize offset, DeviceSize size, uint flags) {
-			Result result;
-			IntPtr ppData;
-			unsafe {
-				ppData = new IntPtr();
-				result = NativeMethods.vkMapMemory(_handle, memory._handle, offset, size, flags, &ppData);
+		    unsafe {
+				var ppData = new IntPtr();
+				var result = NativeMethods.vkMapMemory(_handle, memory._handle, offset, size, flags, &ppData);
 				if (result != Result.Success) throw new ResultException(result);
 
 				return ppData;
@@ -1148,46 +1087,42 @@ namespace VulkanSharp
 		}
 
 		public void MergePipelineCaches(PipelineCache dstCache, uint srcCacheCount, PipelineCache pSrcCaches) {
-			Result result;
-			unsafe {
-				fixed (ulong* ptrpSrcCaches = &pSrcCaches._handle) result = NativeMethods.vkMergePipelineCaches(_handle, dstCache._handle, srcCacheCount, ptrpSrcCaches);
+		    unsafe {
+			    Result result;
+			    fixed (ulong* ptrpSrcCaches = &pSrcCaches._handle) result = NativeMethods.vkMergePipelineCaches(_handle, dstCache._handle, srcCacheCount, ptrpSrcCaches);
 				if (result != Result.Success) throw new ResultException(result);
 			}
 		}
 
 		public void ResetCommandPool(CommandPool commandPool, CommandPoolResetFlags flags) {
-			Result result;
-			result = NativeMethods.vkResetCommandPool(_handle, commandPool._handle, flags);
-			if (result != Result.Success) throw new ResultException(result);
+		    var result = NativeMethods.vkResetCommandPool(_handle, commandPool._handle, flags);
+		    if (result != Result.Success) throw new ResultException(result);
 		}
 
-		public void ResetDescriptorPool(DescriptorPool descriptorPool, uint flags) {
-			Result result;
-			result = NativeMethods.vkResetDescriptorPool(_handle, descriptorPool._handle, flags);
-			if (result != Result.Success) throw new ResultException(result);
-		}
+	    public void ResetDescriptorPool(DescriptorPool descriptorPool, uint flags) {
+	        var result = NativeMethods.vkResetDescriptorPool(_handle, descriptorPool._handle, flags);
+	        if (result != Result.Success) throw new ResultException(result);
+	    }
 
-		public void ResetEvent(Event @event) {
-			Result result;
-			result = NativeMethods.vkResetEvent(_handle, @event._handle);
-			if (result != Result.Success) throw new ResultException(result);
-		}
+	    public void ResetEvent(Event @event) {
+	        var result = NativeMethods.vkResetEvent(_handle, @event._handle);
+	        if (result != Result.Success) throw new ResultException(result);
+	    }
 
-		public void ResetFences(uint fenceCount, Fence pFences) {
-			Result result;
-			unsafe {
-				fixed (ulong* ptrpFences = &pFences._handle) result = NativeMethods.vkResetFences(_handle, fenceCount, ptrpFences);
+	    public void ResetFences(uint fenceCount, Fence pFences) {
+		    unsafe {
+			    Result result;
+			    fixed (ulong* ptrpFences = &pFences._handle) result = NativeMethods.vkResetFences(_handle, fenceCount, ptrpFences);
 				if (result != Result.Success) throw new ResultException(result);
 			}
 		}
 
 		public void SetEvent(Event @event) {
-			Result result;
-			result = NativeMethods.vkSetEvent(_handle, @event._handle);
-			if (result != Result.Success) throw new ResultException(result);
+		    var result = NativeMethods.vkSetEvent(_handle, @event._handle);
+		    if (result != Result.Success) throw new ResultException(result);
 		}
 
-		public void UnmapMemory(DeviceMemory memory) {
+	    public void UnmapMemory(DeviceMemory memory) {
 			NativeMethods.vkUnmapMemory(_handle, memory._handle);
 		}
 
@@ -1217,9 +1152,8 @@ namespace VulkanSharp
 		}
 
 		public void WaitIdle() {
-			Result result;
-			result = NativeMethods.vkDeviceWaitIdle(_handle);
-			if (result != Result.Success) throw new ResultException(result);
+		    var result = NativeMethods.vkDeviceWaitIdle(_handle);
+		    if (result != Result.Success) throw new ResultException(result);
 		}
 	}
 
@@ -1268,10 +1202,9 @@ namespace VulkanSharp
 		public IntPtr _handle;
 
 		public void Begin(CommandBufferBeginInfo pBeginInfo) {
-			Result result;
-			unsafe {
-				result = NativeMethods.vkBeginCommandBuffer(_handle, pBeginInfo._handle);
-				if (result != Result.Success) throw new ResultException(result);
+		    unsafe {
+			    var result = NativeMethods.vkBeginCommandBuffer(_handle, pBeginInfo._handle);
+			    if (result != Result.Success) throw new ResultException(result);
 			}
 		}
 
@@ -1358,9 +1291,8 @@ namespace VulkanSharp
 		}
 
 		public DebugMarkerMarkerInfoExt CmdDebugMarkerBeginEXT() {
-			DebugMarkerMarkerInfoExt pMarkerInfo;
-			unsafe {
-				pMarkerInfo = new DebugMarkerMarkerInfoExt();
+		    unsafe {
+				var pMarkerInfo = new DebugMarkerMarkerInfoExt();
 				NativeMethods.vkCmdDebugMarkerBeginEXT(_handle, pMarkerInfo._handle);
 
 				return pMarkerInfo;
@@ -1372,9 +1304,8 @@ namespace VulkanSharp
 		}
 
 		public DebugMarkerMarkerInfoExt CmdDebugMarkerInsertEXT() {
-			DebugMarkerMarkerInfoExt pMarkerInfo;
-			unsafe {
-				pMarkerInfo = new DebugMarkerMarkerInfoExt();
+		    unsafe {
+				var pMarkerInfo = new DebugMarkerMarkerInfoExt();
 				NativeMethods.vkCmdDebugMarkerInsertEXT(_handle, pMarkerInfo._handle);
 
 				return pMarkerInfo;
@@ -1523,15 +1454,13 @@ namespace VulkanSharp
 		}
 
 		public void End() {
-			Result result;
-			result = NativeMethods.vkEndCommandBuffer(_handle);
-			if (result != Result.Success) throw new ResultException(result);
+		    var result = NativeMethods.vkEndCommandBuffer(_handle);
+		    if (result != Result.Success) throw new ResultException(result);
 		}
 
-		public void Reset(CommandBufferResetFlags flags) {
-			Result result;
-			result = NativeMethods.vkResetCommandBuffer(_handle, flags);
-			if (result != Result.Success) throw new ResultException(result);
+	    public void Reset(CommandBufferResetFlags flags) {
+		    var result = NativeMethods.vkResetCommandBuffer(_handle, flags);
+		    if (result != Result.Success) throw new ResultException(result);
 		}
 	}
 

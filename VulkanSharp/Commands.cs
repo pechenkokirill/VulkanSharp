@@ -6,10 +6,9 @@ namespace VulkanSharp
 	{
 		public static LayerProperties[] EnumerateInstanceLayerProperties ()
 		{
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pPropertyCount;
-				result = Interop.NativeMethods.vkEnumerateInstanceLayerProperties (&pPropertyCount, null);
+				var result = Interop.NativeMethods.vkEnumerateInstanceLayerProperties (&pPropertyCount, null);
 				if (result != Result.Success)
 					throw new ResultException (result);
 				if (pPropertyCount <= 0)
@@ -34,10 +33,9 @@ namespace VulkanSharp
 
 		public static ExtensionProperties[] EnumerateInstanceExtensionProperties (string pLayerName)
 		{
-			Result result;
-			unsafe {
+		    unsafe {
 				uint pPropertyCount;
-				result = Interop.NativeMethods.vkEnumerateInstanceExtensionProperties (pLayerName, &pPropertyCount, null);
+				var result = Interop.NativeMethods.vkEnumerateInstanceExtensionProperties (pLayerName, &pPropertyCount, null);
 				if (result != Result.Success)
 					throw new ResultException (result);
 				if (pPropertyCount <= 0)
